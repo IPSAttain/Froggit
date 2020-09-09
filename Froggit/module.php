@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../libs/HelperFunctions.php';
 	class Froggit extends IPSModule {
 
 		public function Create()
@@ -50,6 +51,11 @@
 						if($this->GetValue($array[0]."_int") != $array[1]) $this->SetValue($array[0]."_int", intval($array[1]));
 						$this->RegisterVariableFloat($array[0]."_txt", $this->Translate('Wind Direction'),'~WindDirection.Text');
 						if($this->GetValue($array[0]."_txt") != $array[1]) $this->SetValue($array[0]."_txt", floatval($array[1]));
+					}
+					if ($array[0] == 'windspeedmph')
+					{
+						$this->RegisterVariableFloat($array[0], $this->Translate('Wind Speed'),'');
+						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], MilesToKilometer(floatval($array[1]));
 					}
 				}
 			}
