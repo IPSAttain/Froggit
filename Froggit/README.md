@@ -31,7 +31,7 @@ Beschreibung des Moduls.
 
  * Der Gleiche Port, wie in der WS App, muß auch in IPS für den Server Socket gewählt werden.
 
-  ![Server_Socket](../docs/Server_Socket.png)
+  ![Server_Socket](../docs/ServerSocket.png)
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
