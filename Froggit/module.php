@@ -29,10 +29,11 @@
 		public function ReceiveData($JSONString)
 		{
 			$data = json_decode($JSONString);
-			IPS_LogMessage("Device RECV", utf8_decode($data->Buffer . " -  + $data->ClientIP +  -  . $data->ClientPort"));
-			if (strpos($data, '&')) {
+			$content = utf8_decode($data->Buffer)
+			IPS_LogMessage("Device RECV", $data . " -  + $data->ClientIP +  -  . $data->ClientPort"));
+			if (strpos($content '&')) {
 				// $data in durch & separierte Datensätze zerlegen
-				$datasets = explode('&', $data);
+				$datasets = explode('&', $content);
 				$wsvar = array();
 		 
 				// alle nicht durch ; terminierten Datensätze ausgeben
