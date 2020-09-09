@@ -1,8 +1,26 @@
 {
     "translations": {
         "de": {
-            "Translation 1": "Übersetzung 1",
-            "Translation 2": "Übersetzung 2"
+            "Station Type": "Stations Typ",
+            "Wind Speed": "Windgeschwindigkeit",
+            "Day Wind Max": "Windböe (Max.) Tag",
+            "Wind Gust": "Windböe",
+            "Temperature": "Temperatur",
+            "Humidity": "Luftfeuchtigkeit",
+            "Air Pressure": "Luftdruck",
+            "Wind Direction": "Windrichtung",
+            "Rain": "Regenmenge",
+            "Rain Rate": "Regenrate",
+            "totalrainin": "Regenmenge Total",
+            "yearlyrainin": "Regenmenge Jahr",
+            "monthlyrainin": "Regenmenge Monat",
+            "weeklyrainin": "Regenmenge Woche",
+            "dailyrainin": "Regenmenge Tag",
+            "hourlyrainin": "Regenmenge Stunde",
+            "eventrainin": "Regenmenge aktuell",
+            "Solar Radiation": "Solar Einstrahlung",
+            "UV Index": "UV Index",
+            "Time": "Uhrzeit"
         }
     }
 }
