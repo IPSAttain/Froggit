@@ -3,7 +3,8 @@
         "de": {
             "Station Type": "Stations Typ",
             "Wind Speed": "Windgeschwindigkeit",
-            "Day Wind Max": "Maximal Wingeschwindigkeit Tag",
+            "Day Wind Max": "Maximale Wingböe Tag",
+            "Wind Gust": "Windböe",
             "Temperature": "Temperatur",
             "Humidity": "Luftfeuchtigkeit",
             "Air Pressure": "Luftdruck",
