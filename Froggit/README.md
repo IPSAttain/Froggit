@@ -13,16 +13,18 @@ Beschreibung des Moduls.
 
 ### 1. Funktionsumfang
 
-*
+* Empfangen von Daten des DP1500 und ablegen in Variablen.
 
 ### 2. Vorraussetzungen
 
-- IP-Symcon ab Version 5.3
+- IP-Symcon ab Version 5.0
 
 ### 3. Software-Installation
 
-* Über den Module Store das 'Froggit'-Modul installieren.
-* Alternativ über das Module Control folgende URL hinzufügen
+* Über den Module Store das 'Froggit'-Modul installieren.(Noch nicht vorhanden)
+* Alternativ über das Module Control folgende URL hinzufügen: https://github.com/IPSAttain/Froggit
+* In der App muss der "Customized Upload konfiguriert werden. Dazu die IP-Adresse des IPS Servers angeben und ein Port. 
+![App](docs/Config_App.png)
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
@@ -38,7 +40,7 @@ Name     | Beschreibung
 
 ### 5. Statusvariablen und Profile
 
-Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzelner kann zu Fehlfunktionen führen.
+Die Statusvariablen werden automatisch angelegt. Werden diese gelöscht, werden sie wieder angelegt. Die Variablen können umbenannt werden.
 
 #### Statusvariablen
 
@@ -56,12 +58,8 @@ Name   | Typ
 
 ### 6. WebFront
 
-Die Funktionalität, die das Modul im WebFront bietet.
+Die Werte werden nur angezeigt.
 
 ### 7. PHP-Befehlsreferenz
 
-`boolean FROGGIT_BeispielFunktion(integer $InstanzID);`
-Erklärung der Funktion.
-
-Beispiel:
-`FROGGIT_BeispielFunktion(12345);`
+keine
