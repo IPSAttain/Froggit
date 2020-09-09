@@ -30,30 +30,27 @@
 		{
 			$data = json_decode($JSONString);
 			$incomming = utf8_decode($data->Buffer);
-			IPS_LogMessage("Device RECV"," -  + $data->ClientIP +  -  . $data->ClientPort");
+			IPS_LogMessage("Device RECV",$data->ClientIP ." +  Port ". $data->ClientPort);
 			if (strpos($incomming, '&')) {
 				// $data in durch & separierte Datensätze zerlegen
 				$datasets = explode('&', $incomming);
-				$wsvar = array();
-		 
 				// alle nicht durch ; terminierten Datensätze ausgeben
 				for ($i = 0; $i < count($datasets) - 1; $i++) {
-					$this->SendDebug("Received", $datasets[$i] , 0);
-					//$wsvar = explode('=', $datasets[$i]);
+					//$this->SendDebug("Received", $datasets[$i] , 0);
 					$array = explode('=', $datasets[$i]);
 					$this->SendDebug($array[0], $array[1] , 0);
 					if ($array[0] == 'stationtype')
-					
 					{
-						$this->RegisterVariableString($array[0], 'StationType','');
-						if($this->GetValue($array[0]) != $array[1]) 
-							{
-								$this->SetValue($array[0], $array[1]);
-								
-
-							}
+						$this->RegisterVariableString($array[0], $this->Translate('Station Type'),'');
+						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $array[1]);
 					}
-					$wsvar[$array[0]] = $array[1];
+					if ($array[0] == 'winddir')
+					{
+						$this->RegisterVariableInteger($array[0]."_int", $this->Translate('Wind Direction'),'~WindDirection');
+						if($this->GetValue($array[0]."_int") != $array[1]) $this->SetValue($array[0]."_int", intval($array[1]));
+						$this->RegisterVariableFloat($array[0]."_txt", $this->Translate('Wind Direction'),'~WindDirection.Text');
+						if($this->GetValue($array[0]."_txt") != $array[1]) $this->SetValue($array[0]."_txt", floatval($array[1]));
+					}
 				}
 			}
 		}
