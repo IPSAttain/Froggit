@@ -68,7 +68,7 @@
 					}
 					if (substr($array[0],0,5) == 'barom' )
 					{
-						$this->RegisterVariableFloat($array[0], $this->Translate('Air Pressure') . "_(" . $array[0] . ")",'~AirPressure');
+						$this->RegisterVariableFloat($array[0], $this->Translate('Air Pressure') . "_(" . $array[0] . ")",'~AirPressure.F');
 						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $this->Pressure_absolute(floatval($array[1])));
 					}
 				}
