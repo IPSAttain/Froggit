@@ -68,7 +68,7 @@
 					}
 					elseif (substr($array[0],0,4) == 'temp' )
 					{
-						$$array[1] = round($this->FahrenheitToCelsius($array[1]) ,2);
+						$array[1] = round($this->FahrenheitToCelsius($array[1]) ,2);
 						$this->RegisterVariableFloat($array[0], $this->Translate('Temperature') . "_(" . $array[0] . ")",'~Temperature');
 						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $array[1]);
 					}
