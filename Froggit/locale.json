@@ -18,7 +18,8 @@
             "hourlyrainin": "Regenmenge Stunde",
             "eventrainin": "Regenmenge aktuell",
             "Solar Radiation": "Solar Einstrahlung",
-            "UV Index": "UV Index"
+            "UV Index": "UV Index",
+            "Time": "Uhrzeit"
         }
     }
 }

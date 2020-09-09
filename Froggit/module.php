@@ -99,8 +99,9 @@
 					if ($array[0] == 'dateutc' )
 					{
 						$time = str_replace("+"," ",$array[1]);
+						$this->SendDebug($array[0], $time , 0);
 						$this->RegisterVariableInteger($array[0], $this->Translate('Time'),'~UnixTimestamp');
-						$this->SetValue($array[0], $time);
+						$this->SetValue($array[0], strtotime($time));
 					}
 				}
 			}
