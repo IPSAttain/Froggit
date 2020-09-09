@@ -30,7 +30,7 @@
 		{
 			$data = json_decode($JSONString);
 			$incomming = utf8_decode($data->Buffer);
-			IPS_LogMessage("Device RECV", $data . " -  + $data->ClientIP +  -  . $data->ClientPort");
+			IPS_LogMessage("Device RECV"," -  + $data->ClientIP +  -  . $data->ClientPort");
 			if (strpos($incomming, '&')) {
 				// $data in durch & separierte Datensätze zerlegen
 				$datasets = explode('&', $incomming);
