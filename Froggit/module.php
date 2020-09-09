@@ -86,6 +86,22 @@
 						$this->RegisterVariableFloat($array[0], $this->Translate('Rain Rate'),'~Rainfall');
 						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], floatval($array[1] * 25.4));
 					}
+					if ($array[0] == 'solarradiation' )
+					{
+						$this->RegisterVariableInteger($array[0], $this->Translate('Solar Radiation'),'~Illumination');
+						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], intval($array[1] * 10,7639));
+					}
+					if ($array[0] == 'uv' )
+					{
+						$this->RegisterVariableInteger($array[0], $this->Translate('UV Index'),'~UVIndex');
+						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], intval($array[1]));
+					}
+					if ($array[0] == 'dateutc' )
+					{
+						$time = str_replace("+"," ",$array[1]);
+						$this->RegisterVariableInteger($array[0], $this->Translate('Time'),'~UnixTimestamp');
+						$this->SetValue($array[0], $time);
+					}
 				}
 			}
 		}

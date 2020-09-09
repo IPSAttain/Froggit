@@ -15,7 +15,10 @@
             "monthlyrainin": "Regenmenge Monat",
             "weeklyrainin": "Regenmenge Woche",
             "dailyrainin": "Regenmenge Tag",
-            "hourlyrainin": "Regenmenge Stunde"
+            "hourlyrainin": "Regenmenge Stunde",
+            "eventrainin": "Regenmenge aktuell",
+            "Solar Radiation": "Solar Einstrahlung",
+            "UV Index": "UV Index"
         }
     }
 }
