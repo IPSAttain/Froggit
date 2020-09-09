@@ -30,7 +30,7 @@
 		{
 			$data = json_decode($JSONString);
 			$incomming = utf8_decode($data->Buffer);
-			IPS_LogMessage("Device RECV",$data->ClientIP ." +  Port ". $data->ClientPort);
+			//IPS_LogMessage("Device RECV",$data->ClientIP ." +  Port ". $data->ClientPort);
 			if (strpos($incomming, '&')) {
 				// $data in durch & separierte Datensätze zerlegen
 				$datasets = explode('&', $incomming);
@@ -69,7 +69,12 @@
 					if (substr($array[0],0,5) == 'barom' )
 					{
 						$this->RegisterVariableFloat($array[0], $this->Translate('Air Pressure') . "_(" . $array[0] . ")",'~AirPressure.F');
-						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $this->Pressure_absolute(floatval($array[1])));
+						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], floatval($array[1] / 0.02997));
+					}
+					if (substr($array[0],-6) == 'rainin' )
+					{
+						$this->RegisterVariableFloat($array[0], $this->Translate('Rain') . "_(" . $array[0] . ")",'~Rainfall');
+						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], floatval($array[1] * 25,4));
 					}
 				}
 			}
@@ -97,11 +102,6 @@
 		$hi = -8.784695 + 1.61139411*$t + 2.338549*$r - 0.14611605*$t*$r - 0.012308094*$t*$t - 0.016424828*$r*$r + 0.002211732*$t*$t*$r + 0.00072546*$t*$r*$r - 0.000003582*$t*$t*$r*$r;
 		return $hi;
 		} // end heatindex
-	
-		private function CelsiusToFahrenheit(float $celsius)
-		{
-			return $celsius * 1.8 + 32;
-		}
 	
 		private function FahrenheitToCelsius(float $fahrenheit)
 		{
@@ -138,7 +138,7 @@
 			return $mph;
 		}
 	
-		private function Rain(float $inch)
+		private function InchToMM(float $inch)
 		{
 			$mm = $inch * 25.4;
 			return $mm;
@@ -150,35 +150,9 @@
 			return $inch;
 		}
 	
-		private function Pressure_absolute(float $pressure)
+		private function PressureinHGToBar($pressure)
 		{
-			$pascal = $pressure / 0.02952998751;
-			return $pascal;
-		}
-	
-		private function Pressure(float $pressure, float $temperature)
-		{
-			$pascal   = $pressure / 0.02952998751;
-			$altitude = $this->ReadPropertyInteger('altitude_above_sea_level');
-	
-			$g0 = 9.80665;                                         // Normwert der Fallbeschleunigung
-			$R  = 287.05;                                          // Gaskonstante trockener Luft
-			$T  = 273.15;                                          // 0°C in Kelvin
-			$Ch = 0.12;                                            // Beiwert zu E
-			if ($temperature < 9.1) {
-				$E = 5.6402 * (-0.0916 + exp(0.06 * $temperature));        // Dampfdruck des Wasserdampfanteils bei t < 9.1°C
-			} else {
-				$E = 18.2194 * (1.0463 - exp(-0.0666 * $temperature));    // Dampfdruck des Wasserdampfanteils bei t >= 9.1°C
-			}
-			$a  = 0.0065;                                          // vertikaler Temperaturgradient
-			$xp = $altitude * $g0 / ($R * ($T + $temperature + $Ch * $E + $a * $altitude / 2)); // Exponent für Formel
-			$p0 = $pascal * exp($xp);                             // Formel für den NN-bezogenen Luftdruck laut Wikipedia
-			return $p0;
-		}
-	
-		private function PressurehPaToBar($pressure)
-		{
-			$bar = $pressure * 0.02952998751;
+			$bar = $pressure * 0.02997;
 			return $bar;
 		}
 	}

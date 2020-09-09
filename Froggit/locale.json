@@ -6,7 +6,8 @@
             "Temperature": "Temperatur",
             "Humidity": "Luftfeuchtigkeit",
             "Air Pressure": "Luftdruck",
-            "Wind Direction": "Windrichtung"
+            "Wind Direction": "Windrichtung",
+            "Rain": "Regenmenge"
         }
     }
 }
