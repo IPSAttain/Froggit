@@ -83,7 +83,7 @@
 					}
 					elseif (substr($array[0],-6) == 'rainin' )
 					{
-						$rain = round($array[1] * 25.4,1),
+						$rain = round($array[1] * 25.4,1);
 						$this->RegisterVariableFloat($array[0], $this->Translate($array[0]),'~Rainfall');
 						if($this->GetValue($array[0]) != $rain) $this->SetValue($array[0],$rain);
 					}
