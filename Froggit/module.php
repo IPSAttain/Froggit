@@ -69,12 +69,12 @@
 					if (substr($array[0],0,5) == 'barom' )
 					{
 						$this->RegisterVariableFloat($array[0], $this->Translate('Air Pressure') . "_(" . $array[0] . ")",'~AirPressure.F');
-						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], floatval($array[1] / 0.02997));
+						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], floatval($array[1] / 0.02952998751));
 					}
 					if (substr($array[0],-6) == 'rainin' )
 					{
 						$this->RegisterVariableFloat($array[0], $this->Translate('Rain') . "_(" . $array[0] . ")",'~Rainfall');
-						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], floatval($array[1] * 25,4));
+						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], floatval($array[1] * 25.4));
 					}
 				}
 			}
