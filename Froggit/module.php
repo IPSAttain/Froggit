@@ -29,7 +29,7 @@
 		public function ReceiveData($JSONString)
 		{
 			$data = json_decode($JSONString);
-			IPS_LogMessage("Device RECV", utf8_decode($data->Buffer . " - " + $data->ClientIP + " - " . $data->ClientPort));
+			IPS_LogMessage("Device RECV", utf8_decode($data->Buffer . " -  + $data->ClientIP +  -  . $data->ClientPort"));
 			if (strpos($data, '&')) {
 				// $data in durch & separierte Datensätze zerlegen
 				$datasets = explode('&', $data);
