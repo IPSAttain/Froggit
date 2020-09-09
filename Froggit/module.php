@@ -35,7 +35,7 @@
 				// $data in durch & separierte Datensätze zerlegen
 				$datasets = explode('&', $incomming);
 				// alle nicht durch ; terminierten Datensätze ausgeben
-				for ($i = 0; $i < count($datasets) - 1; $i++) {
+				for ($i = 1; $i < count($datasets) - 1; $i++) {
 					//$this->SendDebug("Received", $datasets[$i] , 0);
 					$array = explode('=', $datasets[$i]);
 					$this->SendDebug($array[0], $array[1] , 0);
