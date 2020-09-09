@@ -56,6 +56,11 @@
 						$this->RegisterVariableFloat($array[0], $this->Translate('Wind Speed'),'~WindSpeed.kmh');
 						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $this->MilesToKilometer(floatval($array[1])));
 					}
+					if ($array[0] == 'windgustmph')
+					{
+						$this->RegisterVariableFloat($array[0], $this->Translate('Day Wind Max'),'~WindSpeed.kmh');
+						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $this->MilesToKilometer(floatval($array[1])));
+					}
 					if (substr($array[0],0,4) == 'temp' )
 					{
 						$this->RegisterVariableFloat($array[0], $this->Translate('Temperature') . "_(" . $array[0] . ")",'~Temperature');
@@ -73,7 +78,12 @@
 					}
 					if (substr($array[0],-6) == 'rainin' )
 					{
-						$this->RegisterVariableFloat($array[0], $this->Translate('Rain') . "_(" . $array[0] . ")",'~Rainfall');
+						$this->RegisterVariableFloat($array[0], $this->Translate($array[0]),'~Rainfall');
+						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], floatval($array[1] * 25.4));
+					}
+					if ($array[0] == 'rainratein' )
+					{
+						$this->RegisterVariableFloat($array[0], $this->Translate('Rain Rate'),'~Rainfall');
 						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], floatval($array[1] * 25.4));
 					}
 				}

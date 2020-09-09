@@ -3,11 +3,19 @@
         "de": {
             "Station Type": "Stations Typ",
             "Wind Speed": "Windgeschwindigkeit",
+            "Day Wind Max": "Maximal Wingeschwindigkeit Tag",
             "Temperature": "Temperatur",
             "Humidity": "Luftfeuchtigkeit",
             "Air Pressure": "Luftdruck",
             "Wind Direction": "Windrichtung",
-            "Rain": "Regenmenge"
+            "Rain": "Regenmenge",
+            "Rain Rate": "Regenrate",
+            "totalrainin": "Regenmenge Total",
+            "yearlyrainin": "Regenmenge Jahr",
+            "monthlyrainin": "Regenmenge Monat",
+            "weeklyrainin": "Regenmenge Woche",
+            "dailyrainin": "Regenmenge Tag",
+            "hourlyrainin": "Regenmenge Stunde"
         }
     }
 }
