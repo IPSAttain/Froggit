@@ -56,6 +56,11 @@
 						$this->RegisterVariableFloat($array[0], $this->Translate('Wind Speed'),'~WindSpeed.kmh');
 						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $this->MilesToKilometer(floatval($array[1])));
 					}
+					if (substr($array[0],0,4) == 'temp' )
+					{
+						$this->RegisterVariableFloat($array[0], $this->Translate('Temperature') . "_(" . $array[0] . ")",'~Temperature');
+						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $this->FahrenheitToCelsius(floatval($array[1])));
+					}
 				}
 			}
 		}
