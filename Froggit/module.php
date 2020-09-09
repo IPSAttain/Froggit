@@ -47,6 +47,8 @@
 						if($this->GetValue($array[0]) != $array[1]) 
 							{
 								$this->SetValue($array[0], $array[1]);
+								$this->SendDebug($array[0], $array[1] , 0);
+								
 							}
 					}
 					$wsvar[$array[0]] = $array[1];
