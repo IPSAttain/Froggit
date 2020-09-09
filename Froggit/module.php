@@ -41,6 +41,14 @@
 					$this->SendDebug("Received", $datasets[$i] , 0);
 					//$wsvar = explode('=', $datasets[$i]);
 					$array = explode('=', $datasets[$i]);
+					if ($array[0] = 'stationtype')
+					{
+						$this->RegisterVariableString($array[0], 'StationType','');
+						if($this->GetValue($array[0]) != $array[1]) 
+							{
+								$this->SetValue($array[0], $array[1]);
+							}
+					}
 					$wsvar[$array[0]] = $array[1];
 				}
 			}
