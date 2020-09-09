@@ -110,8 +110,11 @@
 					}
 					else
 					{
-						$this->RegisterVariableString($array[0], $array[0],'');
-						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $array[1]);
+						if (isset($array[0]) && isset($array[1]))
+						{
+							$this->RegisterVariableString($array[0], $array[0],'');
+							if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $array[1]);
+						}
 					}
 				}
 			}
