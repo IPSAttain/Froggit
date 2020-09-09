@@ -25,7 +25,7 @@ Beschreibung des Moduls.
 * Alternativ über das Module Control folgende URL hinzufügen: https://github.com/IPSAttain/Froggit
 * In der App muss der "Customized Upload konfiguriert werden. Dazu die IP-Adresse des IPS Servers angeben und ein Port. 
 
- ![Config_App](docs/Config_App.png)
+ ![Config_App](../docs/Config_App.png)
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
