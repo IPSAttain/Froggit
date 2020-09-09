@@ -54,8 +54,8 @@ require_once __DIR__ . '/../libs/HelperFunctions.php';
 					}
 					if ($array[0] == 'windspeedmph')
 					{
-						$this->RegisterVariableFloat($array[0], $this->Translate('Wind Speed'),'');
-						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], MilesToKilometer(floatval($array[1])));
+						$this->RegisterVariableFloat($array[0], $this->Translate('Wind Speed'),'~WindSpeed.kmh');
+						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $this->MilesToKilometer(floatval($array[1])));
 					}
 				}
 			}
