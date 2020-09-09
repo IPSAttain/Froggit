@@ -68,8 +68,9 @@
 					}
 					elseif (substr($array[0],0,4) == 'temp' )
 					{
+						$$array[1] = round($this->FahrenheitToCelsius($array[1] ,2));
 						$this->RegisterVariableFloat($array[0], $this->Translate('Temperature') . "_(" . $array[0] . ")",'~Temperature');
-						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $this->FahrenheitToCelsius(floatval($array[1])));
+						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $array[1]);
 					}
 					elseif (substr($array[0],0,8) == 'humidity' )
 					{
@@ -81,16 +82,17 @@
 						$this->RegisterVariableFloat($array[0], $this->Translate('Air Pressure') . "_(" . $array[0] . ")",'~AirPressure.F');
 						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], floatval($array[1] / 0.02952998751));
 					}
-					elseif (substr($array[0],-6) == 'rainin' )
+					elseif (substr($array[0],-6) == 'rainin')
 					{
-						$rain = round($array[1] * 25.4,1);
+						$rain = round($array[1] * 25.4,2);
 						$this->RegisterVariableFloat($array[0], $this->Translate($array[0]),'~Rainfall');
 						if($this->GetValue($array[0]) != $rain) $this->SetValue($array[0],$rain);
 					}
 					elseif ($array[0] == 'rainratein' )
 					{
+						$rain = round($array[1] * 25.4,2);
 						$this->RegisterVariableFloat($array[0], $this->Translate('Rain Rate'),'~Rainfall');
-						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], floatval($array[1] * 25.4));
+						if($this->GetValue($array[0]) != $rain) $this->SetValue($array[0],$rain);
 					}
 					elseif ($array[0] == 'solarradiation' )
 					{
