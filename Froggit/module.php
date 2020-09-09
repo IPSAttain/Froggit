@@ -122,8 +122,8 @@
 							if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $array[1]);
 						}
 					}
-					*/
+					*/ 
 				}
 			}
 		}
-
+	} //ende
