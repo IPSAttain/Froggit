@@ -61,6 +61,16 @@
 						$this->RegisterVariableFloat($array[0], $this->Translate('Temperature') . "_(" . $array[0] . ")",'~Temperature');
 						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $this->FahrenheitToCelsius(floatval($array[1])));
 					}
+					if (substr($array[0],0,8) == 'humidity' )
+					{
+						$this->RegisterVariableInteger($array[0], $this->Translate('Humidity') . "_(" . $array[0] . ")",'~Humidity');
+						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], intval($array[1]));
+					}
+					if (substr($array[0],0,5) == 'barom' )
+					{
+						$this->RegisterVariableFloat($array[0], $this->Translate('Air Pressure') . "_(" . $array[0] . ")",'~AirPressure');
+						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $this->Pressure_absolute(floatval($array[1])));
+					}
 				}
 			}
 		}

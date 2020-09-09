@@ -3,6 +3,9 @@
         "de": {
             "Station Type": "Stations Typ",
             "Wind Speed": "Windgeschwindigkeit",
+            "Temperature": "Temperatur",
+            "Humidity": "Luftfeuchtigkeit",
+            "Air Pressure": "Luftdruck",
             "Wind Direction": "Windrichtung"
         }
     }
