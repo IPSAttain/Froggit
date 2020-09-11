@@ -1,12 +1,34 @@
 <?php
+
+declare(strict_types=1);
+
+//Constants will be defined with IP-Symcon 5.0 and newer
+if (!defined('IPS_KERNELMESSAGE')) {
+    define('IPS_KERNELMESSAGE', 10100);
+}
+if (!defined('KR_READY')) {
+    define('KR_READY', 10103);
+}
+
 	class Froggit extends IPSModule {
+
+		private $hook = 'froggit';
+
+		public function __construct($InstanceID, $hook)
+		{
+			parent::__construct($InstanceID);
+	
+			$this->hook = $hook;
+		}
 
 		public function Create()
 		{
 			//Never delete this line!
 			parent::Create();
 
-			$this->ConnectParent("{8062CF2B-600E-41D6-AD4B-1BA66C32D6ED}");
+			//We need to call the RegisterHook function on Kernel READY
+			$this->RegisterMessage(0, IPS_KERNELMESSAGE);
+			//$this->ConnectParent("{8062CF2B-600E-41D6-AD4B-1BA66C32D6ED}");
 		}
 
 		public function Destroy()
@@ -19,14 +41,57 @@
 		{
 			//Never delete this line!
 			parent::ApplyChanges();
+
+			//Only call this in READY state. On startup the WebHook instance might not be available yet
+			if (IPS_GetKernelRunlevel() == KR_READY) {
+				$this->RegisterHook('/hook/' . $this->hook);
+			}
 		}
 
-		public function Send(string $Text, string $ClientIP, int $ClientPort)
+		public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
 		{
-			$this->SendDataToParent(json_encode(Array("DataID" => "{C8792760-65CF-4C53-B5C7-A30FCC84FEFE}", "ClientIP" => $ClientIP, "ClientPort" => $ClientPort, "Buffer" => $Text)));
+	
+			//Never delete this line!
+			parent::MessageSink($TimeStamp, $SenderID, $Message, $Data);
+	
+			if ($Message == IPS_KERNELMESSAGE && $Data[0] == KR_READY) {
+				$this->RegisterHook('/hook/' . $this->hook);
+			}
 		}
 
-		public function ReceiveData($JSONString)
+		private function RegisterHook($WebHook)
+		{
+			$ids = IPS_GetInstanceListByModuleID('{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}');
+			if (count($ids) > 0) {
+				$hooks = json_decode(IPS_GetProperty($ids[0], 'Hooks'), true);
+				$found = false;
+				foreach ($hooks as $index => $hook) {
+					if ($hook['Hook'] == $WebHook) {
+						if ($hook['TargetID'] == $this->InstanceID) {
+							return;
+						}
+						$hooks[$index]['TargetID'] = $this->InstanceID;
+						$found = true;
+					}
+				}
+				if (!$found) {
+					$hooks[] = ['Hook' => $WebHook, 'TargetID' => $this->InstanceID];
+				}
+				IPS_SetProperty($ids[0], 'Hooks', json_encode($hooks));
+				IPS_ApplyChanges($ids[0]);
+			}
+		}
+	
+		/**
+		 * This function will be called by the hook control. Visibility should be protected!
+		 */
+		protected function ProcessHookData()
+		{
+			$this->SendDebug('WebHook', 'Array POST: ' . print_r($_POST, true), 0);
+		}
+	}
+/*
+	public function ReceiveData($JSONString)
 		{
 			$data = json_decode($JSONString);
 			$incomming = utf8_decode($data->Buffer);
@@ -114,7 +179,7 @@
 						$this->RegisterVariableInteger($array[0], $this->Translate('Time'),'~UnixTimestamp');
 						$this->SetValue($array[0], strtotime($time));
 					}
-					/*else
+					//else
 					{
 						if (isset($array[0]) && isset($array[1]))
 						{
@@ -122,8 +187,9 @@
 							if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $array[1]);
 						}
 					}
-					*/ 
+					
 				}
 			}
 		}
 	} //ende
+	*/ 
