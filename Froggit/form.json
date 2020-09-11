@@ -5,6 +5,11 @@
             "options": [
                 { "label": "°C", "value": 0 },
                 { "label": "°F", "value": 1 }
+        ]},
+        { "type": "Select", "name": "Rain", "caption": "Rain",
+            "options": [
+                { "label": "mm", "value": 0 },
+                { "label": "inch", "value": 1 }
         ]}
     ],
     "actions": [],

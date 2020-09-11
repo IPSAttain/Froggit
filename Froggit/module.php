@@ -21,6 +21,7 @@ if (!defined('KR_READY')) {
 			//We need to call the RegisterHook function on Kernel READY
 			$this->RegisterMessage(0, IPS_KERNELMESSAGE);
 			$this->RegisterPropertyInteger("Temperature", 0);
+			$this->RegisterPropertyInteger("Rain", 0);
 		}
 
 		public function Destroy()
@@ -124,7 +125,7 @@ if (!defined('KR_READY')) {
 						$profile = '~Temperature';
 					} else { // °F
 						$profile = '~Temperature.Fahrenheit';
-						$key .=  $this->ReadPropertyInteger("Temperature");
+						$key .=  '_F';
 						$temp = $value;
 					}
 					$this->RegisterVariableFloat($key, $this->Translate('Temperature') . "_(" . $key . ")",$profile);
@@ -143,14 +144,40 @@ if (!defined('KR_READY')) {
 				}
 				elseif (substr($key,-6) == 'rainin')
 				{
-					$rain = round($value * 25.4,2);
-					$this->RegisterVariableFloat($key, $this->Translate($key),'~Rainfall');
+					if($this->ReadPropertyInteger("Rain") == 0) { // mm
+						$rain = round($value * 25.4,2);
+						$profile = '~Rainfall';
+					} else { // inch
+						if (!IPS_VariableProfileExists('Rain.Froggit.Inch')) {
+							IPS_CreateVariableProfile('Rain.Froggit.Inch', 2);
+							IPS_SetVariableProfileIcon('Rain.Froggit.Inch', 'Rainfall');
+							IPS_SetVariableProfileText('Rain.Froggit.Inch', '', ' in');
+							IPS_SetVariableProfileDigits('Rain.Froggit.Inch', 2);
+						}
+						$profile = 'Rain.Froggit.Inch';
+						$key .=  '_inch';
+						$rain = $value;
+					}
+					$this->RegisterVariableFloat($key, $this->Translate($key),$profile);
 					if($this->GetValue($key) != $rain) $this->SetValue($key,$rain);
 				}
 				elseif ($key == 'rainratein' )
 				{
-					$rain = round($value * 25.4,2);
-					$this->RegisterVariableFloat($key, $this->Translate('Rain Rate'),'~Rainfall');
+					if($this->ReadPropertyInteger("Rain") == 0) { // mm
+						$rain = round($value * 25.4,2);
+						$profile = '~Rainfall';
+					} else { // inch
+						if (!IPS_VariableProfileExists('Rain.Froggit.Inch')) {
+							IPS_CreateVariableProfile('Rain.Froggit.Inch', 2);
+							IPS_SetVariableProfileIcon('Rain.Froggit.Inch', 'Rainfall');
+							IPS_SetVariableProfileText('Rain.Froggit.Inch', '', ' in');
+							IPS_SetVariableProfileDigits('Rain.Froggit.Inch', 2);
+						}
+						$profile = 'Rain.Froggit.Inch';
+						$key .=  '_inch';
+						$rain = $value;
+					}
+					$this->RegisterVariableFloat($key, $this->Translate('Rain Rate'),$profile);
 					if($this->GetValue($key) != $rain) $this->SetValue($key,$rain);
 				}
 				elseif ($key == 'solarradiation' )
