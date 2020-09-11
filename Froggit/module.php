@@ -88,7 +88,7 @@ if (!defined('KR_READY')) {
 				//$this->SendDebug("Received", $datasets[$i] , 0);
 				//$array[0] = $_POST[0];
 				//$array[1] = $_POST[1];
-				$this->SendDebug($key, $value] , 0);
+				$this->SendDebug($key, $value , 0);
 				if ($key == 'stationtype')
 				{
 					$this->RegisterVariableString($key, $this->Translate('Station Type'),'');
