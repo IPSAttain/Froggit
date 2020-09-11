@@ -144,6 +144,7 @@ if (!defined('KR_READY')) {
 				}
 				elseif (substr($key,-6) == 'rainin')
 				{
+					$name = $key;
 					if($this->ReadPropertyInteger("Rain") == 0) { // mm
 						$rain = round($value * 25.4,2);
 						$profile = '~Rainfall';
@@ -158,7 +159,7 @@ if (!defined('KR_READY')) {
 						$key .=  '_inch';
 						$rain = $value;
 					}
-					$this->RegisterVariableFloat($key, $this->Translate($key),$profile);
+					$this->RegisterVariableFloat($key, $this->Translate($name),$profile);
 					if($this->GetValue($key) != $rain) $this->SetValue($key,$rain);
 				}
 				elseif ($key == 'rainratein' )
