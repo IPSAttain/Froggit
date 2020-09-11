@@ -131,14 +131,36 @@ if (!defined('KR_READY')) {
 				}
 				elseif ($key == 'maxdailygust')
 				{
-					$windspeed = round($value * 1.609344 , 2);
-					$this->RegisterVariableFloat($key, $this->Translate('Day Wind Max'),'~WindSpeed.kmh');
+					if($this->ReadPropertyInteger("Wind") == 0) { // km/h
+						$windspeed = round($value * 1.609344 , 2);
+						$profile = '~WindSpeed.kmh';
+					} elseif ($this->ReadPropertyInteger("Wind") == 1) { // m/s
+						$windspeed = round($value * 1.609344 / 3.6 , 2);
+						$profile = '~WindSpeed.ms';
+						$key .=  '_ms';
+					} else { //mph
+						$windspeed = round($value,2);
+						$profile = 'Wind.Froggit.mph';
+						$key .=  '_mph';
+					}
+					$this->RegisterVariableFloat($key, $this->Translate('Day Wind Max'),$profil);
 					if($this->GetValue($key) != $windspeed) $this->SetValue($key, $windspeed);
 				}
 				elseif ($key == 'windgustmph')
 				{
-					$windspeed = round($value * 1.609344 , 2);
-					$this->RegisterVariableFloat($key, $this->Translate('Wind Gust'),'~WindSpeed.kmh');
+					if($this->ReadPropertyInteger("Wind") == 0) { // km/h
+						$windspeed = round($value * 1.609344 , 2);
+						$profile = '~WindSpeed.kmh';
+					} elseif ($this->ReadPropertyInteger("Wind") == 1) { // m/s
+						$windspeed = round($value * 1.609344 / 3.6 , 2);
+						$profile = '~WindSpeed.ms';
+						$key .=  '_ms';
+					} else { //mph
+						$windspeed = round($value,2);
+						$profile = 'Wind.Froggit.mph';
+						$key .=  '_mph';
+					}
+					$this->RegisterVariableFloat($key, $this->Translate('Wind Gust'),$profil);
 					if($this->GetValue($key) != $windspeed) $this->SetValue($key, $windspeed);
 				}
 				elseif (substr($key,0,4) == 'temp' )
