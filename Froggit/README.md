@@ -14,6 +14,7 @@ Beschreibung des Moduls.
 ### 1. Funktionsumfang
 
 * Empfangen von Daten des DP1500 und ablegen in Variablen.
+* Die Kommunikation läuft über das WebHook Control. Die nötigen Einstellungen werde automatisch eingetragen.
 
 ### 2. Vorraussetzungen
 
@@ -23,15 +24,16 @@ Beschreibung des Moduls.
 
 * Über den Module Store das 'Froggit'-Modul installieren.(Noch nicht vorhanden)
 * Alternativ über das Module Control folgende URL hinzufügen: https://github.com/IPSAttain/Froggit
-* In der App muss der "Customized Upload konfiguriert und aktiviert werden. 
-* Dazu die IP-Adresse des IPS Servers angeben und ein Port. 
+
+* In der App muss der "Customized Upload" konfiguriert und aktiviert werden. 
 * Protokoll Typ mus Ecowitt sein.
+* Dazu die IP-Adresse des IPS Servers angeben. 
+* Als "Path" muss /hook/froggit eingetragen werden.
+* Port ist 3777 (Standard-Zugangsport IPS)
 
  ![Config_App](../docs/Config_App.png)
 
- * Der Gleiche Port, wie in der WS App, muß auch in IPS für den Server Socket gewählt werden.
-
-  ![Server_Socket](../docs/ServerSocket.png)
+ 
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
