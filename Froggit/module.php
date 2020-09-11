@@ -83,93 +83,93 @@ if (!defined('KR_READY')) {
 			IPS_LogMessage("WebHook POST", print_r($_POST, true));
 			//$datasets = $_POST;
 			// alle nicht durch ; terminierten Datensätze ausgeben
-			foreach ($_POST as $array) {
+			foreach ($_POST as $key => $value) {
 				// ($i = 1; $i < count($_POST) - 1; $i++) {
 				//$this->SendDebug("Received", $datasets[$i] , 0);
 				//$array[0] = $_POST[0];
 				//$array[1] = $_POST[1];
-				$this->SendDebug($array[0], $array[1] , 0);
-				if ($array[0] == 'stationtype')
+				$this->SendDebug($key, $value] , 0);
+				if ($key == 'stationtype')
 				{
-					$this->RegisterVariableString($array[0], $this->Translate('Station Type'),'');
-					if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $array[1]);
+					$this->RegisterVariableString($key, $this->Translate('Station Type'),'');
+					if($this->GetValue($key) != $value) $this->SetValue($key, $value);
 				}
-				elseif ($array[0] == 'winddir')
+				elseif ($key == 'winddir')
 				{
-					$this->RegisterVariableInteger($array[0]."_int", $this->Translate('Wind Direction'),'~WindDirection');
-					if($this->GetValue($array[0]."_int") != $array[1]) $this->SetValue($array[0]."_int", intval($array[1]));
-					$this->RegisterVariableFloat($array[0]."_txt", $this->Translate('Wind Direction'),'~WindDirection.Text');
-					if($this->GetValue($array[0]."_txt") != $array[1]) $this->SetValue($array[0]."_txt", floatval($array[1]));
+					$this->RegisterVariableInteger($key."_int", $this->Translate('Wind Direction'),'~WindDirection');
+					if($this->GetValue($key."_int") != $value) $this->SetValue($key."_int", intval($value));
+					$this->RegisterVariableFloat($key."_txt", $this->Translate('Wind Direction'),'~WindDirection.Text');
+					if($this->GetValue($key."_txt") != $value) $this->SetValue($key."_txt", floatval($value));
 				}
-				elseif ($array[0] == 'windspeedmph')
+				elseif ($key == 'windspeedmph')
 				{
-					$windspeed = round($array[1] * 1.609344 , 2);
-					$this->RegisterVariableFloat($array[0], $this->Translate('Wind Speed'),'~WindSpeed.kmh');
-					if($this->GetValue($array[0]) != $windspeed) $this->SetValue($array[0], $windspeed);
+					$windspeed = round($value * 1.609344 , 2);
+					$this->RegisterVariableFloat($key, $this->Translate('Wind Speed'),'~WindSpeed.kmh');
+					if($this->GetValue($key) != $windspeed) $this->SetValue($key, $windspeed);
 				}
-				elseif ($array[0] == 'maxdailygust')
+				elseif ($key == 'maxdailygust')
 				{
-					$windspeed = round($array[1] * 1.609344 , 2);
-					$this->RegisterVariableFloat($array[0], $this->Translate('Day Wind Max'),'~WindSpeed.kmh');
-					if($this->GetValue($array[0]) != $windspeed) $this->SetValue($array[0], $windspeed);
+					$windspeed = round($value * 1.609344 , 2);
+					$this->RegisterVariableFloat($key, $this->Translate('Day Wind Max'),'~WindSpeed.kmh');
+					if($this->GetValue($key) != $windspeed) $this->SetValue($key, $windspeed);
 				}
-				elseif ($array[0] == 'windgustmph')
+				elseif ($key == 'windgustmph')
 				{
-					$windspeed = round($array[1] * 1.609344 , 2);
-					$this->RegisterVariableFloat($array[0], $this->Translate('Wind Gust'),'~WindSpeed.kmh');
-					if($this->GetValue($array[0]) != $windspeed) $this->SetValue($array[0], $windspeed);
+					$windspeed = round($value * 1.609344 , 2);
+					$this->RegisterVariableFloat($key, $this->Translate('Wind Gust'),'~WindSpeed.kmh');
+					if($this->GetValue($key) != $windspeed) $this->SetValue($key, $windspeed);
 				}
-				elseif (substr($array[0],0,4) == 'temp' )
+				elseif (substr($key,0,4) == 'temp' )
 				{
-					$temp = round(($array[1] - 32) / 1.8 ,2);
-					$this->RegisterVariableFloat($array[0], $this->Translate('Temperature') . "_(" . $array[0] . ")",'~Temperature');
-					if($this->GetValue($array[0]) != $temp) $this->SetValue($array[0], $temp);
+					$temp = round(($value - 32) / 1.8 ,2);
+					$this->RegisterVariableFloat($key, $this->Translate('Temperature') . "_(" . $key . ")",'~Temperature');
+					if($this->GetValue($key) != $temp) $this->SetValue($key, $temp);
 				}
-				elseif (substr($array[0],0,8) == 'humidity' )
+				elseif (substr($key,0,8) == 'humidity' )
 				{
-					$this->RegisterVariableInteger($array[0], $this->Translate('Humidity') . "_(" . $array[0] . ")",'~Humidity');
-					if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], intval($array[1]));
+					$this->RegisterVariableInteger($key, $this->Translate('Humidity') . "_(" . $key . ")",'~Humidity');
+					if($this->GetValue($key) != $value) $this->SetValue($key, intval($value));
 				}
-				elseif (substr($array[0],0,5) == 'barom' )
+				elseif (substr($key,0,5) == 'barom' )
 				{
-					$pressure = round($array[1] / 0.02952998751 , 2);
-					$this->RegisterVariableFloat($array[0], $this->Translate('Air Pressure') . "_(" . $array[0] . ")",'~AirPressure.F');
-					if($this->GetValue($array[0]) != $pressure) $this->SetValue($array[0], $pressure);
+					$pressure = round($value / 0.02952998751 , 2);
+					$this->RegisterVariableFloat($key, $this->Translate('Air Pressure') . "_(" . $key . ")",'~AirPressure.F');
+					if($this->GetValue($key) != $pressure) $this->SetValue($key, $pressure);
 				}
-				elseif (substr($array[0],-6) == 'rainin')
+				elseif (substr($key,-6) == 'rainin')
 				{
-					$rain = round($array[1] * 25.4,2);
-					$this->RegisterVariableFloat($array[0], $this->Translate($array[0]),'~Rainfall');
-					if($this->GetValue($array[0]) != $rain) $this->SetValue($array[0],$rain);
+					$rain = round($value * 25.4,2);
+					$this->RegisterVariableFloat($key, $this->Translate($key),'~Rainfall');
+					if($this->GetValue($key) != $rain) $this->SetValue($key,$rain);
 				}
-				elseif ($array[0] == 'rainratein' )
+				elseif ($key == 'rainratein' )
 				{
-					$rain = round($array[1] * 25.4,2);
-					$this->RegisterVariableFloat($array[0], $this->Translate('Rain Rate'),'~Rainfall');
-					if($this->GetValue($array[0]) != $rain) $this->SetValue($array[0],$rain);
+					$rain = round($value * 25.4,2);
+					$this->RegisterVariableFloat($key, $this->Translate('Rain Rate'),'~Rainfall');
+					if($this->GetValue($key) != $rain) $this->SetValue($key,$rain);
 				}
-				elseif ($array[0] == 'solarradiation' )
+				elseif ($key == 'solarradiation' )
 				{
-					$this->RegisterVariableInteger($array[0], $this->Translate('Solar Radiation'),'~Illumination');
-					if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], intval($array[1] * 10,7639));
+					$this->RegisterVariableInteger($key, $this->Translate('Solar Radiation'),'~Illumination');
+					if($this->GetValue($key) != $value) $this->SetValue($key, intval($value * 10,7639));
 				}
-				elseif ($array[0] == 'uv' )
+				elseif ($key == 'uv' )
 				{
-					$this->RegisterVariableInteger($array[0], $this->Translate('UV Index'),'~UVIndex');
-					if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], intval($array[1]));
+					$this->RegisterVariableInteger($key, $this->Translate('UV Index'),'~UVIndex');
+					if($this->GetValue($key) != $value) $this->SetValue($key, intval($value));
 				}
-				elseif ($array[0] == 'dateutc' )
+				elseif ($key == 'dateutc' )
 				{
-					$time = str_replace("+"," ",$array[1]);
-					$this->RegisterVariableInteger($array[0], $this->Translate('Time'),'~UnixTimestamp');
-					$this->SetValue($array[0], strtotime($time));
+					$time = str_replace("+"," ",$value);
+					$this->RegisterVariableInteger($key, $this->Translate('Time'),'~UnixTimestamp');
+					$this->SetValue($key, strtotime($time));
 				}
 				//else
 				{
-					if (isset($array[0]) && isset($array[1]))
+					if (isset($key) && isset($value))
 					{
-						$this->RegisterVariableString($array[0], $array[0],'');
-						if($this->GetValue($array[0]) != $array[1]) $this->SetValue($array[0], $array[1]);
+						$this->RegisterVariableString($key, $key,'');
+						if($this->GetValue($key) != $value) $this->SetValue($key, $value);
 					}
 				}
 			}
