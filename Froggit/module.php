@@ -80,6 +80,7 @@ if (!defined('KR_READY')) {
 		protected function ProcessHookData()
 		{
 			$this->SendDebug('WebHook', 'Array POST: ' . print_r($_POST, true), 0);
+			IPS_LogMessage("WebHook POST", print_r($_POST, true));
 			$datasets = $_POST;
 			// alle nicht durch ; terminierten Datensätze ausgeben
 			for ($i = 1; $i < count($datasets) - 1; $i++) {
