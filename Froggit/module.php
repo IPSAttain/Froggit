@@ -20,6 +20,9 @@ if (!defined('KR_READY')) {
 
 			//We need to call the RegisterHook function on Kernel READY
 			$this->RegisterMessage(0, IPS_KERNELMESSAGE);
+			$this->RegisterPropertyInteger("Temperature", 0);
+			$this->RegisterPropertyInteger("Rain", 0);
+			$this->RegisterPropertyInteger("Wind", 0);
 		}
 
 		public function Destroy()
@@ -79,6 +82,18 @@ if (!defined('KR_READY')) {
 		protected function ProcessHookData()
 		{
 			$this->SendDebug('WebHook', 'Array POST: ' . print_r($_POST, true), 0);
+			if (!IPS_VariableProfileExists('Wind.Froggit.mph')) {
+				IPS_CreateVariableProfile('Wind.Froggit.mph', 2);
+				IPS_SetVariableProfileIcon('Wind.Froggit.mph', 'Rainfall');
+				IPS_SetVariableProfileText('Wind.Froggit.mph', '', ' mph');
+				IPS_SetVariableProfileDigits('Wind.Froggit.mph', 2);
+			}
+			if (!IPS_VariableProfileExists('Rain.Froggit.Inch')) {
+				IPS_CreateVariableProfile('Rain.Froggit.Inch', 2);
+				IPS_SetVariableProfileIcon('Rain.Froggit.Inch', 'Rainfall');
+				IPS_SetVariableProfileText('Rain.Froggit.Inch', '', ' in');
+				IPS_SetVariableProfileDigits('Rain.Froggit.Inch', 2);
+			}
 			foreach ($_POST as $key => $value) {
 				//$this->SendDebug($key, $value , 0);
 				if ($key == 'stationtype')
@@ -100,26 +115,59 @@ if (!defined('KR_READY')) {
 				}
 				elseif ($key == 'windspeedmph')
 				{
-					$windspeed = round($value * 1.609344 , 2);
-					$this->RegisterVariableFloat($key, $this->Translate('Wind Speed'),'~WindSpeed.kmh');
+					if($this->ReadPropertyInteger("Wind") == 0) { // km/h
+						$windspeed = round($value * 1.609344 , 2);
+						$profile = '~WindSpeed.kmh';
+					} elseif ($this->ReadPropertyInteger("Wind") == 1) { // m/s
+						$windspeed = round($value * 1.609344 / 3.6 , 2);
+						$profile = '~WindSpeed.ms';
+					} else { //mph
+						$windspeed = round($value,2);
+						$profile = 'Wind.Froggit.mph';
+					}
+					$this->RegisterVariableFloat($key, $this->Translate('Wind Speed'),$profile);
 					if($this->GetValue($key) != $windspeed) $this->SetValue($key, $windspeed);
 				}
 				elseif ($key == 'maxdailygust')
 				{
-					$windspeed = round($value * 1.609344 , 2);
-					$this->RegisterVariableFloat($key, $this->Translate('Day Wind Max'),'~WindSpeed.kmh');
+					if($this->ReadPropertyInteger("Wind") == 0) { // km/h
+						$windspeed = round($value * 1.609344 , 2);
+						$profile = '~WindSpeed.kmh';
+					} elseif ($this->ReadPropertyInteger("Wind") == 1) { // m/s
+						$windspeed = round($value * 1.609344 / 3.6 , 2);
+						$profile = '~WindSpeed.ms';
+					} else { //mph
+						$windspeed = round($value,2);
+						$profile = 'Wind.Froggit.mph';
+					}
+					$this->RegisterVariableFloat($key, $this->Translate('Day Wind Max'),$profile);
 					if($this->GetValue($key) != $windspeed) $this->SetValue($key, $windspeed);
 				}
 				elseif ($key == 'windgustmph')
 				{
-					$windspeed = round($value * 1.609344 , 2);
-					$this->RegisterVariableFloat($key, $this->Translate('Wind Gust'),'~WindSpeed.kmh');
+					if($this->ReadPropertyInteger("Wind") == 0) { // km/h
+						$windspeed = round($value * 1.609344 , 2);
+						$profile = '~WindSpeed.kmh';
+					} elseif ($this->ReadPropertyInteger("Wind") == 1) { // m/s
+						$windspeed = round($value * 1.609344 / 3.6 , 2);
+						$profile = '~WindSpeed.ms';
+					} else { //mph
+						$windspeed = round($value,2);
+						$profile = 'Wind.Froggit.mph';
+					}
+					$this->RegisterVariableFloat($key, $this->Translate('Wind Gust'),$profile);
 					if($this->GetValue($key) != $windspeed) $this->SetValue($key, $windspeed);
 				}
 				elseif (substr($key,0,4) == 'temp' )
 				{
-					$temp = round(($value - 32) / 1.8 ,2);
-					$this->RegisterVariableFloat($key, $this->Translate('Temperature') . "_(" . $key . ")",'~Temperature');
+					if($this->ReadPropertyInteger("Temperature") == 0) { // °C
+						$temp = round(($value - 32) / 1.8 ,2);
+						$profile = '~Temperature';
+					} else { // °F
+						$profile = '~Temperature.Fahrenheit';
+						$temp = $value;
+					}
+					$this->RegisterVariableFloat($key, $this->Translate('Temperature') . "_(" . $key . ")",$profile);
 					if($this->GetValue($key) != $temp) $this->SetValue($key, $temp);
 				}
 				elseif (substr($key,0,8) == 'humidity' )
@@ -135,14 +183,26 @@ if (!defined('KR_READY')) {
 				}
 				elseif (substr($key,-6) == 'rainin')
 				{
-					$rain = round($value * 25.4,2);
-					$this->RegisterVariableFloat($key, $this->Translate($key),'~Rainfall');
+					if($this->ReadPropertyInteger("Rain") == 0) { // mm
+						$rain = round($value * 25.4,2);
+						$profile = '~Rainfall';
+					} else { // inch
+						$profile = 'Rain.Froggit.Inch';
+						$rain = $value;
+					}
+					$this->RegisterVariableFloat($key, $this->Translate($key),$profile);
 					if($this->GetValue($key) != $rain) $this->SetValue($key,$rain);
 				}
 				elseif ($key == 'rainratein' )
 				{
-					$rain = round($value * 25.4,2);
-					$this->RegisterVariableFloat($key, $this->Translate('Rain Rate'),'~Rainfall');
+					if($this->ReadPropertyInteger("Rain") == 0) { // mm
+						$rain = round($value * 25.4,2);
+						$profile = '~Rainfall';
+					} else { // inch
+						$profile = 'Rain.Froggit.Inch';
+						$rain = $value;
+					}
+					$this->RegisterVariableFloat($key, $this->Translate('Rain Rate'),$profile);
 					if($this->GetValue($key) != $rain) $this->SetValue($key,$rain);
 				}
 				elseif ($key == 'solarradiation' )
@@ -171,10 +231,10 @@ if (!defined('KR_READY')) {
 				{
 					if (isset($key) && isset($value))
 					{
-						$this->SendDebug("Unsupportet Feature","Key: " . $key . "  Value: " . $value , 0);
+						$this->SendDebug("Unsupportet Feature","Key: " . $key . " | Value: " . $value , 0);
 						//$this->RegisterVariableString($key, $key,'');
 						//if($this->GetValue($key) != $value) $this->SetValue($key, $value);
-						}
+					}
 				}
 			}
 		}

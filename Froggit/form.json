@@ -1,5 +1,23 @@
 {
-    "elements": [],
+    "elements": [
+        { "type": "Label", "name": "Unit Settings", "caption": "Unit Settings" },
+        { "type": "Select", "name": "Temperature", "caption": "Temperature",
+            "options": [
+                { "label": "°C", "value": 0 },
+                { "label": "°F", "value": 1 }
+        ]},
+        { "type": "Select", "name": "Rain", "caption": "Rain",
+            "options": [
+                { "label": "mm", "value": 0 },
+                { "label": "inch", "value": 1 }
+        ]},
+        { "type": "Select", "name": "Wind", "caption": "Wind",
+            "options": [
+                { "label": "km/h", "value": 0 },
+                { "label": "m/s", "value": 1 },
+                { "label": "mph", "value": 2 }
+        ]}
+    ],
     "actions": [],
     "status": []
 }
