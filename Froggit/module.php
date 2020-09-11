@@ -171,7 +171,7 @@ if (!defined('KR_READY')) {
 				//		$this->RegisterVariableString($key, $key,'');
 				//		if($this->GetValue($key) != $value) $this->SetValue($key, $value);
 				//	}
-				}
+				//}
 			}
 		}
 	}
