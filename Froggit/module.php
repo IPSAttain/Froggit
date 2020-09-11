@@ -12,15 +12,15 @@ if (!defined('KR_READY')) {
 
 	class Froggit extends IPSModule {
 
-		private $hook = 'froggit';
-
+		//private $hook = 'froggit';
+/*
 		public function __construct($InstanceID, $hook)
 		{
 			parent::__construct($InstanceID);
 	
 			$this->hook = $hook;
 		}
-
+*/
 		public function Create()
 		{
 			//Never delete this line!
@@ -44,7 +44,7 @@ if (!defined('KR_READY')) {
 
 			//Only call this in READY state. On startup the WebHook instance might not be available yet
 			if (IPS_GetKernelRunlevel() == KR_READY) {
-				$this->RegisterHook('/hook/' . $this->hook);
+				$this->RegisterHook('/hook/froggit');
 			}
 		}
 
@@ -55,7 +55,7 @@ if (!defined('KR_READY')) {
 			parent::MessageSink($TimeStamp, $SenderID, $Message, $Data);
 	
 			if ($Message == IPS_KERNELMESSAGE && $Data[0] == KR_READY) {
-				$this->RegisterHook('/hook/' . $this->hook);
+				$this->RegisterHook('/hook/froggit');
 			}
 		}
 
