@@ -22,6 +22,7 @@ if (!defined('KR_READY')) {
 			$this->RegisterMessage(0, IPS_KERNELMESSAGE);
 			$this->RegisterPropertyInteger("Temperature", 0);
 			$this->RegisterPropertyInteger("Rain", 0);
+			$this->RegisterPropertyInteger("Wind", 0);
 		}
 
 		public function Destroy()
