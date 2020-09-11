@@ -22,7 +22,8 @@
             "Solar Radiation": "Solar Einstrahlung",
             "UV Index": "UV Index",
             "Time": "Uhrzeit",
-            "Battery": "Batterie"
+            "Battery": "Batterie",
+            "Unit Settings": "Einheiten"
         }
     }
 }

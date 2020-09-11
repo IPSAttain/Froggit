@@ -1,5 +1,12 @@
 {
-    "elements": [],
+    "elements": [
+        { "type": "Label", "name": "Unit Settings", "caption": "Unit Settings" },
+        { "type": "Select", "name": "Temperature", "caption": "Temperature",
+            "options": [
+                { "label": "°C", "value": 0 },
+                { "label": "°F", "value": 1 }
+        ]}
+    ],
     "actions": [],
     "status": []
 }

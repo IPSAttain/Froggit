@@ -20,6 +20,7 @@ if (!defined('KR_READY')) {
 
 			//We need to call the RegisterHook function on Kernel READY
 			$this->RegisterMessage(0, IPS_KERNELMESSAGE);
+			$this->RegisterPropertyInteger("Temperature", 0);
 		}
 
 		public function Destroy()
@@ -118,8 +119,14 @@ if (!defined('KR_READY')) {
 				}
 				elseif (substr($key,0,4) == 'temp' )
 				{
-					$temp = round(($value - 32) / 1.8 ,2);
-					$this->RegisterVariableFloat($key, $this->Translate('Temperature') . "_(" . $key . ")",'~Temperature');
+					$temp = $value;
+					$profile = '~Temperature';
+					$key .=  $this->ReadPropertyInteger("Temperature");
+					if($this->ReadPropertyInteger("Temperature") == 1) {
+						$temp = round(($value - 32) / 1.8 ,2);
+						$profile = '~Temperature.Fahrenheit';
+					}
+					$this->RegisterVariableFloat($key, $this->Translate('Temperature') . "_(" . $key . ")",$profile);
 					if($this->GetValue($key) != $temp) $this->SetValue($key, $temp);
 				}
 				elseif (substr($key,0,8) == 'humidity' )
@@ -171,10 +178,10 @@ if (!defined('KR_READY')) {
 				{
 					if (isset($key) && isset($value))
 					{
-						$this->SendDebug("Unsupportet Feature","Key: " . $key . "  Value: " . $value , 0);
+						$this->SendDebug("Unsupportet Feature","Key: " . $key . " | Value: " . $value , 0);
 						//$this->RegisterVariableString($key, $key,'');
 						//if($this->GetValue($key) != $value) $this->SetValue($key, $value);
-						}
+					}
 				}
 			}
 		}
