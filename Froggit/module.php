@@ -119,12 +119,13 @@ if (!defined('KR_READY')) {
 				}
 				elseif (substr($key,0,4) == 'temp' )
 				{
-					$temp = $value;
-					$profile = '~Temperature.Fahrenheit';
-					$key .=  $this->ReadPropertyInteger("Temperature");
-					if($this->ReadPropertyInteger("Temperature") == 0) {
+					if($this->ReadPropertyInteger("Temperature") == 0) { // °C
 						$temp = round(($value - 32) / 1.8 ,2);
 						$profile = '~Temperature';
+					} else { // °F
+						$profile = '~Temperature.Fahrenheit';
+						$key .=  $this->ReadPropertyInteger("Temperature");
+						$temp = $value;
 					}
 					$this->RegisterVariableFloat($key, $this->Translate('Temperature') . "_(" . $key . ")",$profile);
 					if($this->GetValue($key) != $temp) $this->SetValue($key, $temp);
