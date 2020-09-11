@@ -42,10 +42,9 @@ Beschreibung des Moduls.
 
 __Konfigurationsseite__:
 
-Name     | Beschreibung
--------- | ------------------
-         |
-         |
+* In der Instanz können die bevorzugten Einheiten ausgewählt werden.
+* Änderungen Übernehmen
+ ![Config_Instanz](../docs/Config_Instanz.png)
 
 ### 5. Statusvariablen und Profile
 
