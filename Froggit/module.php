@@ -144,7 +144,7 @@ if (!defined('KR_READY')) {
 						$profile = 'Wind.Froggit.mph';
 						$key .=  '_mph';
 					}
-					$this->RegisterVariableFloat($key, $this->Translate('Day Wind Max'),$profil);
+					$this->RegisterVariableFloat($key, $this->Translate('Day Wind Max'),$profile);
 					if($this->GetValue($key) != $windspeed) $this->SetValue($key, $windspeed);
 				}
 				elseif ($key == 'windgustmph')
@@ -161,7 +161,7 @@ if (!defined('KR_READY')) {
 						$profile = 'Wind.Froggit.mph';
 						$key .=  '_mph';
 					}
-					$this->RegisterVariableFloat($key, $this->Translate('Wind Gust'),$profil);
+					$this->RegisterVariableFloat($key, $this->Translate('Wind Gust'),$profile);
 					if($this->GetValue($key) != $windspeed) $this->SetValue($key, $windspeed);
 				}
 				elseif (substr($key,0,4) == 'temp' )
