@@ -2,6 +2,7 @@
     "translations": {
         "de": {
             "Station Type": "Stations Typ",
+            "Model": "Modell",
             "Wind Speed": "Windgeschwindigkeit",
             "Day Wind Max": "Windböe (Max.) Tag",
             "Wind Gust": "Windböe",
@@ -20,7 +21,8 @@
             "eventrainin": "Regenmenge aktuell",
             "Solar Radiation": "Solar Einstrahlung",
             "UV Index": "UV Index",
-            "Time": "Uhrzeit"
+            "Time": "Uhrzeit",
+            "Battery": "Batterie"
         }
     }
 }

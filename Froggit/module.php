@@ -86,6 +86,11 @@ if (!defined('KR_READY')) {
 					$this->RegisterVariableString($key, $this->Translate('Station Type'),'');
 					if($this->GetValue($key) != $value) $this->SetValue($key, $value);
 				}
+				elseif ($key == 'model')
+				{
+					$this->RegisterVariableString($key, $this->Translate('Model'),'');
+					if($this->GetValue($key) != $value) $this->SetValue($key, $value);
+				}
 				elseif ($key == 'winddir')
 				{
 					$this->RegisterVariableInteger($key."_int", $this->Translate('Wind Direction'),'~WindDirection');
@@ -155,6 +160,12 @@ if (!defined('KR_READY')) {
 					$time = str_replace("+"," ",$value);
 					$this->RegisterVariableInteger($key, $this->Translate('Time'),'~UnixTimestamp');
 					$this->SetValue($key, strtotime($time));
+				}
+				elseif (strpos($key, 'batt'))
+				{
+					$batt = boolval($value);
+					$this->RegisterVariableBoolean($key, $this->Translate('Battery') . "_(" . $key . ")",'~Battery');
+					if($this->GetValue($key) != $value) $this->SetValue($key, $value);
 				}
 				else
 				{
