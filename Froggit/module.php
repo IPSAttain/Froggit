@@ -81,11 +81,11 @@ if (!defined('KR_READY')) {
 		{
 			$this->SendDebug('WebHook', 'Array POST: ' . print_r($_POST, true), 0);
 			IPS_LogMessage("WebHook POST", print_r($_POST, true));
-			$datasets = $_POST;
+			//$datasets = $_POST;
 			// alle nicht durch ; terminierten Datensätze ausgeben
-			for ($i = 1; $i < count($datasets) - 1; $i++) {
+			for ($i = 1; $i < count($$_POST) - 1; $i++) {
 				//$this->SendDebug("Received", $datasets[$i] , 0);
-				$array = explode('=', $datasets[$i]);
+				$array = explode('=', $$_POST[$i]);
 				$this->SendDebug($array[0], $array[1] , 0);
 				if ($array[0] == 'stationtype')
 				{
