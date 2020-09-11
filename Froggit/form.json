@@ -10,6 +10,12 @@
             "options": [
                 { "label": "mm", "value": 0 },
                 { "label": "inch", "value": 1 }
+        ]},
+        { "type": "Select", "name": "Wind", "caption": "Wind",
+            "options": [
+                { "label": "km/h", "value": 0 },
+                { "label": "m/s", "value": 1 },
+                { "label": "mph", "value": 2 }
         ]}
     ],
     "actions": [],
