@@ -20,7 +20,6 @@ if (!defined('KR_READY')) {
 
 			//We need to call the RegisterHook function on Kernel READY
 			$this->RegisterMessage(0, IPS_KERNELMESSAGE);
-			//$this->ConnectParent("{8062CF2B-600E-41D6-AD4B-1BA66C32D6ED}");
 		}
 
 		public function Destroy()
@@ -80,15 +79,8 @@ if (!defined('KR_READY')) {
 		protected function ProcessHookData()
 		{
 			$this->SendDebug('WebHook', 'Array POST: ' . print_r($_POST, true), 0);
-			IPS_LogMessage("WebHook POST", print_r($_POST, true));
-			//$datasets = $_POST;
-			// alle nicht durch ; terminierten Datensätze ausgeben
 			foreach ($_POST as $key => $value) {
-				// ($i = 1; $i < count($_POST) - 1; $i++) {
-				//$this->SendDebug("Received", $datasets[$i] , 0);
-				//$array[0] = $_POST[0];
-				//$array[1] = $_POST[1];
-				$this->SendDebug($key, $value , 0);
+				//$this->SendDebug($key, $value , 0);
 				if ($key == 'stationtype')
 				{
 					$this->RegisterVariableString($key, $this->Translate('Station Type'),'');
@@ -151,7 +143,7 @@ if (!defined('KR_READY')) {
 				elseif ($key == 'solarradiation' )
 				{
 					$this->RegisterVariableInteger($key, $this->Translate('Solar Radiation'),'~Illumination');
-					if($this->GetValue($key) != $value) $this->SetValue($key, intval($value * 10,7639));
+					if($this->GetValue($key) != $value) $this->SetValue($key, intval($value * 126.7));
 				}
 				elseif ($key == 'uv' )
 				{
@@ -164,14 +156,15 @@ if (!defined('KR_READY')) {
 					$this->RegisterVariableInteger($key, $this->Translate('Time'),'~UnixTimestamp');
 					$this->SetValue($key, strtotime($time));
 				}
-				//else
-				//{
-				//	if (isset($key) && isset($value))
-				//	{
-				//		$this->RegisterVariableString($key, $key,'');
-				//		if($this->GetValue($key) != $value) $this->SetValue($key, $value);
-				//	}
-				//}
+				else
+				{
+					if (isset($key) && isset($value))
+					{
+						$this->SendDebug("Unsupportet Feature","Key: " . $key . "  Value: " . $value , 0);
+						//$this->RegisterVariableString($key, $key,'');
+						//if($this->GetValue($key) != $value) $this->SetValue($key, $value);
+						}
+				}
 			}
 		}
 	}
