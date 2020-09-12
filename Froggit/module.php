@@ -180,7 +180,7 @@ if (!defined('KR_READY')) {
 						$this->CreateVarProfileFloat('Froggit.AirPressure.inHg','Gauge',' inHG');
 						$profile = 'Froggit.AirPressure.inHg';
 					} else { // mmHg
-						$pressure = round($value * 25.4 , 1);
+						$pressure = round($value * 25.4 , 2);
 						$this->CreateVarProfileFloat('Froggit.AirPressure.mmHg','Gauge',' mmHG');
 						$profile = 'Froggit.AirPressure.mmHg';
 					}
@@ -213,7 +213,7 @@ if (!defined('KR_READY')) {
 						$this->CreateVarProfileFloat('Froggit.Light.fc','Sun',' fc');
 						$profile = 'Froggit.Light.fc';
 					}
-					$this->RegisterVariableInteger($key, $this->Translate('Solar Radiation'),'~Illumination');
+					$this->RegisterVariableInteger($key, $this->Translate('Solar Radiation'),$profile);
 					if($this->GetValue($key) != $value) $this->SetValue($key, $light);
 				}
 				elseif ($key == 'uv' )
