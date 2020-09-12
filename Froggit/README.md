@@ -44,7 +44,8 @@ __Konfigurationsseite__:
 
 * In der Instanz können die bevorzugten Einheiten ausgewählt werden.
 * Änderungen Übernehmen
- ![Config_Instanz](../docs/Config_Instanz.png)
+
+ ![Config_Instanz](../docs/Config_Instanz.PNG)
 
 ### 5. Statusvariablen und Profile
 

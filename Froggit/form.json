@@ -16,6 +16,19 @@
                 { "label": "km/h", "value": 0 },
                 { "label": "m/s", "value": 1 },
                 { "label": "mph", "value": 2 }
+        ]},
+        { "type": "Select", "name": "Light", "caption": "Light",
+            "options": [
+                { "label": "w/m²", "value": 0 },
+                { "label": "lux", "value": 1 },
+                { "label": "fc", "value": 2 }
+        ]}
+        ,
+        { "type": "Select", "name": "Pressure", "caption": "Air Pressure",
+            "options": [
+                { "label": "hPa", "value": 0 },
+                { "label": "inHg", "value": 1 },
+                { "label": "mmHg", "value": 2 }
         ]}
     ],
     "actions": [],
