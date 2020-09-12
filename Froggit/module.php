@@ -187,7 +187,7 @@ if (!defined('KR_READY')) {
 					$this->RegisterVariableFloat($key, $this->Translate('Air Pressure') . "_(" . $key . ")",$profile);
 					if($this->GetValue($key) != $pressure) $this->SetValue($key, $pressure);
 				}
-				elseif (strpos($key, 'rain' !== false))
+				elseif (strpos($key, 'rain') !== false)
 				{
 					if($this->ReadPropertyInteger("Rain") == 0) { // mm
 						$rain = round($value * 25.4,2);
