@@ -23,7 +23,7 @@ if (!defined('KR_READY')) {
 			$this->RegisterPropertyInteger("Temperature", 0);
 			$this->RegisterPropertyInteger("Rain", 0);
 			$this->RegisterPropertyInteger("Wind", 0);
-			$this->RegisterPropertyInteger("Ligth", 0);
+			$this->RegisterPropertyInteger("Light", 0);
 			$this->RegisterPropertyInteger("Pressure", 0);
 		}
 
