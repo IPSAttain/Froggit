@@ -53,22 +53,23 @@ Die Statusvariablen werden automatisch angelegt. Werden diese gelöscht, werden 
 
 #### Statusvariablen
 
-Name   | Typ     | Beschreibung
------- | ------- | ------------
-       |         |
-       |         |
+* keine
 
 #### Profile
 
 Name   | Typ
 ------ | -------
-       |
-       |
+Froggit.Rain.Inch  |  float
+Froggit.Light.wm2  |  integer
+Froggit.Light.fc   |  integer
+Froggit.AirPressure.inHg  |  float
+Froggit.AirPressure.mmHg..|  float
+Froggit.Wind.mph   |  float
 
 ### 6. WebFront
 
-Die Werte werden nur angezeigt.
+* Die Werte werden nur angezeigt, eine Bedienung ist nicht vorgesehen.
 
 ### 7. PHP-Befehlsreferenz
 
-keine
+* keine
