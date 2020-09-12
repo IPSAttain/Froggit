@@ -206,7 +206,7 @@ if (!defined('KR_READY')) {
 						$this->CreateVarProfileFloat('Froggit.Light.w_m','Sun',' w/m²');
 						$profile = 'Froggit.Light.w_m';
 					} elseif ($this->ReadPropertyInteger("Light") == 1) { // lux
-						$windspeed = intval($value * 126.7 ));
+						$windspeed = intval($value * 126.7 );
 						$profile = '~Illumination';
 					} else { //fc
 						$light = intval($value * 126.7 / 10.76);
