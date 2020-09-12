@@ -202,19 +202,19 @@ if (!defined('KR_READY')) {
 				elseif ($key == 'solarradiation' )
 				{
 					if($this->ReadPropertyInteger("Light") == 0) { // w/m²
-						$light = intval($value );
-						$this->CreateVarProfileFloat('Froggit.Light.w_m','Sun',' w/m²');
+						$solarradiation = intval($value );
+						$this->CreateVarProfileInteger('Froggit.Light.w_m','Sun',' w/m²');
 						$profile = 'Froggit.Light.w_m';
 					} elseif ($this->ReadPropertyInteger("Light") == 1) { // lux
-						$light = intval($value * 126.7 );
+						$solarradiation = intval($value * 126.7 );
 						$profile = '~Illumination';
 					} else { //fc
-						$light = intval($value * 126.7 / 10.76);
-						$this->CreateVarProfileFloat('Froggit.Light.fc','Sun',' fc');
+						$solarradiation = intval($value * 126.7 / 10.76);
+						$this->CreateVarProfileInteger('Froggit.Light.fc','Sun',' fc');
 						$profile = 'Froggit.Light.fc';
 					}
 					$this->RegisterVariableInteger($key, $this->Translate('Solar Radiation'),$profile);
-					if($this->GetValue($key) != $value) $this->SetValue($key, $light);
+					if($this->GetValue($key) != $value) $this->SetValue($key, $solarradiation);
 				}
 				elseif ($key == 'uv' )
 				{
