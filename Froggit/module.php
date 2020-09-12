@@ -23,6 +23,8 @@ if (!defined('KR_READY')) {
 			$this->RegisterPropertyInteger("Temperature", 0);
 			$this->RegisterPropertyInteger("Rain", 0);
 			$this->RegisterPropertyInteger("Wind", 0);
+			$this->RegisterPropertyInteger("Light", 0);
+			$this->RegisterPropertyInteger("Pressure", 0);
 		}
 
 		public function Destroy()
@@ -82,18 +84,7 @@ if (!defined('KR_READY')) {
 		protected function ProcessHookData()
 		{
 			$this->SendDebug('WebHook', 'Array POST: ' . print_r($_POST, true), 0);
-			if (!IPS_VariableProfileExists('Wind.Froggit.mph')) {
-				IPS_CreateVariableProfile('Wind.Froggit.mph', 2);
-				IPS_SetVariableProfileIcon('Wind.Froggit.mph', 'Rainfall');
-				IPS_SetVariableProfileText('Wind.Froggit.mph', '', ' mph');
-				IPS_SetVariableProfileDigits('Wind.Froggit.mph', 2);
-			}
-			if (!IPS_VariableProfileExists('Rain.Froggit.Inch')) {
-				IPS_CreateVariableProfile('Rain.Froggit.Inch', 2);
-				IPS_SetVariableProfileIcon('Rain.Froggit.Inch', 'Rainfall');
-				IPS_SetVariableProfileText('Rain.Froggit.Inch', '', ' in');
-				IPS_SetVariableProfileDigits('Rain.Froggit.Inch', 2);
-			}
+
 			foreach ($_POST as $key => $value) {
 				//$this->SendDebug($key, $value , 0);
 				if ($key == 'stationtype')
@@ -123,7 +114,8 @@ if (!defined('KR_READY')) {
 						$profile = '~WindSpeed.ms';
 					} else { //mph
 						$windspeed = round($value,2);
-						$profile = 'Wind.Froggit.mph';
+						$this->CreateVarProfileFloat('Froggit.Wind.mph','WindSpeed',' mph');
+						$profile = 'Froggit.Wind.mph';
 					}
 					$this->RegisterVariableFloat($key, $this->Translate('Wind Speed'),$profile);
 					if($this->GetValue($key) != $windspeed) $this->SetValue($key, $windspeed);
@@ -139,6 +131,8 @@ if (!defined('KR_READY')) {
 					} else { //mph
 						$windspeed = round($value,2);
 						$profile = 'Wind.Froggit.mph';
+						$this->CreateVarProfileFloat('Froggit.Wind.mph','WindSpeed',' mph');
+						$profile = 'Froggit.Wind.mph';
 					}
 					$this->RegisterVariableFloat($key, $this->Translate('Day Wind Max'),$profile);
 					if($this->GetValue($key) != $windspeed) $this->SetValue($key, $windspeed);
@@ -153,7 +147,8 @@ if (!defined('KR_READY')) {
 						$profile = '~WindSpeed.ms';
 					} else { //mph
 						$windspeed = round($value,2);
-						$profile = 'Wind.Froggit.mph';
+						$this->CreateVarProfileFloat('Froggit.Wind.mph','WindSpeed',' mph');
+						$profile = 'Froggit.Wind.mph';
 					}
 					$this->RegisterVariableFloat($key, $this->Translate('Wind Gust'),$profile);
 					if($this->GetValue($key) != $windspeed) $this->SetValue($key, $windspeed);
@@ -177,38 +172,49 @@ if (!defined('KR_READY')) {
 				}
 				elseif (substr($key,0,5) == 'barom' )
 				{
-					$pressure = round($value / 0.02952998751 , 2);
-					$this->RegisterVariableFloat($key, $this->Translate('Air Pressure') . "_(" . $key . ")",'~AirPressure.F');
+					if($this->ReadPropertyInteger("Pressure") == 0) { // hPa
+						$pressure = round($value / 0.02952998751 , 1);
+						$profile = '~AirPressure.F';
+					} elseif ($this->ReadPropertyInteger("Pressure") == 1) { // inHg
+						$pressure = round($value, 2);
+						$this->CreateVarProfileFloat('Froggit.AirPressure.inHg','Gauge',' inHG');
+						$profile = 'Froggit.AirPressure.inHg';
+					} else { // mmHg
+						$pressure = round($value * 25.4 , 2);
+						$this->CreateVarProfileFloat('Froggit.AirPressure.mmHg','Gauge',' mmHG');
+						$profile = 'Froggit.AirPressure.mmHg';
+					}
+					$this->RegisterVariableFloat($key, $this->Translate('Air Pressure') . "_(" . $key . ")",$profile);
 					if($this->GetValue($key) != $pressure) $this->SetValue($key, $pressure);
 				}
-				elseif (substr($key,-6) == 'rainin')
+				elseif (strpos($key, 'rain'))
 				{
 					if($this->ReadPropertyInteger("Rain") == 0) { // mm
 						$rain = round($value * 25.4,2);
 						$profile = '~Rainfall';
 					} else { // inch
-						$profile = 'Rain.Froggit.Inch';
+						$this->CreateVarProfileFloat('Froggit.Rain.Inch', 'Rainfall',' in');
 						$rain = $value;
 					}
 					$this->RegisterVariableFloat($key, $this->Translate($key),$profile);
 					if($this->GetValue($key) != $rain) $this->SetValue($key,$rain);
 				}
-				elseif ($key == 'rainratein' )
-				{
-					if($this->ReadPropertyInteger("Rain") == 0) { // mm
-						$rain = round($value * 25.4,2);
-						$profile = '~Rainfall';
-					} else { // inch
-						$profile = 'Rain.Froggit.Inch';
-						$rain = $value;
-					}
-					$this->RegisterVariableFloat($key, $this->Translate('Rain Rate'),$profile);
-					if($this->GetValue($key) != $rain) $this->SetValue($key,$rain);
-				}
 				elseif ($key == 'solarradiation' )
 				{
-					$this->RegisterVariableInteger($key, $this->Translate('Solar Radiation'),'~Illumination');
-					if($this->GetValue($key) != $value) $this->SetValue($key, intval($value * 126.7));
+					if($this->ReadPropertyInteger("Light") == 0) { // w/m²
+						$solarradiation = intval($value );
+						$this->CreateVarProfileInteger('Froggit.Light.wm2','Sun',' w/m²');
+						$profile = 'Froggit.Light.wm2';
+					} elseif ($this->ReadPropertyInteger("Light") == 1) { // lux
+						$solarradiation = intval($value * 126.7 );
+						$profile = '~Illumination';
+					} else { //fc
+						$solarradiation = intval($value * 126.7 / 10.76);
+						$this->CreateVarProfileInteger('Froggit.Light.fc','Sun',' fc');
+						$profile = 'Froggit.Light.fc';
+					}
+					$this->RegisterVariableInteger($key, $this->Translate('Solar Radiation'),$profile);
+					if($this->GetValue($key) != $value) $this->SetValue($key, $solarradiation);
 				}
 				elseif ($key == 'uv' )
 				{
@@ -236,6 +242,24 @@ if (!defined('KR_READY')) {
 						//if($this->GetValue($key) != $value) $this->SetValue($key, $value);
 					}
 				}
+			}
+		}
+
+		private function CreateVarProfileFloat(string $ProfilName, string $ProfilIcon, string $ProfileText)
+		{
+			if (!IPS_VariableProfileExists($ProfilName)) {
+				IPS_CreateVariableProfile($ProfilName, 2);
+				IPS_SetVariableProfileIcon($ProfilName, $ProfilIcon);
+				IPS_SetVariableProfileText($ProfilName, '', $ProfileText);
+				IPS_SetVariableProfileDigits($ProfilName, 2);
+			}
+		}
+		private function CreateVarProfileInteger(string $ProfilName, string $ProfilIcon, string $ProfileText)
+		{
+			if (!IPS_VariableProfileExists($ProfilName)) {
+				IPS_CreateVariableProfile($ProfilName, 1);
+				IPS_SetVariableProfileIcon($ProfilName, $ProfilIcon);
+				IPS_SetVariableProfileText($ProfilName, '', $ProfileText);
 			}
 		}
 	}
