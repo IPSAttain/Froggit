@@ -203,8 +203,8 @@ if (!defined('KR_READY')) {
 				{
 					if($this->ReadPropertyInteger("Light") == 0) { // w/m²
 						$solarradiation = intval($value );
-						$this->CreateVarProfileInteger('Froggit.Light.w_m','Sun',' w/m²');
-						$profile = 'Froggit.Light.w_m';
+						$this->CreateVarProfileInteger('Froggit.Light.wm2','Sun',' w/m²');
+						$profile = 'Froggit.Light.wm2';
 					} elseif ($this->ReadPropertyInteger("Light") == 1) { // lux
 						$solarradiation = intval($value * 126.7 );
 						$profile = '~Illumination';
