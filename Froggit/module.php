@@ -184,7 +184,7 @@ if (!defined('KR_READY')) {
 						$this->CreateVarProfileFloat('Froggit.AirPressure.mmHg','Gauge',' mmHG');
 						$profile = 'Froggit.AirPressure.mmHg';
 					}
-					$this->RegisterVariableFloat($key, $this->Translate('Air Pressure') . "_(" . $key . ")",'~AirPressure.F');
+					$this->RegisterVariableFloat($key, $this->Translate('Air Pressure') . "_(" . $key . ")",$profile);
 					if($this->GetValue($key) != $pressure) $this->SetValue($key, $pressure);
 				}
 				elseif (strpos($key, 'rain'))

@@ -26,7 +26,7 @@
         ,
         { "type": "Select", "name": "Pressure", "caption": "Air Pressure",
             "options": [
-                { "label": "hPa", "value": 0 },
+                { "label": "hPa (mbar)", "value": 0 },
                 { "label": "inHg", "value": 1 },
                 { "label": "mmHg", "value": 2 }
         ]}
