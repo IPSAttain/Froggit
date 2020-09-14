@@ -48,7 +48,7 @@ __Konfigurationsseite__:
 
 * In der Instanz können die bevorzugten Einheiten ausgewählt werden.
 * Änderungen Übernehmen
-* Der Pfad zum hook kann eingestellt werden. Damit ist es Möglich Mehrere Wetterstationen mit mehreren Instanzen einzubinden. Der Pfad muss immer mit "/hook/..." beginnen!
+* Der Pfad zum hook kann eingestellt werden. Damit ist es möglich, mehrere Wetterstationen mit mehreren Instanzen einzubinden. Der Pfad muss immer mit "/hook/..." beginnen!
 
  ![Config_Instanz](../docs/Config_Instanz.PNG)
 

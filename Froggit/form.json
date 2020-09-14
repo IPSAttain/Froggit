@@ -29,7 +29,7 @@
                 { "label": "inHg", "value": 1 },
                 { "label": "mmHg", "value": 2 }
         ]},
-        { "type": "ValidationTextBox", "name": "Hook", "caption": "Path", "validate": "/\/hook\/" }
+        { "type": "ValidationTextBox", "name": "Hook", "caption": "Path", "validate": "/\/hook\/i" }
     ],
     "actions": [],
     "status": []
