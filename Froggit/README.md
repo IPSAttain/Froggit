@@ -18,7 +18,7 @@ Beschreibung des Moduls.
 
 ### 2. Vorraussetzungen
 
-- IP-Symcon ab Version 5.2
+- IP-Symcon ab Version 5.3
 
 ### 3. Software-Installation
 
@@ -28,13 +28,13 @@ Beschreibung des Moduls.
 * In der App muss der "Customized Upload" konfiguriert und aktiviert werden. 
 * Protokoll Typ mus Ecowitt sein.
 * Dazu die IP-Adresse des IPS Servers angeben. 
-* Als "Path" muss /hook/froggit eingetragen werden.
+* Als "Path" muss /hook/froggit eingetragen werden. Wenn mehrere Stationen eingebunden werden sollen, ist jeweils ein Pfad zu definieren. Dieser muss immer mit "/hook"..." beginnen.
 * Port ist 3777 (Standard-Zugangsport IPS)
 
  ![Config_App](../docs/Config_App.png)
 
- * Auch ist es möglich, Wetterstationen von ausserrhalb des eigenen Netzwerkes, über Symcon Connect einzubinden.
- * Dazu deine Connect Adresse als Hostname eintragen und Port 80 wählen.
+* Auch ist es möglich, Wetterstationen von ausserrhalb des eigenen Netzwerkes, über Symcon Connect einzubinden.
+* Dazu deine Connect Adresse als Hostname eintragen und Port 80 wählen.
 
  ![Config_Connect](../docs/Config_Connect.png)
  
@@ -48,6 +48,7 @@ __Konfigurationsseite__:
 
 * In der Instanz können die bevorzugten Einheiten ausgewählt werden.
 * Änderungen Übernehmen
+* Der Pfad zum hook kann eingestellt werden. Damit ist es Möglich Mehrere Wetterstationen mit mehreren Instanzen einzubinden. Der Pfad muss immer mit "/hook/..." beginnen!
 
  ![Config_Instanz](../docs/Config_Instanz.PNG)
 
