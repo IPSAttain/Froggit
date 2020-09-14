@@ -36,7 +36,13 @@
         {"type": "ExpansionPanel",
         "caption": "Path",
         "items": [
-                    { "type": "ValidationTextBox", "name": "Hook", "caption": "Path", "validate": "\/hook\/" },
+                    { 
+                        "type": "RowLayout",
+                        "items": [
+                            {"type": "Label", "name": "HookPrefix", "caption": "/hook/"},
+                            { "type": "ValidationTextBox", "name": "Hook", "caption": "Path", "validate": "\/hook\/" }
+                        ]
+                    },
                     { "type": "Label", "name": "Hints", "caption": "You can select the /hook path. It must match to the settings in the App!" }
             ]
         }
