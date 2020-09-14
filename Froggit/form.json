@@ -3,7 +3,6 @@
         {"type": "ExpansionPanel",
         "caption": "Unit Settings",
         "items": [
-                    { "type": "Label", "name": "Unit Settings", "caption": "Unit Settings" },
                     { "type": "Select", "name": "Temperature", "caption": "Temperature",
                         "options": [
                             { "label": "°C", "value": 0 },
@@ -31,11 +30,16 @@
                             { "label": "hPa (mbar)", "value": 0 },
                             { "label": "inHg", "value": 1 },
                             { "label": "mmHg", "value": 2 }
-                    ]},
-                    { "type": "ValidationTextBox", "name": "Hook", "caption": "Path", "validate": "\/hook\/" }
+                    ]}
             ]
         },
-        { "type": "Label", "name": "Hints", "caption": "You can select the /hook path. It must match to the settings in the App!" }
+        {"type": "ExpansionPanel",
+        "caption": "Path",
+        "items": [
+                    { "type": "ValidationTextBox", "name": "Hook", "caption": "Path", "validate": "\/hook\/" },
+                    { "type": "Label", "name": "Hints", "caption": "You can select the /hook path. It must match to the settings in the App!" }
+            ]
+        }
     ],
     "actions": [],
     "status": []
