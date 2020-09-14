@@ -33,6 +33,10 @@ Beschreibung des Moduls.
 
  ![Config_App](../docs/Config_App.png)
 
+ * Auch ist es möglich, Wetterstationen von ausserrhalb des eigenen Netzwerkes, über Symcon Connect einzubinden.
+ * Dazu deine Connect Adresse als Hostname eintragen und Port 80 wählen.
+
+ ![Config_Connect](../docs/Config_Connect.png)
  
 
 ### 4. Einrichten der Instanzen in IP-Symcon
