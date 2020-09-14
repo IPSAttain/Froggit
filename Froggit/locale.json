@@ -25,7 +25,9 @@
             "UV Index": "UV Index",
             "Time": "Uhrzeit",
             "Battery": "Batterie",
-            "Unit Settings": "Einheiten"
+            "Unit Settings": "Einheiten",
+            "Path": "Pfad",
+            "You can select the /hook path. It must match to the settings in the App!": "Der Pfad zum /hook kann gewählt werden. Dies muss mit der Einstellung in der App übereinstimmen!"
         }
     }
 }

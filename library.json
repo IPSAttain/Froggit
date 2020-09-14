@@ -4,9 +4,9 @@
     "author": "Attain",
     "url": "",
     "compatibility": {
-        "version": "5.0"
+        "version": "5.3"
     },
-    "version": "1.2",
-    "build": 3,
+    "version": "1.3",
+    "build": 4,
     "date": 0
 }
