@@ -24,7 +24,7 @@ class Froggit extends IPSModule {
 		$this->RegisterPropertyInteger("Wind", 0);
 		$this->RegisterPropertyInteger("Light", 0);
 		$this->RegisterPropertyInteger("Pressure", 0);
-		$this->RegisterPropertyString("Hook",0);
+		$this->RegisterPropertyString("Hook","/hook/froggit");
 	}
 
 	public function Destroy()
