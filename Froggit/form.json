@@ -40,14 +40,14 @@
                 "type": "RowLayout",
                 "items": [
                     {
-                        "type": "Label",
+                        "type": "ValidationTextBox",
                         "name": "HookPrefix",
-                        "caption": "/hook/"
+                        "enabled": false
                     },
-                    { "type": "ValidationTextBox", "name": "Hook", "validate": "\/hook\/" }
+                    { "type": "ValidationTextBox", "name": "Hook" }
                 ]
             },
-                    { "type": "ValidationTextBox", "name": "Hook", "caption": "Path", "validate": "\/hook\/" },
+                    { "type": "ValidationTextBox", "name": "Hook1", "caption": "Path", "validate": "\/hook\/" },
                     { "type": "Label", "name": "Hints", "caption": "You can select the /hook path. It must match to the settings in the App!" }
             ]
         },
