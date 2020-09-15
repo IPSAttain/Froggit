@@ -42,13 +42,13 @@
                     {
                         "type": "ValidationTextBox",
                         "name": "HookPrefix",
-                        "enabled": false
+                        "enabled": false,
+                        "width": "100px"
                     },
                     { "type": "ValidationTextBox", "name": "Hook" }
                 ]
             },
-                    { "type": "ValidationTextBox", "name": "Hook1", "caption": "Path", "validate": "\/hook\/" },
-                    { "type": "Label", "name": "Hints", "caption": "You can select the /hook path. It must match to the settings in the App!" }
+            { "type": "Label", "name": "Hints", "caption": "You can select the /hook path. It must match to the settings in the App!" }
             ]
         },
         {
