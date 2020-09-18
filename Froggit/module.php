@@ -24,7 +24,8 @@ class Froggit extends IPSModule {
 		$this->RegisterPropertyInteger("Wind", 0);
 		$this->RegisterPropertyInteger("Light", 0);
 		$this->RegisterPropertyInteger("Pressure", 0);
-		$this->RegisterPropertyString("Hook","/hook/froggit");
+		$this->RegisterPropertyString("HookPrefix","/hook/");
+		$this->RegisterPropertyString("Hook","froggit");
 	}
 
 	public function Destroy()
@@ -41,7 +42,7 @@ class Froggit extends IPSModule {
 		//Only call this in READY state. On startup the WebHook instance might not be available yet
 		if (IPS_GetKernelRunlevel() == KR_READY) {
 			
-			$this->RegisterHook($this->ReadPropertyString('Hook'));
+			$this->RegisterHook($this->ReadPropertyString('HookPrefix') . $this->ReadPropertyString('Hook'));
 		}
 	}
 
@@ -52,7 +53,7 @@ class Froggit extends IPSModule {
 		parent::MessageSink($TimeStamp, $SenderID, $Message, $Data);
 
 		if ($Message == IPS_KERNELMESSAGE && $Data[0] == KR_READY) {
-			$this->RegisterHook($this->ReadPropertyString('Hook'));
+			$this->RegisterHook($this->ReadPropertyString('HookPrefix') . $this->ReadPropertyString('Hook'));
 		}
 	}
 
