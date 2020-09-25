@@ -27,6 +27,7 @@
             "Battery": "Batterie",
             "Unit Settings": "Einheiten",
             "Path": "Pfad",
+            "Soilmoisture": "Bodenfeuchte",
             "You can select the /hook path. It must match to the settings in the App!": "Der Pfad zum /hook kann gewählt werden. Dies muss mit der Einstellung in der App übereinstimmen!"
         }
     }

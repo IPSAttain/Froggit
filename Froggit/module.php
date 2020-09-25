@@ -172,6 +172,11 @@ class Froggit extends IPSModule {
 				$this->RegisterVariableInteger($key, $this->Translate('Humidity') . "_(" . $key . ")",'~Humidity');
 				if($this->GetValue($key) != $value) $this->SetValue($key, intval($value));
 			}
+			elseif (substr($key,0,12) == 'soilmoisture' )
+			{
+				$this->RegisterVariableInteger($key, $this->Translate('Soilmoisture') . "_(" . $key . ")",'~Humidity');
+				if($this->GetValue($key) != $value) $this->SetValue($key, intval($value));
+			}
 			elseif (substr($key,0,5) == 'barom' )
 			{
 				if($this->ReadPropertyInteger("Pressure") == 0) { // hPa
