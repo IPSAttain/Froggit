@@ -88,7 +88,7 @@ class Froggit extends IPSModule {
 		$this->SendDebug('WebHook', 'Array POST: ' . print_r($_POST, true), 0);
 
 		foreach ($_POST as $key => $value) {
-			$this->SendDebug($key, $value , 0);
+			//$this->SendDebug($key, $value , 0);
 			if ($key == 'stationtype')
 			{
 				$this->RegisterVariableString($key, $this->Translate('Station Type'),'');
