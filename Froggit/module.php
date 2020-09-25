@@ -174,7 +174,7 @@ class Froggit extends IPSModule {
 			}
 			elseif (substr($key,0,12) == 'soilmoisture' )
 			{
-				$this->RegisterVariableInteger($key, $this->Translate('Soilmoisture') . "_(" . $key . ")",'~Humidity');
+				$this->RegisterVariableInteger($key, $this->Translate('Soilmoisture') . " (" . substr($key,-1) . ")",'~Humidity');
 				if($this->GetValue($key) != $value) $this->SetValue($key, intval($value));
 			}
 			elseif (substr($key,0,5) == 'barom' )
@@ -234,11 +234,19 @@ class Froggit extends IPSModule {
 				$this->RegisterVariableInteger($key, $this->Translate('Time'),'~UnixTimestamp');
 				$this->SetValue($key, strtotime($time));
 			}
+			elseif (substr($key,0,8) == 'soilbatt' )
+			{
+				$batt = floatval($value) >= 1.0;
+				$this->RegisterVariableBoolean($key, $this->Translate('SoilMoistureBattery') . " (" . substr($key,-1) . ")",'~Battery');
+				if($this->GetValue($key) != $batt) $this->SetValue($key, $batt);
+				$this->RegisterVariableFloat($key."Volt", $this->Translate('SoilMoistureBattery') . " (" . substr($key,-1) . ")",'~Volt');
+				if($this->GetValue($key."Volt") != floatval($value)) $this->SetValue($key."Volt", floatval($value));
+			}
 			elseif (strpos($key, 'batt'))
 			{
 				$batt = boolval($value);
 				$this->RegisterVariableBoolean($key, $this->Translate('Battery') . "_(" . $key . ")",'~Battery');
-				if($this->GetValue($key) != $value) $this->SetValue($key, $value);
+				if($this->GetValue($key) != $batt) $this->SetValue($key, $batt);
 			}
 			else
 			{
