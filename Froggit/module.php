@@ -238,7 +238,7 @@ class Froggit extends IPSModule {
 			elseif (substr($key,0,8) == 'soilbatt' )
 			{
 				$batt = floatval($value) <= 1.1;  //false = OK | true = LOW
-				if(is_numeric(substr($key,-2-1))) // check the sensor number
+				if(is_numeric(substr($key,-2,-1))) // check the sensor number
 				{
 					$number = substr($key,-2); // 10 to 16
 				}
