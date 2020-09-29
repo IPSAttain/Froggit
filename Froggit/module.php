@@ -164,12 +164,12 @@ class Froggit extends IPSModule {
 					$profile = '~Temperature.Fahrenheit';
 					$temp = $value;
 				}
-				$this->RegisterVariableFloat($key, $this->Translate('Temperature') . "_(" . $key . ")",$profile);
+				$this->RegisterVariableFloat($key, $this->Translate('Temperature') . " (" . $key . ")",$profile);
 				if($this->GetValue($key) != $temp) $this->SetValue($key, $temp);
 			}
 			elseif (substr($key,0,8) == 'humidity' )
 			{
-				$this->RegisterVariableInteger($key, $this->Translate('Humidity') . "_(" . $key . ")",'~Humidity');
+				$this->RegisterVariableInteger($key, $this->Translate('Humidity') . " (" . $key . ")",'~Humidity');
 				if($this->GetValue($key) != $value) $this->SetValue($key, intval($value));
 			}
 			elseif (substr($key,0,12) == 'soilmoisture' )
@@ -191,7 +191,7 @@ class Froggit extends IPSModule {
 					$this->CreateVarProfileFloat('Froggit.AirPressure.mmHg','Gauge',' mmHG');
 					$profile = 'Froggit.AirPressure.mmHg';
 				}
-				$this->RegisterVariableFloat($key, $this->Translate('Air Pressure') . "_(" . $key . ")",$profile);
+				$this->RegisterVariableFloat($key, $this->Translate('Air Pressure') . " (" . $key . ")",$profile);
 				if($this->GetValue($key) != $pressure) $this->SetValue($key, $pressure);
 			}
 			elseif (strpos($key, 'rain') !== false)
@@ -234,20 +234,39 @@ class Froggit extends IPSModule {
 				$this->RegisterVariableInteger($key, $this->Translate('Time'),'~UnixTimestamp');
 				$this->SetValue($key, strtotime($time));
 			}
+			// >>>>>>>>>>>>>>>>> Battery <<<<<<<<<<<<<<<<<<<
 			elseif (substr($key,0,8) == 'soilbatt' )
 			{
-				$batt = floatval($value) >= 1.0;
+				$batt = floatval($value) <= 1.1;
 				$this->RegisterVariableBoolean($key, $this->Translate('SoilMoistureBattery') . " (" . substr($key,-1) . ")",'~Battery');
 				if($this->GetValue($key) != $batt) $this->SetValue($key, $batt);
 				$this->RegisterVariableFloat($key."Volt", $this->Translate('SoilMoistureBattery') . " (" . substr($key,-1) . ")",'~Volt');
 				if($this->GetValue($key."Volt") != floatval($value)) $this->SetValue($key."Volt", floatval($value));
 			}
-			elseif (strpos($key, 'batt'))
+			elseif (Substr($key,0,8) == 'pm25batt')
 			{
-				$batt = boolval($value);
-				$this->RegisterVariableBoolean($key, $this->Translate('Battery') . "_(" . $key . ")",'~Battery');
+				$batt = intval($value);
+				if (!IPS_VariableProfileExists('Froggit.pm25batt')) {
+					IPS_CreateVariableProfile('Froggit.pm25batt', 1);
+					IPS_SetVariableProfileIcon('Froggit.pm25batt', 'Battery');
+					IPS_SetVariableProfileValues('Froggit.pm25batt', 0, 5, 1);
+					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 0, '%d (' . $this->Translate('Low') . ')', "", 0xFF0000);
+					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 1, '%d (' . $this->Translate('OK' ) . ')', "", 0xFFFF00);
+					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 2, '%d (' . $this->Translate('OK' ) . ')', "", 0xA0FF00);
+					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 3, '%d (' . $this->Translate('OK' ) . ')', "", 0x00FF00);
+					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 4, '%d (' . $this->Translate('OK' ) . ')', "", 0x00FF00);
+					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 5, '%d (' . $this->Translate('OK' ) . ')', "", 0x00FF00);
+				}
+				$this->RegisterVariableInteger($key, $this->Translate('Battery') . " (" . substr($key,0,4) . ")",'Froggit.pm25batt');
 				if($this->GetValue($key) != $batt) $this->SetValue($key, $batt);
 			}
+			elseif (Substr($key,4,4) == 'batt')
+			{
+				$batt = boolval($value);
+				$this->RegisterVariableBoolean($key, $this->Translate('Battery') . " (" . substr($key,0,4) . ")",'~Battery');
+				if($this->GetValue($key) != $batt) $this->SetValue($key, $batt);
+			}
+			// >>>>>>>>>>>>>>>>> all other <<<<<<<<<<<<<<<<<<
 			else
 			{
 				if (isset($key) && isset($value))
