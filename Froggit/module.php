@@ -174,7 +174,15 @@ class Froggit extends IPSModule {
 			}
 			elseif (substr($key,0,12) == 'soilmoisture' )
 			{
-				$this->RegisterVariableInteger($key, $this->Translate('Soilmoisture') . " (" . substr($key,-1) . ")",'~Humidity');
+				if(is_numeric(substr($key,-2,-1))) // check the sensor number
+				{
+					$number = substr($key,-2); // 10 to 16
+				}
+				else
+				{
+					$number = "0" . substr($key,-1); // 1 to 9
+				}
+				$this->RegisterVariableInteger($key, $this->Translate('Soilmoisture') . " (" . $number . ")",'~Humidity');
 				if($this->GetValue($key) != $value) $this->SetValue($key, intval($value));
 			}
 			elseif (substr($key,0,5) == 'barom' )
@@ -233,6 +241,12 @@ class Froggit extends IPSModule {
 				$time = str_replace("+"," ",$value);
 				$this->RegisterVariableInteger($key, $this->Translate('Time'),'~UnixTimestamp');
 				$this->SetValue($key, strtotime($time));
+			}
+			elseif (substr($key,0,5) == "pm25_"
+			{
+				$this->CreateVarProfileInteger('Froggit.PM25_ch','Fog',' µg/cm²');
+				$this->RegisterVariableInteger($key, $this->Translate('PM2.5 particle') . " (" . substr($key,-1) . ")",'Froggit.PM25_ch');
+				if($this->GetValue($key) != $value) $this->SetValue($key, intval($value));
 			}
 			// >>>>>>>>>>>>>>>>> Battery <<<<<<<<<<<<<<<<<<<
 			elseif (substr($key,0,8) == 'soilbatt' )
