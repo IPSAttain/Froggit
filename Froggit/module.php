@@ -242,7 +242,7 @@ class Froggit extends IPSModule {
 				$this->RegisterVariableInteger($key, $this->Translate('Time'),'~UnixTimestamp');
 				$this->SetValue($key, strtotime($time));
 			}
-			elseif (substr($key,0,5) == "pm25_"
+			elseif (substr($key,0,5) == "pm25_")
 			{
 				$this->CreateVarProfileInteger('Froggit.PM25_ch','Fog',' µg/cm²');
 				$this->RegisterVariableInteger($key, $this->Translate('PM2.5 particle') . " (" . substr($key,-1) . ")",'Froggit.PM25_ch');
