@@ -237,10 +237,18 @@ class Froggit extends IPSModule {
 			// >>>>>>>>>>>>>>>>> Battery <<<<<<<<<<<<<<<<<<<
 			elseif (substr($key,0,8) == 'soilbatt' )
 			{
-				$batt = floatval($value) <= 1.1;
-				$this->RegisterVariableBoolean($key, $this->Translate('SoilMoistureBattery') . " (" . substr($key,-1) . ")",'~Battery');
+				$batt = floatval($value) <= 1.1;  //false = OK | true = LOW
+				if(is_numeric(substr($key,-2-1))) // check the sensor number
+				{
+					$number = substr($key,-2); // 10 to 16
+				}
+				else
+				{
+					$number = "0" . substr($key,-1); // 1 to 9
+				}
+				$this->RegisterVariableBoolean($key, $this->Translate('SoilMoistureBattery') . " (" . $number . ")",'~Battery');
 				if($this->GetValue($key) != $batt) $this->SetValue($key, $batt);
-				$this->RegisterVariableFloat($key."Volt", $this->Translate('SoilMoistureBattery') . " (" . substr($key,-1) . ")",'~Volt');
+				$this->RegisterVariableFloat($key."Volt", $this->Translate('SoilMoistureBattery') . " (" . $number . ")",'~Volt');
 				if($this->GetValue($key."Volt") != floatval($value)) $this->SetValue($key."Volt", floatval($value));
 			}
 			elseif (Substr($key,0,8) == 'pm25batt')
