@@ -279,7 +279,7 @@ class Froggit extends IPSModule {
 					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 4, '%d (' . $this->Translate('OK' ) . ')', "", 0x00FF00);
 					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 5, '%d (' . $this->Translate('OK' ) . ')', "", 0x00FF00);
 				}
-				$this->RegisterVariableInteger($key, $this->Translate('Battery') . " (" . substr($key,0,4) . ")",'Froggit.pm25batt');
+				$this->RegisterVariableInteger($key, $this->Translate('Battery') . " PM2.5 (" . substr($key,-1) . ")",'Froggit.pm25batt');
 				if($this->GetValue($key) != $batt) $this->SetValue($key, $batt);
 			}
 			elseif (Substr($key,4,4) == 'batt')

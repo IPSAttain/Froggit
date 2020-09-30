@@ -1,4 +1,4 @@
-# Froggit
+# Froggit Wetterstation
 Beschreibung des Moduls.
 
 ### Inhaltsverzeichnis
@@ -22,7 +22,10 @@ Beschreibung des Moduls.
 
 ### 3. Software-Installation
 
-* Über den Module Store das 'Froggit'-Modul installieren.(Noch nicht vorhanden)
+* Im Module Store das 'Froggit Wetterstation'-Modul suchen und installieren.
+
+![ModulStore](../docs/ModulStore.png)
+
 * Alternativ über das Module Control folgende URL hinzufügen: https://github.com/IPSAttain/Froggit
 
 * In der App muss der "Customized Upload" konfiguriert und aktiviert werden. 

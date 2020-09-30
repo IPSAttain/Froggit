@@ -31,7 +31,7 @@
             "SoilMoistureBattery": "Batterie Bodenfeuchtesensor",
             "Low": "Leer",
             "OK": "OK",
-            "PM2.5 particle": "PM2.5 Partikelkonzentration",
+            "PM2.5 particle": "Feinstaubpartikel",
             "You can select the /hook path. It must match to the settings in the App!": "Der Pfad zum /hook kann gewählt werden. Dies muss mit der Einstellung in der App übereinstimmen!"
         }
     }
