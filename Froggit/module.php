@@ -99,14 +99,14 @@ class Froggit extends IPSModule {
 				$this->RegisterVariableString($key, $this->Translate('Model'),'');
 				if($this->GetValue($key) != $value) $this->SetValue($key, $value);
 			}
-			elseif ($key == 'winddir')
+			elseif ($key == 'winddir'||$key == 'winddir_avg10m')
 			{
-				$this->RegisterVariableInteger($key."_int", $this->Translate('Wind Direction'),'~WindDirection');
+				$this->RegisterVariableInteger($key."_int", $this->Translate('Wind Direction') . ' ($key)','~WindDirection');
 				if($this->GetValue($key."_int") != $value) $this->SetValue($key."_int", intval($value));
-				$this->RegisterVariableFloat($key."_txt", $this->Translate('Wind Direction'),'~WindDirection.Text');
+				$this->RegisterVariableFloat($key."_txt", $this->Translate('Wind Direction') . ' ($key)','~WindDirection.Text');
 				if($this->GetValue($key."_txt") != $value) $this->SetValue($key."_txt", floatval($value));
 			}
-			elseif ($key == 'windspeedmph')
+			elseif ($key == 'windspeedmph'||$key == 'windspdmph_avg10m')
 			{
 				if($this->ReadPropertyInteger("Wind") == 0) { // km/h
 					$windspeed = round($value * 1.609344 , 2);
@@ -119,7 +119,7 @@ class Froggit extends IPSModule {
 					$this->CreateVarProfileFloat('Froggit.Wind.mph','WindSpeed',' mph', 0 , 100);
 					$profile = 'Froggit.Wind.mph';
 				}
-				$this->RegisterVariableFloat($key, $this->Translate('Wind Speed'),$profile);
+				$this->RegisterVariableFloat($key, $this->Translate('Wind Speed') . ' ($key)',$profile);
 				if($this->GetValue($key) != $windspeed) $this->SetValue($key, $windspeed);
 			}
 			elseif ($key == 'maxdailygust')
