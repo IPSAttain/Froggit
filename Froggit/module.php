@@ -108,9 +108,9 @@ class Froggit extends IPSModule {
 			}
 			elseif ($key == 'winddir_avg10m')
 			{
-				$this->RegisterVariableInteger($key."_int", $this->Translate('Wind Direction (10min Average)','~WindDirection');
+				$this->RegisterVariableInteger($key."_int", $this->Translate('Wind Direction (10min Average)'),'~WindDirection');
 				if($this->GetValue($key."_int") != $value) $this->SetValue($key."_int", intval($value));
-				$this->RegisterVariableFloat($key."_txt", $this->Translate('Wind Direction (10min Average)','~WindDirection.Text');
+				$this->RegisterVariableFloat($key."_txt", $this->Translate('Wind Direction (10min Average)'),'~WindDirection.Text');
 				if($this->GetValue($key."_txt") != $value) $this->SetValue($key."_txt", floatval($value));
 			}
 			elseif ($key == 'windspeedmph'||$key == 'windspdmph_avg10m')
@@ -128,11 +128,11 @@ class Froggit extends IPSModule {
 				}
 				if (substr($key,-6) == 'avg10m')
 				{
-					$this->RegisterVariableFloat($key, $this->Translate('Wind Speed (10min Average)',$profile);
+					$this->RegisterVariableFloat($key, $this->Translate('Wind Speed (10min Average)'),$profile);
 				}
 				else
 				{
-					$this->RegisterVariableFloat($key, $this->Translate('Wind Speed',$profile);
+					$this->RegisterVariableFloat($key, $this->Translate('Wind Speed'),$profile);
 				}
 				if($this->GetValue($key) != $windspeed) $this->SetValue($key, $windspeed);
 			}
