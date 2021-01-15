@@ -101,9 +101,9 @@ class Froggit extends IPSModule {
 			}
 			elseif ($key == 'winddir')
 			{
-				$this->RegisterVariableInteger($key."_int", $this->Translate('Wind Direction') . ' (' . $key . ')','~WindDirection');
+				$this->RegisterVariableInteger($key."_int", $this->Translate('Wind Direction'),'~WindDirection');
 				if($this->GetValue($key."_int") != $value) $this->SetValue($key."_int", intval($value));
-				$this->RegisterVariableFloat($key."_txt", $this->Translate('Wind Direction') . ' (' . $key . ')','~WindDirection.Text');
+				$this->RegisterVariableFloat($key."_txt", $this->Translate('Wind Direction'),'~WindDirection.Text');
 				if($this->GetValue($key."_txt") != $value) $this->SetValue($key."_txt", floatval($value));
 			}
 			elseif ($key == 'winddir_avg10m')
@@ -258,7 +258,7 @@ class Froggit extends IPSModule {
 			}
 			elseif (substr($key,0,5) == "pm25_")
 			{
-				$this->CreateVarProfileInteger('Froggit.PM25_ch','Fog',' µg/cm²');
+				$this->CreateVarProfileInteger('Froggit.PM25_ch','Fog',' µg/m³');
 				if (substr($key,-11,7) == 'avg_24h')
 				{
 					$this->RegisterVariableInteger($key, $this->Translate('PM2.5 particle') . " 24h_avg (" . substr($key,-1) . ")",'Froggit.PM25_ch');
