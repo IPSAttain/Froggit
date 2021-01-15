@@ -116,7 +116,7 @@ class Froggit extends IPSModule {
 					$profile = '~WindSpeed.ms';
 				} else { //mph
 					$windspeed = round($value,2);
-					$this->CreateVarProfileFloat('Froggit.Wind.mph','WindSpeed',' mph');
+					$this->CreateVarProfileFloat('Froggit.Wind.mph','WindSpeed',' mph', 0 , 100);
 					$profile = 'Froggit.Wind.mph';
 				}
 				$this->RegisterVariableFloat($key, $this->Translate('Wind Speed'),$profile);
@@ -133,7 +133,7 @@ class Froggit extends IPSModule {
 				} else { //mph
 					$windspeed = round($value,2);
 					$profile = 'Wind.Froggit.mph';
-					$this->CreateVarProfileFloat('Froggit.Wind.mph','WindSpeed',' mph');
+					$this->CreateVarProfileFloat('Froggit.Wind.mph','WindSpeed',' mph', 0 , 100);
 					$profile = 'Froggit.Wind.mph';
 				}
 				$this->RegisterVariableFloat($key, $this->Translate('Day Wind Max'),$profile);
@@ -149,7 +149,7 @@ class Froggit extends IPSModule {
 					$profile = '~WindSpeed.ms';
 				} else { //mph
 					$windspeed = round($value,2);
-					$this->CreateVarProfileFloat('Froggit.Wind.mph','WindSpeed',' mph');
+					$this->CreateVarProfileFloat('Froggit.Wind.mph','WindSpeed',' mph', 0, 100);
 					$profile = 'Froggit.Wind.mph';
 				}
 				$this->RegisterVariableFloat($key, $this->Translate('Wind Gust'),$profile);
@@ -192,11 +192,11 @@ class Froggit extends IPSModule {
 					$profile = '~AirPressure.F';
 				} elseif ($this->ReadPropertyInteger("Pressure") == 1) { // inHg
 					$pressure = round($value, 2);
-					$this->CreateVarProfileFloat('Froggit.AirPressure.inHg','Gauge',' inHG');
+					$this->CreateVarProfileFloat('Froggit.AirPressure.inHg','Gauge',' inHG', 30, 50);
 					$profile = 'Froggit.AirPressure.inHg';
 				} else { // mmHg
 					$pressure = round($value * 25.4 , 2);
-					$this->CreateVarProfileFloat('Froggit.AirPressure.mmHg','Gauge',' mmHG');
+					$this->CreateVarProfileFloat('Froggit.AirPressure.mmHg','Gauge',' mmHG', 900 , 1100);
 					$profile = 'Froggit.AirPressure.mmHg';
 				}
 				$this->RegisterVariableFloat($key, $this->Translate('Air Pressure') . " (" . $key . ")",$profile);
@@ -208,7 +208,7 @@ class Froggit extends IPSModule {
 					$rain = round($value * 25.4,2);
 					$profile = '~Rainfall';
 				} else { // inch
-					$this->CreateVarProfileFloat('Froggit.Rain.Inch', 'Rainfall',' in');
+					$this->CreateVarProfileFloat('Froggit.Rain.Inch', 'Rainfall',' in', 0, 10);
 					$rain = $value;
 				}
 				$this->RegisterVariableFloat($key, $this->Translate($key),$profile);
@@ -262,7 +262,8 @@ class Froggit extends IPSModule {
 				}
 				$this->RegisterVariableBoolean($key, $this->Translate('SoilMoistureBattery') . " (" . $number . ")",'~Battery');
 				if($this->GetValue($key) != $batt) $this->SetValue($key, $batt);
-				$this->RegisterVariableFloat($key."Volt", $this->Translate('SoilMoistureBattery') . " (" . $number . ")",'~Volt');
+				$this->CreateVarProfileFloat('Froggit.Battery.Volt','Batterie',' V' , 1, 1.6);
+				$this->RegisterVariableFloat($key."Volt", $this->Translate('SoilMoistureBattery') . " (" . $number . ")",'Froggit.Battery.Volt');
 				if($this->GetValue($key."Volt") != floatval($value)) $this->SetValue($key."Volt", floatval($value));
 			}
 			elseif (Substr($key,0,8) == 'pm25batt')
@@ -301,7 +302,7 @@ class Froggit extends IPSModule {
 		}
 	}
 
-	private function CreateVarProfileFloat(string $ProfilName, string $ProfilIcon, string $ProfileText)
+	private function CreateVarProfileFloat(string $ProfilName, string $ProfilIcon, string $ProfileText, float $Min , float $Max)
 	{
 		if (!IPS_VariableProfileExists($ProfilName)) {
 			IPS_CreateVariableProfile($ProfilName, 2);

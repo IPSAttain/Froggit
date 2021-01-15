@@ -19,6 +19,7 @@ Beschreibung des Moduls.
 ### 2. Vorraussetzungen
 
 - IP-Symcon ab Version 5.3
+- DP1500 Wi-Fi Wetterserver USB-Dongle oder Displayeinheit HP1000SE PRO 
 
 ### 3. Software-Installation
 
