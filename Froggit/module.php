@@ -323,13 +323,14 @@ class Froggit extends IPSModule {
 		}
 	}
 
-	private function CreateVarProfileFloat(string $ProfilName, string $ProfilIcon, string $ProfileText, float $Min , float $Max)
+	private function CreateVarProfileFloat(string $ProfilName, string $ProfilIcon, string $ProfileText, float $Min = 0 , float $Max = 100)
 	{
 		if (!IPS_VariableProfileExists($ProfilName)) {
 			IPS_CreateVariableProfile($ProfilName, 2);
 			IPS_SetVariableProfileIcon($ProfilName, $ProfilIcon);
 			IPS_SetVariableProfileText($ProfilName, '', $ProfileText);
 			IPS_SetVariableProfileDigits($ProfilName, 2);
+			IPS_SetVariableProfileValues($ProfilName,$Min,$Max);
 		}
 	}
 	private function CreateVarProfileInteger(string $ProfilName, string $ProfilIcon, string $ProfileText)
