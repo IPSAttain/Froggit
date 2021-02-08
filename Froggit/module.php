@@ -272,7 +272,7 @@ class Froggit extends IPSModule {
 			elseif ($key == 'dateutc' )
 			{
 				$time = str_replace("+"," ",$value);
-				$time = $this->ConvertUTCtoLocal($time);
+				$time = $this->ConvertUTCtoLocal(strtotime($time));
 				$this->RegisterVariableInteger($key, $this->Translate('Time'),'~UnixTimestamp');
 				$this->SetValue($key, $time);
 			}
