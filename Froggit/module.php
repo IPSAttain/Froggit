@@ -265,12 +265,14 @@ class Froggit extends IPSModule {
 			}
 			elseif ($key == 'lightning_time' )
 			{
+				$value = $this->ConvertUTCtoLocal(intval($value));
 				$this->RegisterVariableInteger($key, $this->Translate('lightning time'),'~UnixTimestamp');
 				if($this->GetValue($key) != $value) $this->SetValue($key, intval($value));
 			}
 			elseif ($key == 'dateutc' )
 			{
 				$time = str_replace("+"," ",$value);
+				$time = $this->ConvertUTCtoLocal($time);
 				$this->RegisterVariableInteger($key, $this->Translate('Time'),'~UnixTimestamp');
 				$this->SetValue($key, strtotime($time));
 			}
@@ -375,5 +377,14 @@ class Froggit extends IPSModule {
 			IPS_SetVariableProfileIcon($ProfilName, $ProfilIcon);
 			IPS_SetVariableProfileText($ProfilName, '', $ProfileText);
 		}
+	}
+	private function ConvertUTCtoLocal(int $timestamp)
+	{
+		$df = "G:i:s";  // Use a simple time format to find the difference
+		$ts1 = strtotime(date($df));   // Timestamp of current local time
+		$ts2 = strtotime(gmdate($df)); // Timestamp of current UTC time
+		$ts3 = $ts1-$ts2;              // Their difference
+		$timestamp += $ts3;  			// Add the difference
+		return $timestamp;
 	}
 }
