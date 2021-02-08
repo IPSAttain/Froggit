@@ -274,7 +274,7 @@ class Froggit extends IPSModule {
 				$time = str_replace("+"," ",$value);
 				$time = $this->ConvertUTCtoLocal($time);
 				$this->RegisterVariableInteger($key, $this->Translate('Time'),'~UnixTimestamp');
-				$this->SetValue($key, strtotime($time));
+				$this->SetValue($key, $time);
 			}
 			elseif (substr($key,0,5) == "pm25_")
 			{
