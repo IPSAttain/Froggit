@@ -74,6 +74,7 @@ Froggit.Light.fc   |  integer
 Froggit.AirPressure.inHg  |  float
 Froggit.AirPressure.mmHg..|  float
 Froggit.Wind.mph   |  float
+Froggit.pm25batt   |  integer
 
 ### 6. WebFront
 

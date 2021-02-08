@@ -31,9 +31,15 @@
             "Path": "Pfad",
             "Soilmoisture": "Bodenfeuchte",
             "SoilMoistureBattery": "Batterie Bodenfeuchtesensor",
+            "Full": "Voll",
+            "almost empty": "Fast Leer",
             "Low": "Leer",
             "OK": "OK",
             "PM2.5 particle": "Feinstaubpartikel",
+            "lightning count": "Anzahl Blitze",
+            "lightning dist": "Entfernung Blitze",
+            "lightning time": "Uhrzeit Blitz",
+            "Battery Lightning Sensor": "Batterie Blitz Sensor",
             "You can select the /hook path. It must match to the settings in the App!": "Der Pfad zum /hook kann gewählt werden. Dies muss mit der Einstellung in der App übereinstimmen!"
         }
     }
