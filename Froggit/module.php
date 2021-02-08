@@ -384,7 +384,7 @@ class Froggit extends IPSModule {
 		$ts1 = strtotime(date($df));   // Timestamp of current local time
 		$ts2 = strtotime(gmdate($df)); // Timestamp of current UTC time
 		$ts3 = $ts1-$ts2;              // Their difference
-		$timestamp += $ts3+3600;  			// Add the difference
+		$timestamp += $ts3;  			// Add the difference
 		return $timestamp;
 	}
 }
