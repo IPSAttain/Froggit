@@ -250,6 +250,24 @@ class Froggit extends IPSModule {
 				$this->RegisterVariableInteger($key, $this->Translate('UV Index'),'~UVIndex');
 				if($this->GetValue($key) != $value) $this->SetValue($key, intval($value));
 			}
+			// Lightning Detection Sensor (WH57)
+			elseif ($key == 'lightning' )
+			{
+				$this->CreateVarProfileFloat('Froggit.Distance.km','Distance',' km');
+				$this->RegisterVariableFloat($key, $this->Translate('lightning dist'),'Froggit.Distance.km');
+				$value = round($value, 2);
+				if($this->GetValue($key) != $value) $this->SetValue($key, $value);
+			}
+			elseif ($key == 'lightning_num' )
+			{
+				$this->RegisterVariableInteger($key, $this->Translate('lightning count'),'');
+				if($this->GetValue($key) != $value) $this->SetValue($key, intval($value));
+			}
+			elseif ($key == 'lightning_time' )
+			{
+				$this->RegisterVariableInteger($key, $this->Translate('lightning time'),'~UnixTimestamp');
+				if($this->GetValue($key) != $value) $this->SetValue($key, intval($value));
+			}
 			elseif ($key == 'dateutc' )
 			{
 				$time = str_replace("+"," ",$value);
