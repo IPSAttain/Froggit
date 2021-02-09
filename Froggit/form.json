@@ -68,7 +68,7 @@
                         }
                     ]
                 },
-                { "type": "Label", "name": "Hints", "caption": "You can select the /hook path. It must match to the settings in the App!" }
+                { "type": "Label", "name": "Hints", "caption": "With this Checkbox, you can select if every value will stored in Symcon or only if the value changes." }
                 ]
             }
     ],
