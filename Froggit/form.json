@@ -54,7 +54,23 @@
             },
             { "type": "Label", "name": "Hints", "caption": "You can select the /hook path. It must match to the settings in the App!" }
             ]
-        }
+        },
+        {"type": "ExpansionPanel",
+            "caption": "Save Settings",
+            "items": [
+                { 
+                    "type": "RowLayout",
+                    "items": [
+                        {
+                            "type": "CheckBox",
+                            "caption": "Save all Values",
+                            "name": "SaveAllValues"
+                        }
+                    ]
+                },
+                { "type": "Label", "name": "Hints", "caption": "You can select the /hook path. It must match to the settings in the App!" }
+                ]
+            }
     ],
     "actions": [],
     "status": []

@@ -26,6 +26,7 @@ class Froggit extends IPSModule {
 		$this->RegisterPropertyInteger("Pressure", 0);
 		$this->RegisterPropertyString("HookPrefix","/hook/");
 		$this->RegisterPropertyString("Hook","froggit");
+		$this->RegisterPropertyBoolean("SaveAllValues",false);
 	}
 
 	public function Destroy()
@@ -44,6 +45,7 @@ class Froggit extends IPSModule {
 			
 			$this->RegisterHook($this->ReadPropertyString('HookPrefix') . $this->ReadPropertyString('Hook'));
 		}
+		$SaveAllValues = $this->RegisterPropertyBoolean("SaveAllValues");
 	}
 
 	public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
@@ -92,7 +94,7 @@ class Froggit extends IPSModule {
 			if ($key == 'stationtype')
 			{
 				$this->RegisterVariableString($key, $this->Translate('Station Type'),'');
-				if($this->GetValue($key) != $value) $this->SetValue($key, $value);
+				if($this->GetValue($key) != $value || $SaveAllValues) $this->SetValue($key, $value);
 			}
 			elseif ($key == 'model')
 			{
