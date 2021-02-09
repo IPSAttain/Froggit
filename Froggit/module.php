@@ -45,7 +45,6 @@ class Froggit extends IPSModule {
 			
 			$this->RegisterHook($this->ReadPropertyString('HookPrefix') . $this->ReadPropertyString('Hook'));
 		}
-		$SaveAllValues = $this->ReadPropertyBoolean("SaveAllValues");
 	}
 
 	public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
@@ -91,6 +90,7 @@ class Froggit extends IPSModule {
 
 		foreach ($_POST as $key => $value) {
 			//$this->SendDebug($key, $value , 0);
+			$SaveAllValues = $this->ReadPropertyBoolean("SaveAllValues");
 			if ($key == 'stationtype')
 			{
 				$this->RegisterVariableString($key, $this->Translate('Station Type'),'');
