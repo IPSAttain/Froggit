@@ -262,7 +262,8 @@ class Froggit extends IPSModule {
 			}
 			elseif ($key == 'lightning_num' )
 			{
-				$this->RegisterVariableInteger($key, $this->Translate('lightning count'),'');
+				$this->CreateVarProfileInteger('Froggit.Lightning.Count','Lightning',' ');
+				$this->RegisterVariableInteger($key, $this->Translate('lightning count'),'Froggit.Lightning.Count');
 				if($this->GetValue($key) != $value || $SaveAllValues) $this->SetValue($key, intval($value));
 			}
 			elseif ($key == 'lightning_time' )
@@ -316,12 +317,12 @@ class Froggit extends IPSModule {
 					IPS_CreateVariableProfile('Froggit.pm25batt', 1);
 					IPS_SetVariableProfileIcon('Froggit.pm25batt', 'Battery');
 					IPS_SetVariableProfileValues('Froggit.pm25batt', 0, 5, 1);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 0, '%d (' . $this->Translate('Low') . ')', "", 0xFF0000);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 1, '%d (' . $this->Translate('almost empty' ) . ')', "", 0xFFFF00);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 2, '%d (' . $this->Translate('OK' ) . ')', "", 0xA0FF00);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 3, '%d (' . $this->Translate('OK' ) . ')', "", 0x00FF00);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 4, '%d (' . $this->Translate('OK' ) . ')', "", 0x00FF00);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 5, '%d (' . $this->Translate('Full' ) . ')', "", 0x00FF00);
+					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 0, "%d/5 (" . $this->Translate('Low') . ")", "", 0xFF0000);
+					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 1, "%d/5 (" . $this->Translate('almost empty' ) . ")", "", 0xFFFF00);
+					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 2, "%d/5 (" . $this->Translate('OK' ) . ")", "", 0xA0FF00);
+					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 3, "%d/5 (" . $this->Translate('OK' ) . ")", "", 0x00FF00);
+					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 4, "%d/5 (" . $this->Translate('OK' ) . ")", "", 0x00FF00);
+					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 5, "%d/5 (" . $this->Translate('Full' ) . ")", "", 0x00FF00);
 				}
 				$this->RegisterVariableInteger($key, $this->Translate('Battery Lightning Sensor') ,'Froggit.pm25batt');
 				if($this->GetValue($key) != $batt || $SaveAllValues) $this->SetValue($key, $batt);
