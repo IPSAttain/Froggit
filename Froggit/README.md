@@ -1,5 +1,4 @@
 # Froggit Wetterstation
-Beschreibung des Moduls.
 
 ### Inhaltsverzeichnis
 
@@ -13,8 +12,8 @@ Beschreibung des Moduls.
 
 ### 1. Funktionsumfang
 
-* Empfangen von Daten des DP1500 und ablegen in Variablen.
-* Die Kommunikation läuft über das WebHook Control. Die nötigen Einstellungen werde automatisch eingetragen.
+* Empfangen von Daten einer Froggit/Ecowitt Wetterstation und ablegen in Variablen.
+* Die Kommunikation läuft über das WebHook Control. Die nötigen Einstellungen werde automatisch vom Modul vorgenommen.
 
 ### 2. Vorraussetzungen
 
@@ -29,11 +28,14 @@ Beschreibung des Moduls.
 
 * Alternativ über das Module Control folgende URL hinzufügen: https://github.com/IPSAttain/Froggit
 
-* In der App muss der "Customized Upload" konfiguriert und aktiviert werden. 
-* Protokoll Typ mus Ecowitt sein.
-* Dazu die IP-Adresse des IPS Servers angeben. 
-* Als "Path" muss /hook/froggit eingetragen werden. Wenn mehrere Stationen eingebunden werden sollen, ist jeweils ein Pfad zu definieren. Dieser muss immer mit "/hook"..." beginnen.
-* Port ist 3777 (Standard-Zugangsport IPS)
+* Konfiguriert wird das WiFi Gateeway mit der App "WS View". Erhältlich für Android und IOS.
+* Im Bereich "Weather Services" muss der "Customized Upload" aktiviert und konfiguriert werden. 
+* Protokoll Typ: | Ecowitt
+* Server IP: | IP-Adresse des IPS Servers. 
+* Path: | /hook/froggit eintragen
+* Port: | 3777 (Standard-Zugangsport IPS)
+* Wenn mehrere Stationen eingebunden werden sollen, ist jeweils ein Pfad zu definieren. Dieser muss immer mit "/hook"..." beginnen.
+
 
  ![Config_App](../docs/Config_App.png)
 
@@ -57,12 +59,11 @@ __Konfigurationsseite__:
  ![Config_Instanz](../docs/Config_Instanz.PNG)
 
 ### 5. Statusvariablen und Profile
-
-Die Statusvariablen werden automatisch angelegt. Werden diese gelöscht, werden sie wieder angelegt. Die Variablen können umbenannt werden.
-
 #### Statusvariablen
 
-* keine
+* Die Statusvariablen werden automatisch angelegt. 
+* Werden diese gelöscht, werden sie wieder angelegt. 
+* Die Variablen können umbenannt werden.
 
 #### Profile
 

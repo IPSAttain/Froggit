@@ -267,7 +267,7 @@ class Froggit extends IPSModule {
 			}
 			elseif ($key == 'lightning_time' )
 			{
-				$value = $this->ConvertUTCtoLocal(intval($value));
+				// $value = $this->ConvertUTCtoLocal(intval($value)); 24.04.21 comes already as a Unix Timestamp
 				$this->RegisterVariableInteger($key, $this->Translate('lightning time'),'~UnixTimestamp');
 				if($this->GetValue($key) != $value || $SaveAllValues) $this->SetValue($key, intval($value));
 			}
