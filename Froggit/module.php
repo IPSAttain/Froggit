@@ -86,7 +86,7 @@ class Froggit extends IPSModule {
 	 */
 	protected function ProcessHookData()
 	{
-		$this->SendDebug('WebHook', 'Array POST: ' . print_r($_POST, true), 0);
+		$this->SendDebug(__FUNCTION__, 'Array POST: ' . print_r($_POST, true), 0);
 
 		foreach ($_POST as $key => $value) {
 			//$this->SendDebug($key, $value , 0);
@@ -180,7 +180,16 @@ class Froggit extends IPSModule {
 					$profile = '~Temperature.Fahrenheit';
 					$temp = $value;
 				}
-				$this->RegisterVariableFloat($key, $this->Translate('Temperature') . " (" . $key . ")",$profile);
+				if(is_numeric(substr($key,4,1)))
+				{
+					$sensor = $this->Translate('Channel') . ' ' . substr($key,4,1);
+					
+				}
+				else
+				{
+					$sensor = $key;
+				}
+				$this->RegisterVariableFloat($key, $this->Translate('Temperature') . " (" . $sensor . ")",$profile);
 				if($this->GetValue($key) != $temp || $SaveAllValues) $this->SetValue($key, $temp);
 			}
 			elseif (substr($key,0,8) == 'humidity' )
@@ -348,6 +357,12 @@ class Froggit extends IPSModule {
 			{
 				$batt = boolval($value);
 				$this->RegisterVariableBoolean($key, $this->Translate('Battery') . " (" . substr($key,0,4) . ")",'~Battery');
+				if($this->GetValue($key) != $batt || $SaveAllValues) $this->SetValue($key, $batt);
+			}
+			elseif (Substr($key,0,4) == 'batt')
+			{
+				$batt = boolval($value);
+				$this->RegisterVariableBoolean($key, $this->Translate('Battery Temperature Sensor Channel ') . ' ('  . substr($key,4,1) . ')','~Battery');
 				if($this->GetValue($key) != $batt || $SaveAllValues) $this->SetValue($key, $batt);
 			}
 			// >>>>>>>>>>>>>>>>> all other <<<<<<<<<<<<<<<<<<

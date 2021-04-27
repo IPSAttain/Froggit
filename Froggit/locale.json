@@ -8,6 +8,8 @@
             "Day Wind Max": "Windböe (Max.) Tag",
             "Wind Gust": "Windböe",
             "Temperature": "Temperatur",
+            "Battery Temperature Sensor Channel ": "Batterie Temperatur Sensor Kanal ",
+            "Channel": "Kanal",
             "Humidity": "Luftfeuchtigkeit",
             "Air Pressure": "Luftdruck",
             "Wind Direction": "Windrichtung",
