@@ -89,7 +89,6 @@ class Froggit extends IPSModule {
 		$this->SendDebug(__FUNCTION__, 'Array POST: ' . print_r($_POST, true), 0);
 
 		foreach ($_POST as $key => $value) {
-			//$this->SendDebug($key, $value , 0);
 			$SaveAllValues = $this->ReadPropertyBoolean("SaveAllValues");
 			if ($key == 'stationtype')
 			{
