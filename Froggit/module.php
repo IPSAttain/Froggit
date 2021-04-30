@@ -114,61 +114,24 @@ class Froggit extends IPSModule {
 				$this->RegisterVariableFloat($key."_txt", $this->Translate('Wind Direction (10min Average)'),'~WindDirection.Text');
 				if($this->GetValue($key."_txt") != $value || $SaveAllValues) $this->SetValue($key."_txt", floatval($value));
 			}
-			elseif ($key == 'windspeedmph'||$key == 'windspdmph_avg10m')
+			elseif ($key == 'windspeedmph' || $key == 'windspdmph_avg10m')
 			{
-				if($this->ReadPropertyInteger("Wind") == 0) { // km/h
-					$windspeed = round($value * 1.609344 , 2);
-					$profile = '~WindSpeed.kmh';
-				} elseif ($this->ReadPropertyInteger("Wind") == 1) { // m/s
-					$windspeed = round($value * 1.609344 / 3.6 , 2);
-					$profile = '~WindSpeed.ms';
-				} else { //mph
-					$windspeed = round($value,2);
-					$this->CreateVarProfileFloat('Froggit.Wind.mph','WindSpeed',' mph', 0 , 100);
-					$profile = 'Froggit.Wind.mph';
-				}
-				if (substr($key,-6) == 'avg10m')
-				{
-					$this->RegisterVariableFloat($key, $this->Translate('Wind Speed (10min Average)'),$profile);
-				}
-				else
-				{
-					$this->RegisterVariableFloat($key, $this->Translate('Wind Speed'),$profile);
-				}
-				if($this->GetValue($key) != $windspeed || $SaveAllValues) $this->SetValue($key, $windspeed);
+				$wind = $this->ConvertWindSpeed(floatval($value));
+				if (substr($key,-6) == 'avg10m') $this->RegisterVariableFloat($key, $this->Translate('Wind Speed (10min Average)'),$wind->profile);
+				else $this->RegisterVariableFloat($key, $this->Translate('Wind Speed'),$wind->profile);
+				if($this->GetValue($key) != $wind->windspeed || $SaveAllValues) $this->SetValue($key, $wind->windspeed);
 			}
 			elseif ($key == 'maxdailygust')
 			{
-				if($this->ReadPropertyInteger("Wind") == 0) { // km/h
-					$windspeed = round($value * 1.609344 , 2);
-					$profile = '~WindSpeed.kmh';
-				} elseif ($this->ReadPropertyInteger("Wind") == 1) { // m/s
-					$windspeed = round($value * 1.609344 / 3.6 , 2);
-					$profile = '~WindSpeed.ms';
-				} else { //mph
-					$windspeed = round($value,2);
-					$profile = 'Wind.Froggit.mph';
-					$this->CreateVarProfileFloat('Froggit.Wind.mph','WindSpeed',' mph', 0 , 100);
-					$profile = 'Froggit.Wind.mph';
-				}
-				$this->RegisterVariableFloat($key, $this->Translate('Day Wind Max'),$profile);
-				if($this->GetValue($key) != $windspeed || $SaveAllValues) $this->SetValue($key, $windspeed);
+				$wind = $this->ConvertWindSpeed(floatval($value));
+				$this->RegisterVariableFloat($key, $this->Translate('Day Wind Max'),$wind->profile);
+				if($this->GetValue($key) != $wind->windspeed || $SaveAllValues) $this->SetValue($key, $wind->windspeed);
 			}
 			elseif ($key == 'windgustmph')
 			{
-				if($this->ReadPropertyInteger("Wind") == 0) { // km/h
-					$windspeed = round($value * 1.609344 , 2);
-					$profile = '~WindSpeed.kmh';
-				} elseif ($this->ReadPropertyInteger("Wind") == 1) { // m/s
-					$windspeed = round($value * 1.609344 / 3.6 , 2);
-					$profile = '~WindSpeed.ms';
-				} else { //mph
-					$windspeed = round($value,2);
-					$this->CreateVarProfileFloat('Froggit.Wind.mph','WindSpeed',' mph', 0, 100);
-					$profile = 'Froggit.Wind.mph';
-				}
-				$this->RegisterVariableFloat($key, $this->Translate('Wind Gust'),$profile);
-				if($this->GetValue($key) != $windspeed || $SaveAllValues) $this->SetValue($key, $windspeed);
+				$wind = $this->ConvertWindSpeed(floatval($value));
+				$this->RegisterVariableFloat($key, $this->Translate('Wind Gust'),$wind->profile);
+				if($this->GetValue($key) != $wind->windspeed || $SaveAllValues) $this->SetValue($key, $wind->windspeed);
 			}
 			elseif (substr($key,0,4) == 'temp' )
 			{
@@ -179,15 +142,8 @@ class Froggit extends IPSModule {
 					$profile = '~Temperature.Fahrenheit';
 					$temp = $value;
 				}
-				if(is_numeric(substr($key,4,1)))
-				{
-					$sensor = $this->Translate('Channel') . ' ' . substr($key,4,1);
-					
-				}
-				else
-				{
-					$sensor = $key;
-				}
+				$sensor = $key;
+				if(is_numeric(substr($key,4,1))) $sensor = $this->Translate('Channel') . ' ' . substr($key,4,1);
 				$this->RegisterVariableFloat($key, $this->Translate('Temperature') . " (" . $sensor . ")",$profile);
 				if($this->GetValue($key) != $temp || $SaveAllValues) $this->SetValue($key, $temp);
 			}
@@ -198,15 +154,7 @@ class Froggit extends IPSModule {
 			}
 			elseif (substr($key,0,12) == 'soilmoisture' )
 			{
-				if(is_numeric(substr($key,-2,-1))) // check the sensor number
-				{
-					$number = substr($key,-2); // 10 to 16
-				}
-				else
-				{
-					$number = "0" . substr($key,-1); // 1 to 9
-				}
-				$this->RegisterVariableInteger($key, $this->Translate('Soilmoisture') . " (" . $number . ")",'~Humidity');
+				$this->RegisterVariableInteger($key, $this->Translate('Soilmoisture') . " (" . substr($key,-1) . ")",'~Humidity');
 				if($this->GetValue($key) != $value || $SaveAllValues) $this->SetValue($key, intval($value));
 			}
 			elseif (substr($key,0,5) == 'barom' )
@@ -234,6 +182,7 @@ class Froggit extends IPSModule {
 				} else { // inch
 					$this->CreateVarProfileFloat('Froggit.Rain.Inch', 'Rainfall',' in', 0, 10);
 					$rain = $value;
+					$profile = 'Froggit.Rain.Inch';
 				}
 				$this->RegisterVariableFloat($key, $this->Translate($key),$profile);
 				if($this->GetValue($key) != $rain || $SaveAllValues) $this->SetValue($key,$rain);
@@ -300,67 +249,46 @@ class Froggit extends IPSModule {
 				}
 				if($this->GetValue($key) != $value || $SaveAllValues) $this->SetValue($key, intval($value));
 			}
-			// >>>>>>>>>>>>>>>>> Battery <<<<<<<<<<<<<<<<<<<
-			elseif (substr($key,0,8) == 'soilbatt' )
-			{
-				$batt = floatval($value) <= 1.1;  //false = OK | true = LOW
-				if(is_numeric(substr($key,-2,-1))) // check the sensor number
-				{
-					$number = substr($key,-2); // 10 to 16
-				}
-				else
-				{
-					$number = "0" . substr($key,-1); // 1 to 9
-				}
-				$this->RegisterVariableBoolean($key, $this->Translate('SoilMoistureBattery') . " (" . $number . ")",'~Battery');
-				if($this->GetValue($key) != $batt || $SaveAllValues) $this->SetValue($key, $batt);
-				$this->CreateVarProfileFloat('Froggit.Battery.Volt','Batterie',' V' , 1, 1.6);
-				$this->RegisterVariableFloat($key."Volt", $this->Translate('SoilMoistureBattery') . " (" . $number . ")",'Froggit.Battery.Volt');
-				if($this->GetValue($key."Volt") != floatval($value) || $SaveAllValues) $this->SetValue($key."Volt", floatval($value));
-			}
-			elseif (Substr($key,0,8) == 'wh57batt')
-			{
-				$batt = intval($value);
-				if (!IPS_VariableProfileExists('Froggit.pm25batt')) {
-					IPS_CreateVariableProfile('Froggit.pm25batt', 1);
-					IPS_SetVariableProfileIcon('Froggit.pm25batt', 'Battery');
-					IPS_SetVariableProfileValues('Froggit.pm25batt', 0, 5, 1);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 0, "%d/5 (" . $this->Translate('Low') . ")", "", 0xFF0000);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 1, "%d/5 (" . $this->Translate('almost empty' ) . ")", "", 0xFFFF00);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 2, "%d/5 (" . $this->Translate('OK' ) . ")", "", 0xA0FF00);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 3, "%d/5 (" . $this->Translate('OK' ) . ")", "", 0x00FF00);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 4, "%d/5 (" . $this->Translate('OK' ) . ")", "", 0x00FF00);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 5, "%d/5 (" . $this->Translate('Full' ) . ")", "", 0x00FF00);
-				}
-				$this->RegisterVariableInteger($key, $this->Translate('Battery Lightning Sensor') ,'Froggit.pm25batt');
-				if($this->GetValue($key) != $batt || $SaveAllValues) $this->SetValue($key, $batt);
-			}
-			elseif (Substr($key,0,8) == 'pm25batt')
-			{
-				$batt = intval($value);
-				if (!IPS_VariableProfileExists('Froggit.pm25batt')) {
-					IPS_CreateVariableProfile('Froggit.pm25batt', 1);
-					IPS_SetVariableProfileIcon('Froggit.pm25batt', 'Battery');
-					IPS_SetVariableProfileValues('Froggit.pm25batt', 0, 5, 1);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 0, '%d (' . $this->Translate('Low') . ')', "", 0xFF0000);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 1, '%d (' . $this->Translate('almost empty' ) . ')', "", 0xFFFF00);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 2, '%d (' . $this->Translate('OK' ) . ')', "", 0xA0FF00);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 3, '%d (' . $this->Translate('OK' ) . ')', "", 0x00FF00);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 4, '%d (' . $this->Translate('OK' ) . ')', "", 0x00FF00);
-					IPS_SetVariableProfileAssociation('Froggit.pm25batt', 5, '%d (' . $this->Translate('Full' ) . ')', "", 0x00FF00);
-				}
-				$this->RegisterVariableInteger($key, $this->Translate('Battery') . " PM2.5 (" . substr($key,-1) . ")",'Froggit.pm25batt');
-				if($this->GetValue($key) != $batt || $SaveAllValues) $this->SetValue($key, $batt);
-			}
-			elseif (Substr($key,4,4) == 'batt')
+			elseif (substr($key,0,7) == 'leak_ch')
 			{
 				$batt = boolval($value);
+				$this->RegisterVariableBoolean($key, $this->Translate('Water Leak Sensor') . ' (' . substr($key,-1) . ')','~Alert');
+				if($this->GetValue($key) != $batt || $SaveAllValues) $this->SetValue($key, $batt);
+			}
+			// >>>>>>>>>>>>>>>>> Battery <<<<<<<<<<<<<<<<<<<
+			elseif (substr($key,0,8) == 'soilbatt' ) // soil moisture
+			{
+				$batt = $value * 200 - 220;  // from 1.1 == empty to 1.6 == full
+				$this->RegisterVariableInteger($key, $this->Translate('SoilMoistureBattery') . " (" . substr($key,-1) . ")",'~Battery.100');
+				if($this->GetValue($key) != $batt || $SaveAllValues) $this->SetValue($key, $batt);
+			}
+			elseif (substr($key,0,8) == 'leakbatt') // water leak
+			{
+				$batt = intval($value)*20; // from 0 == empty to 5 == full
+				$this->RegisterVariableInteger($key, $this->Translate('Battery') . ' ' . $this->Translate('Water Leak Sensor') . ' (' . substr($key,-1) . ')','~Battery.100');
+				if($this->GetValue($key) != $batt || $SaveAllValues) $this->SetValue($key, $batt);
+			}
+			elseif (substr($key,0,8) == 'wh57batt') // lightning
+			{
+				$batt = intval($value)*20; // from 0 == empty to 5 == full
+				$this->RegisterVariableInteger($key, $this->Translate('Battery Lightning Sensor') ,'~Battery.100');
+				if($this->GetValue($key) != $batt || $SaveAllValues) $this->SetValue($key, $batt);
+			}
+			elseif (substr($key,0,8) == 'pm25batt')
+			{
+				$batt = intval($value)*20; // from 0 == empty to 5 == full
+				$this->RegisterVariableInteger($key, $this->Translate('Battery') . " PM2.5 (" . substr($key,-1) . ")",'~Battery.100');
+				if($this->GetValue($key) != $batt || $SaveAllValues) $this->SetValue($key, $batt);
+			}
+			elseif (substr($key,4,4) == 'batt')
+			{
+				$batt = boolval($value); // 0 == OK
 				$this->RegisterVariableBoolean($key, $this->Translate('Battery') . " (" . substr($key,0,4) . ")",'~Battery');
 				if($this->GetValue($key) != $batt || $SaveAllValues) $this->SetValue($key, $batt);
 			}
-			elseif (Substr($key,0,4) == 'batt')
+			elseif (substr($key,0,4) == 'batt')
 			{
-				$batt = boolval($value);
+				$batt = boolval($value); // 0 == OK
 				$this->RegisterVariableBoolean($key, $this->Translate('Battery Temperature Sensor Channel ') . ' ('  . substr($key,4,1) . ')','~Battery');
 				if($this->GetValue($key) != $batt || $SaveAllValues) $this->SetValue($key, $batt);
 			}
@@ -403,5 +331,20 @@ class Froggit extends IPSModule {
 		$ts3 = $ts1-$ts2;              // Their difference
 		$timestamp += $ts3;  			// Add the difference
 		return $timestamp;
+	}
+	private function ConvertWindSpeed(float $value)
+	{
+		if($this->ReadPropertyInteger("Wind") == 0) { // km/h
+			$return->windspeed = round($value * 1.609344 , 2);
+			$return->profile = '~WindSpeed.kmh';
+		} elseif ($this->ReadPropertyInteger("Wind") == 1) { // m/s
+			$return->windspeed = round($value * 1.609344 / 3.6 , 2);
+			$return->profile = '~WindSpeed.ms';
+		} else { //mph
+			$return->windspeed = round($value,2);
+			$this->CreateVarProfileFloat('Froggit.Wind.mph','WindSpeed',' mph', 0, 100);
+			$return->profile = 'Froggit.Wind.mph';
+		}
+		return $return;
 	}
 }
