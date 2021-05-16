@@ -334,6 +334,7 @@ class Froggit extends IPSModule {
 	}
 	private function ConvertWindSpeed(float $value)
 	{
+		$return = new StdClass;
 		if($this->ReadPropertyInteger("Wind") == 0) { // km/h
 			$return->windspeed = round($value * 1.609344 , 2);
 			$return->profile = '~WindSpeed.kmh';
