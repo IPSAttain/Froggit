@@ -37,9 +37,13 @@
                     ]},
                     {
                         "type": "CheckBox",
-                        "caption": "Dew Point",
+                        "caption": "Dew Point / Windchill",
                         "name": "DewPoint"
+                    },
+                    { 
+                        "type": "Label", "name": "Hints", "caption": "With this checkbox you can select whether wind chill and dew point are calculated." 
                     }
+
             ]
         },
         {"type": "ExpansionPanel",

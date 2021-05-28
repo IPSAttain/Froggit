@@ -306,6 +306,8 @@ class Froggit extends IPSModule {
 				}
 			}
 		}
+
+		//dew Point calculation
 		if ($this->ReadPropertyBoolean("DewPoint") && array_key_exists('tempf',$_POST) && array_key_exists('humidity',$_POST))
 		{
 			$key='dewpoint';
@@ -322,6 +324,25 @@ class Froggit extends IPSModule {
 			if($this->GetValue($key) != $dewpoint || $SaveAllValues) $this->SetValue($key, $dewpoint);
 		}
 		else $this->SendDebug("Dew Point Calculation","inactive or missing data" , 0);
+		
+		// windchill calculation
+		if ($this->ReadPropertyBoolean("DewPoint") && array_key_exists('tempf',$_POST) && array_key_exists('windspeedmph',$_POST))
+		{
+			$key = 'windchill';
+			$wind = $this->ConvertWindSpeed(floatval($_POST['windspeedmph']));
+			if($this->ReadPropertyInteger("Temperature") == 0) { // °C
+				$temp = round(($_POST['tempf'] - 32) / 1.8 ,2);
+				$profile = '~Temperature';
+			} else { // °F
+				$profile = '~Temperature.Fahrenheit';
+				$temp = $_POST['tempf'];
+			}
+			if ($temp <= 10) $windchill=13.12+0.6215*$temp-11.37*pow($wind->windspeed,0.16)+0.3965*$temp*pow($wind->windspeed,0.16);
+			else $windchill = $temp;
+			$this->RegisterVariableFloat($key, $this->Translate('Windchill'),$profile);
+			if($this->GetValue($key) != $windchill || $SaveAllValues) $this->SetValue($key, $windchill);
+		}
+		else $this->SendDebug("Windchill Calculation","inactive or missing data" , 0);
 	}
 
 	private function CreateVarProfileFloat(string $ProfilName, string $ProfilIcon, string $ProfileText, float $Min = 0 , float $Max = 100)
