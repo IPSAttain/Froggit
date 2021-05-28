@@ -5,7 +5,7 @@
             "image": "data:image/png;base64,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"
         },
         {"type": "ExpansionPanel",
-        "caption": "Unit Settings",
+        "caption": "Settings",
         "items": [
                     { "type": "Select", "name": "Temperature", "caption": "Temperature",
                         "options": [
@@ -34,7 +34,12 @@
                             { "label": "hPa (mbar)", "value": 0 },
                             { "label": "inHg", "value": 1 },
                             { "label": "mmHg", "value": 2 }
-                    ]}
+                    ]},
+                    {
+                        "type": "CheckBox",
+                        "caption": "Dew Point",
+                        "name": "DewPoint"
+                    }
             ]
         },
         {"type": "ExpansionPanel",

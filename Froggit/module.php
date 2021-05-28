@@ -27,6 +27,7 @@ class Froggit extends IPSModule {
 		$this->RegisterPropertyString("HookPrefix","/hook/");
 		$this->RegisterPropertyString("Hook","froggit");
 		$this->RegisterPropertyBoolean("SaveAllValues",false);
+		$this->RegisterPropertyBoolean("DewPoint",false);
 	}
 
 	public function Destroy()
@@ -144,6 +145,8 @@ class Froggit extends IPSModule {
 				}
 				$sensor = $key;
 				if(is_numeric(substr($key,4,1))) $sensor = $this->Translate('Channel') . ' ' . substr($key,4,1);
+				elseif($key == 'tempf')   $sensor = $this->Translate('Outdoor sensor');
+				elseif($key == 'tempinf') $sensor = $this->Translate('Indoor sensor');
 				$this->RegisterVariableFloat($key, $this->Translate('Temperature') . " (" . $sensor . ")",$profile);
 				if($this->GetValue($key) != $temp || $SaveAllValues) $this->SetValue($key, $temp);
 			}
@@ -303,6 +306,22 @@ class Froggit extends IPSModule {
 				}
 			}
 		}
+		if ($this->ReadPropertyBoolean("DewPoint") && array_key_exists('tempf',$_POST) && array_key_exists('humidity',$_POST))
+		{
+			$key='dewpoint';
+			if($this->ReadPropertyInteger("Temperature") == 0) { // °C
+				$temp = round(($_POST['tempf'] - 32) / 1.8 ,2);
+				$profile = '~Temperature';
+			} else { // °F
+				$profile = '~Temperature.Fahrenheit';
+				$temp = $_POST['tempf'];
+			}
+			if ($temp >= 0) $dewpoint=243.12*((17.62*$temp)/(243.12+$temp)+log($_POST['humidity']/100))/((17.62*243.12)/(243.12+$temp)-log($_POST['humidity']/100));
+			else $dewpoint=272.62*((22.46*$temp)/(272.62+$temp)+log($_POST['humidity']/100))/((22.46*272.62)/(272.62+$temp)-log($_POST['humidity']/100));
+			$this->RegisterVariableFloat($key, $this->Translate('Dew Point'),$profile);
+			if($this->GetValue($key) != $dewpoint || $SaveAllValues) $this->SetValue($key, $dewpoint);
+		}
+		else $this->SendDebug("Dew Point Calculation","inactive or missing data" , 0);
 	}
 
 	private function CreateVarProfileFloat(string $ProfilName, string $ProfilIcon, string $ProfileText, float $Min = 0 , float $Max = 100)
