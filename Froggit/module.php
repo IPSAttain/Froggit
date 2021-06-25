@@ -27,6 +27,7 @@ class Froggit extends IPSModule {
 		$this->RegisterPropertyString("HookPrefix","/hook/");
 		$this->RegisterPropertyString("Hook","froggit");
 		$this->RegisterPropertyBoolean("SaveAllValues",false);
+		$this->RegisterPropertyBoolean("IgnoreImprobableValues",false);
 		$this->RegisterPropertyBoolean("DewPoint",false);
 	}
 
@@ -91,6 +92,7 @@ class Froggit extends IPSModule {
 
 		foreach ($_POST as $key => $value) {
 			$SaveAllValues = $this->ReadPropertyBoolean("SaveAllValues");
+			$IgnoreImprobableValues = $this->ReadPropertyBoolean("IgnoreImprobableValues");
 			if ($key == 'stationtype')
 			{
 				$this->RegisterVariableString($key, $this->Translate('Station Type'),'');
@@ -136,24 +138,38 @@ class Froggit extends IPSModule {
 			}
 			elseif (substr($key,0,4) == 'temp' )
 			{
-				if($this->ReadPropertyInteger("Temperature") == 0) { // °C
-					$temp = round(($value - 32) / 1.8 ,2);
-					$profile = '~Temperature';
-				} else { // °F
-					$profile = '~Temperature.Fahrenheit';
-					$temp = $value;
+				if($IgnoreImprobableValues && $value <= -1000)
+				{
+					$this->SendDebug("Ignored Improbable Value","Key: " . $key . " | Value: " . $value , 0);
 				}
-				$sensor = $key;
-				if(is_numeric(substr($key,4,1))) $sensor = $this->Translate('Channel') . ' ' . substr($key,4,1);
-				elseif($key == 'tempf')   $sensor = $this->Translate('Outdoor sensor');
-				elseif($key == 'tempinf') $sensor = $this->Translate('Indoor sensor');
-				$this->RegisterVariableFloat($key, $this->Translate('Temperature') . " (" . $sensor . ")",$profile);
-				if($this->GetValue($key) != $temp || $SaveAllValues) $this->SetValue($key, $temp);
+				else
+				{
+					if($this->ReadPropertyInteger("Temperature") == 0) { // °C
+						$temp = round(($value - 32) / 1.8 ,2);
+						$profile = '~Temperature';
+					} else { // °F
+						$profile = '~Temperature.Fahrenheit';
+						$temp = $value;
+					}
+					$sensor = $key;
+					if(is_numeric(substr($key,4,1))) $sensor = $this->Translate('Channel') . ' ' . substr($key,4,1);
+					elseif($key == 'tempf')   $sensor = $this->Translate('Outdoor sensor');
+					elseif($key == 'tempinf') $sensor = $this->Translate('Indoor sensor');
+					$this->RegisterVariableFloat($key, $this->Translate('Temperature') . " (" . $sensor . ")",$profile);
+					if($this->GetValue($key) != $temp || $SaveAllValues) $this->SetValue($key, $temp);
+				}
 			}
 			elseif (substr($key,0,8) == 'humidity' )
 			{
-				$this->RegisterVariableInteger($key, $this->Translate('Humidity') . " (" . $key . ")",'~Humidity');
-				if($this->GetValue($key) != $value || $SaveAllValues) $this->SetValue($key, intval($value));
+				if($IgnoreImprobableValues && $value < -1000)
+				{
+					$this->SendDebug("Ignored Improbable Value","Key: " . $key . " | Value: " . $value , 0);
+				}
+				else
+				{
+					$this->RegisterVariableInteger($key, $this->Translate('Humidity') . " (" . $key . ")",'~Humidity');
+					if($this->GetValue($key) != $value || $SaveAllValues) $this->SetValue($key, intval($value));
+				}
 			}
 			elseif (substr($key,0,12) == 'soilmoisture' )
 			{
@@ -312,7 +328,7 @@ class Froggit extends IPSModule {
 		{
 			$key='dewpoint';
 			if($this->ReadPropertyInteger("Temperature") == 0) { // °C
-				$temp = round(($_POST['tempf'] - 32) / 1.8 ,2);
+				$temp = ($_POST['tempf'] - 32) / 1.8;
 				$profile = '~Temperature';
 			} else { // °F
 				$profile = '~Temperature.Fahrenheit';
@@ -331,13 +347,13 @@ class Froggit extends IPSModule {
 			$key = 'windchill';
 			$wind = $this->ConvertWindSpeed(floatval($_POST['windspeedmph']));
 			if($this->ReadPropertyInteger("Temperature") == 0) { // °C
-				$temp = round(($_POST['tempf'] - 32) / 1.8 ,2);
+				$temp = ($_POST['tempf'] - 32) / 1.8;
 				$profile = '~Temperature';
 			} else { // °F
 				$profile = '~Temperature.Fahrenheit';
 				$temp = $_POST['tempf'];
 			}
-			if ($temp <= 10) $windchill=13.12+0.6215*$temp-11.37*pow($wind->windspeed,0.16)+0.3965*$temp*pow($wind->windspeed,0.16);
+			if ($temp <= 10) $windchill = 13.12 + 0.6215 * $temp - 11.37 * pow($wind->windspeed,0.16) + 0.3965 * $temp * pow($wind->windspeed,0.16);
 			else $windchill = $temp;
 			$this->RegisterVariableFloat($key, $this->Translate('Windchill'),$profile);
 			if($this->GetValue($key) != $windchill || $SaveAllValues) $this->SetValue($key, $windchill);

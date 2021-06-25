@@ -34,6 +34,7 @@
             "Battery": "Batterie",
             "Save Settings": "Speicher Einstellungen",
             "Save all Values": "Alle Werte Speichern",
+            "Ignore Improbable Values": "Ignoriere unwahrscheinliche Werte",
             "Settings": "Einstellungen",
             "Dew Point": "Taupunkt",
             "Windchill": "Gefühlte Temperatur",
@@ -52,7 +53,8 @@
             "lightning time": "Uhrzeit Blitz",
             "Battery Lightning Sensor": "Batterie Blitz Sensor",
             "You can select the /hook path. It must match to the settings in the App!": "Der Pfad zum /hook kann gewählt werden. Dies muss mit der Einstellung in der App übereinstimmen!",
-            "With this Checkbox, you can select if every value will stored in Symcon or only if the value changes.": "Mit diesem Schalter können Sie auswählen, ob jeder Wert in Symcon gespeichert wird oder nur, wenn sich der Wert ändert. "
+            "With this Checkbox, you can select if every value will stored in Symcon or only if the value changes.": "Mit diesem Schalter können Sie auswählen, ob jeder Wert in Symcon gespeichert wird oder nur, wenn sich der Wert ändert. ",
+            "With this Checkbox, you can select if every value will stored in Symcon or improbable value be ignored.": "Mit diesem Schalter können Sie auswählen, ob jeder Wert in Symcon gespeichert wird oder unwahrscheinliche Werte ignoriert werden. "
         }
     }
 }

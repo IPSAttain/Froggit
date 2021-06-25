@@ -66,19 +66,29 @@
         },
         {"type": "ExpansionPanel",
             "caption": "Save Settings",
-            "items": [
-                { 
-                    "type": "RowLayout",
-                    "items": [
-                        {
-                            "type": "CheckBox",
-                            "caption": "Save all Values",
-                            "name": "SaveAllValues"
-                        }
-                    ]
+            "items": 
+            [
+                {
+                    "type": "CheckBox",
+                    "caption": "Save all Values",
+                    "name": "SaveAllValues"
                 },
-                { "type": "Label", "name": "Hints", "caption": "With this Checkbox, you can select if every value will stored in Symcon or only if the value changes." }
-                ]
+                { 
+                    "type": "Label", 
+                    "name": "Hint1", 
+                    "caption": "With this Checkbox, you can select if every value will stored in Symcon or only if the value changes." 
+                },
+                {
+                    "type": "CheckBox",
+                    "caption": "Ignore Improbable Values",
+                    "name": "IgnoreImprobableValues"
+                },
+                { 
+                    "type": "Label",
+                    "name": "Hint2",
+                    "caption": "With this Checkbox, you can select if every value will stored in Symcon or improbable value be ignored." 
+                }
+            ]
             }
     ],
     "actions": [],
