@@ -14,9 +14,6 @@
 * Empfangen von Daten einer Froggit/Ecowitt Wetterstation und ablegen in Variablen.
 * Die Kommunikation läuft über das WebHook Control. Die nötigen Einstellungen werde automatisch vom Modul vorgenommen.
 
-* Receive data from a Froggit / Ecowitt weather station and store it in variables.
-* Communication takes place via the WebHook Control. The necessary settings are made automatically by the module. 
-
 ### 2. Vorraussetzungen 
 
 - IP-Symcon ab Version 5.3

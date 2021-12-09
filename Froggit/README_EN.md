@@ -52,9 +52,6 @@ The 'Froggit' module can be found under 'Add instance' using the quick filter.
 
 __Configuration__:
 
-* In der Instanz können die bevorzugten Einheiten ausgewählt werden.
-* Der Pfad zum hook kann eingestellt werden. Damit ist es möglich, mehrere Wetterstationen mit mehreren Instanzen einzubinden. Der Pfad muss immer mit "/hook/..." beginnen!
-
 * The preferred units can be selected in the instance.
 * The path to the hook can be set. This makes it possible to integrate several weather stations with several instances. The path must always begin with "/hook/..."! 
 
