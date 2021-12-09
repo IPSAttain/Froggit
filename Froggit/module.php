@@ -354,7 +354,7 @@ class Froggit extends IPSModule {
 				$temp = $_POST['tempf'];
 			}
 			//Windchill temperature is defined only for temperatures at or below 10 °C (50 °F) and wind speeds above 4.8 kilometres per hour (3.0 mph).
-			if ($temp <= 10 && $wind > 5) $windchill = 13.12 + 0.6215 * $temp - 11.37 * pow($wind->windspeed,0.16) + 0.3965 * $temp * pow($wind->windspeed,0.16);
+			if ($temp <= 10 && $wind->windspeed > 5) $windchill = 13.12 + 0.6215 * $temp - 11.37 * pow($wind->windspeed,0.16) + 0.3965 * $temp * pow($wind->windspeed,0.16);
 			else $windchill = $temp;
 			$this->RegisterVariableFloat($key, $this->Translate('Windchill'),$profile);
 			if($this->GetValue($key) != $windchill || $SaveAllValues) $this->SetValue($key, $windchill);
