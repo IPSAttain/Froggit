@@ -6,4 +6,6 @@ Folgende Module beinhaltet das Froggit_WS Repository:
 
 - __Froggit__ ([Dokumentation](Froggit))  
 
+- __Froggit__ ([English Documentation](Froggit/README_EN.md))  
+
 Lokales empfangen von Daten einer Froggit Wetterstation in IP Symcon
