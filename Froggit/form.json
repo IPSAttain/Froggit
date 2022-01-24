@@ -88,8 +88,30 @@
                     "name": "Hint2",
                     "caption": "With this Checkbox, you can select if every value will stored in Symcon or improbable value be ignored." 
                 }
+                ,
+                {
+                    "type": "CheckBox",
+                    "caption": "Create Variables automatically",
+                    "name": "CreateVariables"
+                },
+                { 
+                    "type": "Label",
+                    "name": "Hint3",
+                    "caption": "With this Checkbox, you can select if variables will be automatically created." 
+                }
             ]
-            }
+            },
+            {"type": "ExpansionPanel",
+                "caption": "Debug",
+                "items": [
+                            { "type": "Select", "name": "Debug", "caption": "Debug Level",
+                                "options": [
+                                    { "label": "Off", "value": 0 },
+                                    { "label": "Medium", "value": 1 },
+                                    { "label": "High", "value": 2 }
+                            ]}        
+                    ]
+                }
     ],
     "actions": [],
     "status": []
