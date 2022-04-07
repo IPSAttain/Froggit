@@ -300,7 +300,7 @@ class Froggit extends IPSModule {
 							$temp = $value;
 						}
 						$sensor = $this->Translate('Channel') . ' ' . substr($key,5,1);
-						$name = $this->Translate('Floor Temperature')
+						$name = $this->Translate('Floor Temperature');
 						$pos = 10 * substr($key,5,1) + 1;
 						$ID = $this->VariableCreate('float', $key, $name . ' (' . $sensor . ')', $profile , 500 + $pos);
 						if($ID && ($this->GetValue($key) != $temp || $SaveAllValues)) $this->SetValue($key, $temp);
