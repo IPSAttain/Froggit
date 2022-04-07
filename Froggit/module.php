@@ -221,6 +221,12 @@ class Froggit extends IPSModule {
 					if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) $this->SetValue($key, $batt);
 				break;
 
+				case (substr($key,0,7) == 'tf_batt' ) :
+					$batt = $value * 200 - 220;  // from 1.1 == empty to 1.6 == full
+					$ID = $this->VariableCreate('integer', $key, $this->Translate('Floor Temperature Battery') . " (" . substr($key,-1) . ")",'~Battery.100', 510 + intval(substr($key,-1)));
+					if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) $this->SetValue($key, $batt);
+				break;
+
 				case (substr($key,0,8) == 'leakbatt') : // water leak
 					$batt = intval($value)*20; // from 0 == empty to 5 == full
 					$ID = $this->VariableCreate('integer', $key, $this->Translate('Battery') . ' ' . $this->Translate('Water Leak Sensor') . ' (' . substr($key,-1) . ')','~Battery.100', 810 + intval(substr($key,-1)));
@@ -279,6 +285,28 @@ class Froggit extends IPSModule {
 					}
 				break;
 
+				case (substr($key,0,5) == 'tf_ch' ) :
+					if($IgnoreImprobableValues && $value <= -1000)
+					{
+						if ($Debug) $this->SendDebug("Ignored Improbable Value","Key: " . $key . " | Value: " . $value , 0);
+					}
+					else
+					{
+						if($this->ReadPropertyInteger("Temperature") == 0) { // °C
+							$temp = round(($value - 32) / 1.8 ,2);
+							$profile = '~Temperature';
+						} else { // °F
+							$profile = '~Temperature.Fahrenheit';
+							$temp = $value;
+						}
+						$sensor = $this->Translate('Channel') . ' ' . substr($key,5,1);
+						$name = $this->Translate('Floor Temperature')
+						$pos = 10 * substr($key,5,1) + 1;
+						$ID = $this->VariableCreate('float', $key, $name . ' (' . $sensor . ')', $profile , 500 + $pos);
+						if($ID && ($this->GetValue($key) != $temp || $SaveAllValues)) $this->SetValue($key, $temp);
+					}
+				break;
+
 				case (substr($key,0,8) == 'humidity' ) :
 					if($IgnoreImprobableValues && $value < -1000)
 					{
@@ -296,7 +324,7 @@ class Froggit extends IPSModule {
 					if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) $this->SetValue($key, intval($value));
 				break;
 
-				case (substr($key,0,5) == 'barom' ) :
+				case 'baromabsin' :
 					if($this->ReadPropertyInteger("Pressure") == 0) { // hPa
 						$pressure = round($value / 0.02952998751 , 1);
 						$profile = '~AirPressure.F';
@@ -311,6 +339,22 @@ class Froggit extends IPSModule {
 					}
 					$ID = $this->VariableCreate('float', $key, $this->Translate('Air Pressure') . " (" . $key . ")",$profile, 250);
 					if($ID && ($this->GetValue($key) != $pressure || $SaveAllValues)) $this->SetValue($key, $pressure);
+
+					// baromrel
+					$key= 'baromrelin';
+					if($this->ReadPropertyInteger("Pressure") == 0) { // hPa
+						$pressure = round($value / 0.02952998751 , 1);
+						$profile = '~AirPressure.F';
+					} elseif ($this->ReadPropertyInteger("Pressure") == 1) { // inHg
+						$pressure = round($value, 2);
+						$this->CreateVarProfileFloat('Froggit.AirPressure.inHg','Gauge',' inHG', 30, 50);
+						$profile = 'Froggit.AirPressure.inHg';
+					} else { // mmHg
+						$pressure = round($value * 25.4 , 2);
+						$this->CreateVarProfileFloat('Froggit.AirPressure.mmHg','Gauge',' mmHG', 900 , 1100);
+						$profile = 'Froggit.AirPressure.mmHg';
+					}
+				
 				break;
 
 				case (strpos($key, 'rain') !== false) :
@@ -337,6 +381,9 @@ class Froggit extends IPSModule {
 			}
 		}
 
+
+		$ID = $this->VariableCreate('float', $key, $this->Translate('Air Pressure') . " (" . $key . ")",$profile, 250);
+		if($ID && ($this->GetValue($key) != $pressure || $SaveAllValues)) $this->SetValue($key, $pressure);
 
 		//dew Point calculation
 		if ($this->ReadPropertyBoolean("DewPoint") && array_key_exists('tempf',$_POST) && array_key_exists('humidity',$_POST))
