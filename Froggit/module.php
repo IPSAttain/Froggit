@@ -235,7 +235,7 @@ class Froggit extends IPSModule {
 
 				case (substr($key,0,8) == 'wh57batt') : // lightning
 					$batt = intval($value)*20; // from 0 == empty to 5 == full
-					$ID = $this->VariableCreate('integer', $key, 'Battery Lightning Sensor' ,'~Battery.100' , 820);
+					$ID = $this->VariableCreate('integer', $key, $this->Translate('Battery Lightning Sensor'),'~Battery.100' , 820);
 					if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) $this->SetValue($key, $batt);
 				break;
 
@@ -257,7 +257,9 @@ class Froggit extends IPSModule {
 					if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) $this->SetValue($key, $batt);
 				break;
 
+				// >>>>>>>>>>>>>>>>>>>>>>> Temperature Sensors <<<<<<<<<<<<<<<<<<<<
 				case (substr($key,0,4) == 'temp' ) :
+				case (substr($key,0,5) == 'tf_ch' ) :
 					$pos = 0;
 					if($IgnoreImprobableValues && $value <= -1000)
 					{
@@ -273,36 +275,19 @@ class Froggit extends IPSModule {
 							$temp = $value;
 						}
 						$sensor = $key;
-						if(is_numeric(substr($key,4,1))) 
+						if(is_numeric(substr($key,-1))) 
 						{
-							$sensor = $this->Translate('Channel') . ' ' . substr($key,4,1);
-							$pos = 10 * substr($key,4,1) + 1;
+							$sensor = $this->Translate('Channel') . ' ' . substr($key,-1);
+							$pos = 10 * substr($key,-1) + 1;
+							$name = $this->Translate('Temperature');
+							if (substr($key,0,5) == 'tf_ch' ) {
+								$pos =+ 400;
+								$name = $this->Translate('Floor Temperature');
+							}
 						}
 						elseif($key == 'tempf')   $sensor = $this->Translate('Outdoor sensor');
 						elseif($key == 'tempinf') $sensor = $this->Translate('Indoor sensor');
-						$ID = $this->VariableCreate('float', $key, 'Temperature (' . $sensor . ')', $profile , 100 + $pos);
-						if($ID && ($this->GetValue($key) != $temp || $SaveAllValues)) $this->SetValue($key, $temp);
-					}
-				break;
-
-				case (substr($key,0,5) == 'tf_ch' ) :
-					if($IgnoreImprobableValues && $value <= -1000)
-					{
-						if ($Debug) $this->SendDebug("Ignored Improbable Value","Key: " . $key . " | Value: " . $value , 0);
-					}
-					else
-					{
-						if($this->ReadPropertyInteger("Temperature") == 0) { // °C
-							$temp = round(($value - 32) / 1.8 ,2);
-							$profile = '~Temperature';
-						} else { // °F
-							$profile = '~Temperature.Fahrenheit';
-							$temp = $value;
-						}
-						$sensor = $this->Translate('Channel') . ' ' . substr($key,5,1);
-						$name = $this->Translate('Floor Temperature');
-						$pos = 10 * substr($key,5,1) + 1;
-						$ID = $this->VariableCreate('float', $key, $name . ' (' . $sensor . ')', $profile , 500 + $pos);
+						$ID = $this->VariableCreate('float', $key, $name . ' (' . $sensor . ')', $profile , 100 + $pos);
 						if($ID && ($this->GetValue($key) != $temp || $SaveAllValues)) $this->SetValue($key, $temp);
 					}
 				break;
