@@ -351,10 +351,6 @@ class Froggit extends IPSModule {
 			}
 		}
 
-
-		$ID = $this->VariableCreate('float', $key, $this->Translate('Air Pressure') . " (" . $key . ")",$profile, 250);
-		if($ID && ($this->GetValue($key) != $pressure || $SaveAllValues)) $this->SetValue($key, $pressure);
-
 		//dew Point calculation
 		if ($this->ReadPropertyBoolean("DewPoint") && array_key_exists('tempf',$_POST) && array_key_exists('humidity',$_POST))
 		{
