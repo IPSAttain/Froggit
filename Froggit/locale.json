@@ -44,6 +44,8 @@
             "Path": "Pfad",
             "Soilmoisture": "Bodenfeuchte",
             "SoilMoistureBattery": "Batterie Bodenfeuchtesensor",
+            "Floor Temperature Battery": "Batterie Bodentemperatursensor",
+            "Floor Temperature": "Bodentemperatur",
             "Full": "Voll",
             "almost empty": "Fast Leer",
             "Low": "Leer",

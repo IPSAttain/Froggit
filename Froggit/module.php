@@ -221,6 +221,12 @@ class Froggit extends IPSModule {
 					if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) $this->SetValue($key, $batt);
 				break;
 
+				case (substr($key,0,7) == 'tf_batt' ) :
+					$batt = $value * 200 - 220;  // from 1.1 == empty to 1.6 == full
+					$ID = $this->VariableCreate('integer', $key, $this->Translate('Floor Temperature Battery') . " (" . substr($key,-1) . ")",'~Battery.100', 510 + intval(substr($key,-1)));
+					if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) $this->SetValue($key, $batt);
+				break;
+
 				case (substr($key,0,8) == 'leakbatt') : // water leak
 					$batt = intval($value)*20; // from 0 == empty to 5 == full
 					$ID = $this->VariableCreate('integer', $key, $this->Translate('Battery') . ' ' . $this->Translate('Water Leak Sensor') . ' (' . substr($key,-1) . ')','~Battery.100', 810 + intval(substr($key,-1)));
@@ -229,7 +235,7 @@ class Froggit extends IPSModule {
 
 				case (substr($key,0,8) == 'wh57batt') : // lightning
 					$batt = intval($value)*20; // from 0 == empty to 5 == full
-					$ID = $this->VariableCreate('integer', $key, 'Battery Lightning Sensor' ,'~Battery.100' , 820);
+					$ID = $this->VariableCreate('integer', $key, $this->Translate('Battery Lightning Sensor'),'~Battery.100' , 820);
 					if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) $this->SetValue($key, $batt);
 				break;
 
@@ -251,7 +257,9 @@ class Froggit extends IPSModule {
 					if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) $this->SetValue($key, $batt);
 				break;
 
+				// >>>>>>>>>>>>>>>>>>>>>>> Temperature Sensors <<<<<<<<<<<<<<<<<<<<
 				case (substr($key,0,4) == 'temp' ) :
+				case (substr($key,0,5) == 'tf_ch' ) :
 					$pos = 0;
 					if($IgnoreImprobableValues && $value <= -1000)
 					{
@@ -267,14 +275,19 @@ class Froggit extends IPSModule {
 							$temp = $value;
 						}
 						$sensor = $key;
-						if(is_numeric(substr($key,4,1))) 
+						if(is_numeric(substr($key,-1))) 
 						{
-							$sensor = $this->Translate('Channel') . ' ' . substr($key,4,1);
-							$pos = 10 * substr($key,4,1) + 1;
+							$sensor = $this->Translate('Channel') . ' ' . substr($key,-1);
+							$pos = 10 * substr($key,-1) + 1;
+							$name = $this->Translate('Temperature');
+							if (substr($key,0,5) == 'tf_ch' ) {
+								$pos =+ 400;
+								$name = $this->Translate('Floor Temperature');
+							}
 						}
 						elseif($key == 'tempf')   $sensor = $this->Translate('Outdoor sensor');
 						elseif($key == 'tempinf') $sensor = $this->Translate('Indoor sensor');
-						$ID = $this->VariableCreate('float', $key, 'Temperature (' . $sensor . ')', $profile , 100 + $pos);
+						$ID = $this->VariableCreate('float', $key, $name . ' (' . $sensor . ')', $profile , 100 + $pos);
 						if($ID && ($this->GetValue($key) != $temp || $SaveAllValues)) $this->SetValue($key, $temp);
 					}
 				break;
@@ -296,7 +309,8 @@ class Froggit extends IPSModule {
 					if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) $this->SetValue($key, intval($value));
 				break;
 
-				case (substr($key,0,5) == 'barom' ) :
+				case 'baromabsin' :
+				case 'baromrelin' :
 					if($this->ReadPropertyInteger("Pressure") == 0) { // hPa
 						$pressure = round($value / 0.02952998751 , 1);
 						$profile = '~AirPressure.F';
@@ -336,7 +350,6 @@ class Froggit extends IPSModule {
 					}
 			}
 		}
-
 
 		//dew Point calculation
 		if ($this->ReadPropertyBoolean("DewPoint") && array_key_exists('tempf',$_POST) && array_key_exists('humidity',$_POST))
