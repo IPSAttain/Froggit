@@ -309,7 +309,7 @@ class Froggit extends IPSModule {
 					if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) $this->SetValue($key, intval($value));
 				break;
 
-				case 'baromabsin' :
+				//case 'baromabsin' :
 				case 'baromrelin' :
 					if($this->ReadPropertyInteger("Pressure") == 0) { // hPa
 						$pressure = round($value / 0.02952998751 , 1);
