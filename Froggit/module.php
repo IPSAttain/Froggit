@@ -310,6 +310,7 @@ class Froggit extends IPSModule {
 				break;
 
 				case 'baromabsin' :
+				case 'baromrelin' :
 					if($this->ReadPropertyInteger("Pressure") == 0) { // hPa
 						$pressure = round($value / 0.02952998751 , 1);
 						$profile = '~AirPressure.F';
@@ -324,22 +325,6 @@ class Froggit extends IPSModule {
 					}
 					$ID = $this->VariableCreate('float', $key, $this->Translate('Air Pressure') . " (" . $key . ")",$profile, 250);
 					if($ID && ($this->GetValue($key) != $pressure || $SaveAllValues)) $this->SetValue($key, $pressure);
-
-					// baromrel
-					$key= 'baromrelin';
-					if($this->ReadPropertyInteger("Pressure") == 0) { // hPa
-						$pressure = round($value / 0.02952998751 , 1);
-						$profile = '~AirPressure.F';
-					} elseif ($this->ReadPropertyInteger("Pressure") == 1) { // inHg
-						$pressure = round($value, 2);
-						$this->CreateVarProfileFloat('Froggit.AirPressure.inHg','Gauge',' inHG', 30, 50);
-						$profile = 'Froggit.AirPressure.inHg';
-					} else { // mmHg
-						$pressure = round($value * 25.4 , 2);
-						$this->CreateVarProfileFloat('Froggit.AirPressure.mmHg','Gauge',' mmHG', 900 , 1100);
-						$profile = 'Froggit.AirPressure.mmHg';
-					}
-				
 				break;
 
 				case (strpos($key, 'rain') !== false) :
