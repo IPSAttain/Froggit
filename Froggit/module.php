@@ -110,6 +110,11 @@ class Froggit extends IPSModule {
 					if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) $this->SetValue($key, $value);
 				break;
 				
+				case 'runtime' :
+					$ID = $this->VariableCreate('integer', $key, $this->Translate('Runtime') ,'~UnixTimestamp', 903);
+					if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) $this->SetValue($key, intval($value));
+				break;
+
 				case 'winddir' :
 					$ID = $this->VariableCreate('integer', $key."_int", 'Wind Direction','~WindDirection', 500);
 					if($ID && ($this->GetValue($key."_int") != $value || $SaveAllValues)) $this->SetValue($key."_int", intval($value));
