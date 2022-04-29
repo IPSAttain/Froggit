@@ -112,7 +112,7 @@ class Froggit extends IPSModule {
 				
 				case 'runtime' :
 					$uptime = time() - $value;
-					$ID = $this->VariableCreate('integer', $key, $this->Translate('Runtime') ,'~UnixTimestamp', 903);
+					$ID = $this->VariableCreate('integer', $key, $this->Translate('Start Time Gateway') ,'~UnixTimestamp', 903);
 					if($ID && ($this->GetValue($key) != $uptime || $SaveAllValues)) $this->SetValue($key, intval($uptime));
 				break;
 
