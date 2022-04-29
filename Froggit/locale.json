@@ -46,6 +46,8 @@
             "SoilMoistureBattery": "Batterie Bodenfeuchtesensor",
             "Floor Temperature Battery": "Batterie Bodentemperatursensor",
             "Floor Temperature": "Bodentemperatur",
+            "Leaf Sensor Battery": "Blatt Sensor Batterie",
+            "Leafwetness": "Blatt Feuchte",
             "Full": "Voll",
             "almost empty": "Fast Leer",
             "Low": "Leer",

@@ -221,6 +221,12 @@ class Froggit extends IPSModule {
 					if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) $this->SetValue($key, $batt);
 				break;
 
+				case (substr($key,0,9) == 'leaf_batt' ) :
+					$batt = $value * 200 - 220;  // from 1.1 == empty to 1.6 == full
+					$ID = $this->VariableCreate('integer', $key, $this->Translate('Leaf Sensor Battery') . " (" . substr($key,-1) . ")",'~Battery.100', 520 + intval(substr($key,-1)));
+					if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) $this->SetValue($key, $batt);
+				break;
+
 				case (substr($key,0,7) == 'tf_batt' ) :
 					$batt = $value * 200 - 220;  // from 1.1 == empty to 1.6 == full
 					$ID = $this->VariableCreate('integer', $key, $this->Translate('Floor Temperature Battery') . " (" . substr($key,-1) . ")",'~Battery.100', 510 + intval(substr($key,-1)));
@@ -306,6 +312,11 @@ class Froggit extends IPSModule {
 
 				case (substr($key,0,12) == 'soilmoisture' ) :
 					$ID = $this->VariableCreate('integer', $key, $this->Translate('Soilmoisture') . " (" . substr($key,-1) . ")",'~Humidity', 400 + intval(substr($key,-1)));
+					if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) $this->SetValue($key, intval($value));
+				break;
+
+				case (substr($key,0,11) == 'leafwetness' ) :
+					$ID = $this->VariableCreate('integer', $key, $this->Translate('Leafwetness') . " (" . substr($key,-1) . ")",'~Humidity', 410 + intval(substr($key,-1)));
 					if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) $this->SetValue($key, intval($value));
 				break;
 
