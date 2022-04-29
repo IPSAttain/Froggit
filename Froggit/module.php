@@ -111,8 +111,9 @@ class Froggit extends IPSModule {
 				break;
 				
 				case 'runtime' :
+					$uptime = time() - $value;
 					$ID = $this->VariableCreate('integer', $key, $this->Translate('Runtime') ,'~UnixTimestamp', 903);
-					if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) $this->SetValue($key, intval($value));
+					if($ID && ($this->GetValue($key) != $uptime || $SaveAllValues)) $this->SetValue($key, intval($uptime));
 				break;
 
 				case 'winddir' :
