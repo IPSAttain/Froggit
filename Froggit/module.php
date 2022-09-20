@@ -299,6 +299,7 @@ class Froggit extends IPSModule {
 						}
 						elseif($key == 'tempf')   $sensor = $this->Translate('Outdoor sensor');
 						elseif($key == 'tempinf') $sensor = $this->Translate('Indoor sensor');
+						elseif($key == 'templf')  $sensor = $this->Translate('Indoor sensor');
 						$ID = $this->VariableCreate('float', $key, $name . ' (' . $sensor . ')', $profile , 100 + $pos);
 						if($ID && ($this->GetValue($key) != $temp || $SaveAllValues)) $this->SetValue($key, $temp);
 					}
