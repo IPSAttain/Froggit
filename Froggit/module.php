@@ -357,6 +357,22 @@ class Froggit extends IPSModule {
 					if($ID && ($this->GetValue($key) != $rain || $SaveAllValues)) $this->SetValue($key,$rain);
 				break;
 
+				case 'ws90cap_volt' :
+					$ID = $this->VariableCreate('float', $key, $this->Translate('Voltage Outdoor Sensor') ,'~Volt', 903);
+					if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) $this->SetValue($key, $value);
+				break;
+
+				case 'ws90_ver' :
+					$ID = $this->VariableCreate('integer', $key, $this->Translate('Version') ,'', 904);
+					if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) $this->SetValue($key, intval($value));
+				break;
+
+				case 'interval' :
+					$this->CreateVarProfileInteger('Froggit.interval.sec', '',' sek');
+					$ID = $this->VariableCreate('integer', $key, $this->Translate('Interval'),'Froggit.interval.sec', 906);
+					if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) $this->SetValue($key, $value);
+				break;
+
 					// >>>>>>>>>>>>>>>>> all other <<<<<<<<<<<<<<<<<<
 				default : // all other keys that needs to be seperated
 					if (isset($key) && isset($value))
