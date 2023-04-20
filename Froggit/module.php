@@ -239,6 +239,21 @@ class Froggit extends IPSModule {
 					if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) $this->SetValue($key, $batt);
 				break;
 
+				case 'wh40batt' :  // digital rain gauge sensor
+				case 'wh68batt' :  // wireless solar powered anemometer
+					$batt = $value * 200 - 220;  // from 1.1 == empty to 1.6 == full
+					$ID = $this->VariableCreate('integer', $key, $this->Translate('Battery') . " (" . $key . ")",'~Battery.100', 520);
+					if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) $this->SetValue($key, $batt);
+				break;
+
+				case 'wh90batt' : // DP2000
+				case 'wh80batt' : // ultrasonic anemometer
+				case 'console_batt' :
+					$batt = $value * 75 - 150;  // from 2 == empty to 3.3 == full
+					$ID = $this->VariableCreate('integer', $key, $this->Translate('Battery Weather Station') ,'~Battery.100', 810);
+					if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) $this->SetValue($key, $batt);
+				break;
+
 				case (substr($key,0,8) == 'leakbatt') : // water leak
 					$batt = intval($value)*20; // from 0 == empty to 5 == full
 					$ID = $this->VariableCreate('integer', $key, $this->Translate('Battery') . ' ' . $this->Translate('Water Leak Sensor') . ' (' . substr($key,-1) . ')','~Battery.100', 810 + intval(substr($key,-1)));
