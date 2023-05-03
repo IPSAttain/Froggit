@@ -155,6 +155,33 @@ class Froggit extends IPSModule {
 				break;
 
 				case 'solarradiation' :
+					switch ($this->ReadPropertyInteger("Light"))
+					{
+						case 0:
+							$solarradiation = intval($value );
+							$this->CreateVarProfileInteger('Froggit.Light.wm2','Sun',' w/m²');
+							$profile = 'Froggit.Light.wm2';
+							break;
+						
+						case 1:
+							$solarradiation = intval($value * 126.7 );
+							$profile = '~Illumination';
+							break;
+
+						case 2:
+							$solarradiation = intval($value * 126.7 / 10.76);
+							$this->CreateVarProfileInteger('Froggit.Light.fc','Sun',' fc');
+							$profile = 'Froggit.Light.fc';
+							break;
+
+						case 3:
+							$solarradiation = $value;
+							$this->CreateVarProfileFloat('Froggit.Light.wm2.float','Sun',' w/m²',0,1300);
+							$profile = 'Froggit.Light.wm2.float';
+							$ID = $this->VariableCreate('float', $key, 'Solar Radiation',$profile, 550);
+							break;
+/*
+					}
 					if($this->ReadPropertyInteger("Light") == 0) { // w/m²
 						$solarradiation = intval($value );
 						$this->CreateVarProfileInteger('Froggit.Light.wm2','Sun',' w/m²');
@@ -167,7 +194,8 @@ class Froggit extends IPSModule {
 						$this->CreateVarProfileInteger('Froggit.Light.fc','Sun',' fc');
 						$profile = 'Froggit.Light.fc';
 					}
-					$ID = $this->VariableCreate('integer', $key, 'Solar Radiation',$profile, 550);
+					*/
+					if(!isset($ID)) $ID = $this->VariableCreate('integer', $key, 'Solar Radiation',$profile, 550);
 					if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) $this->SetValue($key, $solarradiation);
 				break;
 
