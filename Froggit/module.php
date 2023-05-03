@@ -180,8 +180,8 @@ class Froggit extends IPSModule {
 							$profile = 'Froggit.Light.wm2.float';
 							$ID = $this->VariableCreate('float', $key, 'Solar Radiation',$profile, 550);
 							break;
-/*
 					}
+					/*
 					if($this->ReadPropertyInteger("Light") == 0) { // w/m²
 						$solarradiation = intval($value );
 						$this->CreateVarProfileInteger('Froggit.Light.wm2','Sun',' w/m²');
