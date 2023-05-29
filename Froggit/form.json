@@ -25,9 +25,10 @@
                     ]},
                     { "type": "Select", "name": "Light", "caption": "Light",
                         "options": [
-                            { "label": "w/m²", "value": 0 },
+                            { "label": "w/m² (integer)", "value": 0 },
                             { "label": "lux", "value": 1 },
-                            { "label": "fc", "value": 2 }
+                            { "label": "fc", "value": 2 },
+                            { "label": "w/m² (float)", "value": 3 }
                     ]},
                     { "type": "Select", "name": "Pressure", "caption": "Air Pressure",
                         "options": [

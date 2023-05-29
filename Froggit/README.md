@@ -24,7 +24,9 @@
 
 ![ModulStore](../docs/ModulStore.png)
 
-* Konfiguriert wird das WiFi Gateeway mit der App "WS View". Erhältlich für Android und IOS.
+#### 3.1 Konfiguration des  Gaytway per App
+
+* Konfiguriert werden kann das WiFi Gateeway mit der App "WS View". Erhältlich für Android und IOS.
 * Im Bereich "Weather Services" muss der "Customized Upload" aktiviert und konfiguriert werden. 
 * Protokoll Typ: | Ecowitt
 * Server IP: | IP-Adresse des IPS Servers. 
@@ -39,6 +41,24 @@
 
  ![Config_Connect](../docs/Config_Connect.png)
  
+#### 3.2 Konfiguration des Gateway per Webinterface
+
+* Das Gateway der DP2000 Station hat auch ein eigenes Webinterface
+* Display auf Werkseinstellungen zurück setzen, so dass das WLAN-Symbol blinkt
+* PC oder Smartphone beim WLAN-Access-Point des Displays anmelden (ab Werk kein Passwort gesetzt)
+* Im Browser 192.168.4.1 aufrufen
+* Hier kann die Station in das eigene WLAN eingebunden werden.
+
+![Config_WebUI](../docs/DP2000_WebUI1.jpeg)
+
+* Im Bereich "Weather Services" muss "Customized" aktiviert und konfiguriert werden. 
+* Protokoll Typ: | Ecowitt
+* Server IP: | IP-Adresse des IPS Servers. 
+* Path: | /hook/froggit eintragen
+* Port: | 3777 (Standard-Zugangsport IPS)
+
+![Config_WebUI](../docs/DP2000_WebUI2.jpeg)
+
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
