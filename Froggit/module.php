@@ -227,7 +227,7 @@ class Froggit extends IPSModule
                 case 'lightning': // Lightning Detection Sensor (WH57)
                     $this->CreateVarProfileFloat('Froggit.Distance.km', 'Distance', ' km');
                     $ID = $this->VariableCreate('float', $key, $this->Translate('lightning dist'), 'Froggit.Distance.km', 802);
-                    $value = round($value, 2);
+                    $value = round((float)$value, 2);
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
                         $this->SetValue($key, $value);
                     }
@@ -371,7 +371,7 @@ class Froggit extends IPSModule
                         }
                     } else {
                         if($this->ReadPropertyInteger("Temperature") == 0) { // °C
-                            $temp = round(($value - 32) / 1.8, 2);
+                            $temp = round(((float)$value - 32) / 1.8, 2);
                             $profile = '~Temperature';
                         } else { // °F
                             $profile = '~Temperature.Fahrenheit';
@@ -428,14 +428,14 @@ class Froggit extends IPSModule
                 case 'baromabsin':
                 case 'baromrelin':
                     if($this->ReadPropertyInteger("Pressure") == 0) { // hPa
-                        $pressure = round($value / 0.02952998751, 1);
+                        $pressure = round((float)$value / 0.02952998751, 1);
                         $profile = '~AirPressure.F';
                     } elseif ($this->ReadPropertyInteger("Pressure") == 1) { // inHg
-                        $pressure = round($value, 2);
+                        $pressure = round((float)$value, 2);
                         $this->CreateVarProfileFloat('Froggit.AirPressure.inHg', 'Gauge', ' inHG', 30, 50);
                         $profile = 'Froggit.AirPressure.inHg';
                     } else { // mmHg
-                        $pressure = round($value * 25.4, 2);
+                        $pressure = round((float)$value * 25.4, 2);
                         $this->CreateVarProfileFloat('Froggit.AirPressure.mmHg', 'Gauge', ' mmHG', 900, 1100);
                         $profile = 'Froggit.AirPressure.mmHg';
                     }
@@ -447,7 +447,7 @@ class Froggit extends IPSModule
 
                 case (strpos($key, 'rain') !== false):
                     if($this->ReadPropertyInteger("Rain") == 0) { // mm
-                        $rain = round($value * 25.4, 2);
+                        $rain = round((float)$value * 25.4, 2);
                         $profile = '~Rainfall';
                     } else { // inch
                         $this->CreateVarProfileFloat('Froggit.Rain.Inch', 'Rainfall', ' in', 0, 10);
@@ -574,13 +574,13 @@ class Froggit extends IPSModule
     {
         $return = new StdClass();
         if($this->ReadPropertyInteger("Wind") == 0) { // km/h
-            $return->windspeed = round($value * 1.609344, 2);
+            $return->windspeed = round((float)$value * 1.609344, 2);
             $return->profile = '~WindSpeed.kmh';
         } elseif ($this->ReadPropertyInteger("Wind") == 1) { // m/s
-            $return->windspeed = round($value * 1.609344 / 3.6, 2);
+            $return->windspeed = round((float)$value * 1.609344 / 3.6, 2);
             $return->profile = '~WindSpeed.ms';
         } else { //mph
-            $return->windspeed = round($value, 2);
+            $return->windspeed = round((float)$value, 2);
             $this->CreateVarProfileFloat('Froggit.Wind.mph', 'WindSpeed', ' mph', 0, 100);
             $return->profile = 'Froggit.Wind.mph';
         }
