@@ -185,17 +185,20 @@ class Froggit extends IPSModule
                             $solarradiation = intval($value);
                             $this->CreateVarProfileInteger('Froggit.Light.wm2', 'Sun', ' w/m²');
                             $profile = 'Froggit.Light.wm2';
+                            $ID = $this->VariableCreate('integer', $key, 'Solar Radiation', $profile, 550);
                             break;
 
                         case 1:
                             $solarradiation = intval($value * 126.7);
                             $profile = '~Illumination';
+                            $ID = $this->VariableCreate('integer', $key, 'Solar Radiation', $profile, 550);
                             break;
 
                         case 2:
                             $solarradiation = intval($value * 126.7 / 10.76);
                             $this->CreateVarProfileInteger('Froggit.Light.fc', 'Sun', ' fc');
                             $profile = 'Froggit.Light.fc';
+                            $ID = $this->VariableCreate('integer', $key, 'Solar Radiation', $profile, 550);
                             break;
 
                         case 3:
@@ -205,13 +208,7 @@ class Froggit extends IPSModule
                             $ID = $this->VariableCreate('float', $key, 'Solar Radiation', $profile, 550);
                             break;
 
-                        default:
-                            $solarradiation = $value;
-                            $profile = '~Illumination';
                     }
-                    if(!isset($ID)) {
-                        $ID = $this->VariableCreate('integer', $key, 'Solar Radiation', $profile, 550);
-                    } // if no float profil already selected
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
                         $this->SetValue($key, $solarradiation);
                     }
