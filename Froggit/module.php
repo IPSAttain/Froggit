@@ -256,7 +256,7 @@ class Froggit extends IPSModule
 
                 case 'co2':
                 case 'co2_24h':
-                    $ID = $this->VariableCreate('integer', $key, key, '~Occurrence.CO2', 701);
+                    $ID = $this->VariableCreate('integer', $key, $key, '~Occurrence.CO2', 701);
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
                         $this->SetValue($key, intval($value));
                     }
