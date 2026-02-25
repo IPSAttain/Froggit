@@ -290,9 +290,26 @@ class Froggit extends IPSModule
                         $this->SetValue($key, $batt);
                     }
                     break;
-
+                // LDS Sensor
+                case (substr($key, 0, 10) == 'ldsheat_ch'):
+                    $this->CreateVarProfileInteger('Froggit.Heating.Count', 'heat', ' ');
+                    $ID = $this->VariableCreate('integer', $key, $this->Translate('Heating Counter LDS Sensor') . ' (' . substr($key, -1) . ')', 'Froggit.Heating.Count', 701);
+                    if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
+                        $this->SetValue($key, intval($value));
+                    }
+                    break;
+                case (substr($key, 0, 6) == 'air_ch'):
+                case (substr($key, 0, 6) == 'thi_ch'):
+                case (substr($key, 0, 8) == 'depth_ch'):
+                    $this->CreateVarProfileInteger('Froggit.Distance.mm','Distance', ' mm');
+                    $ID = $this->VariableCreate('integer', $key, 'LDS Sensor (' . $key . ')', 'Froggit.Distance.mm', 703);
+                    if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
+                        $this->SetValue($key, intval($value));
+                    }
+                    break;
                     // >>>>>>>>>>>>>>>>> Battery <<<<<<<<<<<<<<<<<<<
                 case (substr($key, 0, 8) == 'soilbatt'):
+                case (substr($key, 0, 12) == 'soil_ec_batt'):
                     $batt = $value * 200 - 220;  // from 1.1 == empty to 1.6 == full
                     $ID = $this->VariableCreate('integer', $key, $this->Translate('SoilMoistureBattery') . " (" . substr($key, -1) . ")", '~Battery.100', 410 + intval(substr($key, -1)));
                     if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) {
@@ -327,6 +344,7 @@ class Froggit extends IPSModule
 
                 case 'wh90batt': // DP2000
                 case 'wh80batt': // ultrasonic anemometer
+                case (substr($key, 0, 7) == 'ldsbatt'): //LDS01 Laser Distance Sensor
                 case 'console_batt':
                     $batt = $value * 75 - 150;  // from 2 == empty to 3.3 == full
                     $ID = $this->VariableCreate('integer', $key, $this->Translate('Battery Weather Station'), '~Battery.100', 810);
@@ -378,6 +396,7 @@ class Froggit extends IPSModule
                     // >>>>>>>>>>>>>>>>>>>>>>> Temperature Sensors <<<<<<<<<<<<<<<<<<<<
                 case (substr($key, 0, 4) == 'temp'):
                 case (substr($key, 0, 5) == 'tf_ch'):
+                case (substr($key, 0, 12) == 'soil_ec_temp'):
                 case 'tf_co2':
                     $pos = 0;
                     if($IgnoreImprobableValues && $value <= -1000) {
@@ -397,7 +416,7 @@ class Froggit extends IPSModule
                         if(is_numeric(substr($key, -1))) {
                             $sensor = $this->Translate('Channel') . ' ' . substr($key, -1);
                             $pos = 10 * substr($key, -1) + 1;
-                            if (substr($key, 0, 5) == 'tf_ch') {
+                            if (substr($key, 0, 5) == 'tf_ch' || substr($key, 0, 12) == 'soil_ec_temp') {
                                 $pos = +400;
                                 $name = $this->Translate('Floor Temperature');
                             }
@@ -428,12 +447,19 @@ class Froggit extends IPSModule
                     break;
 
                 case (substr($key, 0, 12) == 'soilmoisture'):
+                case (substr($key, 0, 11) == 'soil_ec_hum'):
                     $ID = $this->VariableCreate('integer', $key, $this->Translate('Soilmoisture') . " (" . substr($key, -1) . ")", '~Humidity', 400 + intval(substr($key, -1)));
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
                         $this->SetValue($key, intval($value));
                     }
                     break;
 
+                case (substr($key, 0, 11) == 'soil_ec'):
+                    $ID = $this->VariableCreate('integer', $key, $this->Translate('EC') . " (" . substr($key, -1) . ")", '', 400 + intval(substr($key, -1)));
+                    if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
+                        $this->SetValue($key, intval($value));
+                    }
+                    break;
                 case (substr($key, 0, 11) == 'leafwetness'):
                     $ID = $this->VariableCreate('integer', $key, $this->Translate('Leafwetness') . " (" . substr($key, -1) . ")", '~Humidity', 410 + intval(substr($key, -1)));
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
