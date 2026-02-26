@@ -455,15 +455,23 @@ class Froggit extends IPSModule
                     break;
 
                 case (substr($key, 0, 7) == 'soil_ec' && strlen($key) == 8):
-                    $ID = $this->VariableCreate('integer', $key, $this->Translate('EC') . " (" . substr($key, -1) . ")", '', 400 + intval(substr($key, -1)));
+                    $ID = $this->VariableCreate('integer', $key, "EC (" . substr($key, -1) . ")", '', 400 + intval(substr($key, -1)));
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
                         $this->SetValue($key, intval($value));
                     }
                     break;
+                    
                 case (substr($key, 0, 11) == 'leafwetness'):
                     $ID = $this->VariableCreate('integer', $key, $this->Translate('Leafwetness') . " (" . substr($key, -1) . ")", '~Humidity', 410 + intval(substr($key, -1)));
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
                         $this->SetValue($key, intval($value));
+                    }
+                    break;
+
+                case 'vpd':
+                    $ID = $this->VariableCreate('float', $key, "VPD", '', 705);
+                    if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
+                        $this->SetValue($key, $value);
                     }
                     break;
 
