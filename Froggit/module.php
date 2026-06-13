@@ -334,6 +334,7 @@ class Froggit extends IPSModule
                     break;
 
                 case 'wh40batt':  // digital rain gauge sensor
+                case 'bgtbatt': // black globe temperature sensor
                 case 'wh68batt':  // wireless solar powered anemometer
                     $batt = $value * 200 - 220;  // from 1.1 == empty to 1.6 == full
                     $ID = $this->VariableCreate('integer', $key, $this->Translate('Battery') . " (" . $key . ")", '~Battery.100', 520);
@@ -395,6 +396,8 @@ class Froggit extends IPSModule
 
                     // >>>>>>>>>>>>>>>>>>>>>>> Temperature Sensors <<<<<<<<<<<<<<<<<<<<
                 case (substr($key, 0, 4) == 'temp'):
+                case (substr($key, 0, 3) == 'bgt'):
+                case (substr($key, 0, 4) == 'wbgt'):
                 case (substr($key, 0, 5) == 'tf_ch'):
                 case (substr($key, 0, 12) == 'soil_ec_temp'):
                 case 'tf_co2':
