@@ -46,6 +46,8 @@
             "SoilMoistureBattery": "Batterie Bodenfeuchtesensor",
             "Floor Temperature Battery": "Batterie Bodentemperatursensor",
             "Floor Temperature": "Bodentemperatur",
+            "Black Globe Temperature": Schwarzkugeltemperatur",
+            "Wet-bulb Black Globe Temperature": "Feuchtkugeltemperatur",
             "Leaf Sensor Battery": "Blatt Sensor Batterie",
             "Leafwetness": "Blatt Feuchte",
             "Start Time Gateway": "Startzeit Gateway",
