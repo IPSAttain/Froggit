@@ -264,13 +264,13 @@ class Froggit extends IPSModule
 
                 case 'pm1_co2':
                     $this->CreateVarProfileFloat('Froggit.PM10_ch', 'Fog', ' µg/m³');
-                    $ID = $this->VariableCreate('float', $key, $key, 703);
+                    $ID = $this->VariableCreate('float', $key, $key, "" , 703);
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
                         $this->SetValue($key, floatval($value));
                     }
                     break;
 
-                case 'pm1_co2_24h':
+                case 'pm1_co2_24h': 
                     $this->CreateVarProfileFloat('Froggit.PM1_ch', 'Fog', ' µg/m³');
                     $ID = $this->VariableCreate('float', $key, $key. "24h_avg", 703);
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
@@ -286,6 +286,7 @@ class Froggit extends IPSModule
                     }
                     break;
 
+                case 'pm25_avg_24h':
                 case 'pm25_co2_24h':
                     $this->CreateVarProfileFloat('Froggit.PM25_ch', 'Fog', ' µg/m³');
                     $ID = $this->VariableCreate('float', $key, $key. "24h_avg", 703);
@@ -326,7 +327,7 @@ class Froggit extends IPSModule
                     }
                     break;
 
- /*               case (substr($key, 0, 5) == "pm25_"):
+                case (substr($key, 0, 5) == "pm25_"):
                     $this->CreateVarProfileInteger('Froggit.PM25_ch', 'Fog', ' µg/m³');
                     if (substr($key, -11, 7) == 'avg_24h') {
                         $ID = $this->VariableCreate('integer', $key, $this->Translate('PM2.5 particle') . " 24h_avg (" . substr($key, -1) . ")", 'Froggit.PM25_ch', 700 + intval(substr($key, -1)));
@@ -337,7 +338,7 @@ class Froggit extends IPSModule
                         $this->SetValue($key, intval($value));
                     }
                     break;
-*/
+
                 case (substr($key, 0, 7) == 'leak_ch'):
                     $batt = boolval($value);
                     $ID = $this->VariableCreate('bool', $key, $this->Translate('Water Leak Sensor') . ' (' . substr($key, -1) . ')', '~Alert', 750 + intval(substr($key, -1)));
