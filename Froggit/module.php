@@ -264,7 +264,7 @@ class Froggit extends IPSModule
 
                 case 'pm1_co2':
                     $this->CreateVarProfileFloat('Froggit.PM10_ch', 'Fog', ' µg/m³');
-                    $ID = $this->VariableCreate('integer', $key, $key, 703);
+                    $ID = $this->VariableCreate('float', $key, $key, 703);
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
                         $this->SetValue($key, floatval($value));
                     }
@@ -272,7 +272,7 @@ class Froggit extends IPSModule
 
                 case 'pm1_co2_24h':
                     $this->CreateVarProfileFloat('Froggit.PM1_ch', 'Fog', ' µg/m³');
-                    $ID = $this->VariableCreate('integer', $key, $key. "24h_avg", 703);
+                    $ID = $this->VariableCreate('float', $key, $key. "24h_avg", 703);
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
                         $this->SetValue($key, floatval($value));
                     }
@@ -280,7 +280,7 @@ class Froggit extends IPSModule
 
                 case 'pm25_co2':
                     $this->CreateVarProfileFloat('Froggit.PM10_ch', 'Fog', ' µg/m³');
-                    $ID = $this->VariableCreate('integer', $key, $key, 703);
+                    $ID = $this->VariableCreate('float', $key, $key, 703);
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
                         $this->SetValue($key, floatval($value));
                     }
@@ -288,7 +288,7 @@ class Froggit extends IPSModule
 
                 case 'pm25_co2_24h':
                     $this->CreateVarProfileFloat('Froggit.PM25_ch', 'Fog', ' µg/m³');
-                    $ID = $this->VariableCreate('integer', $key, $key. "24h_avg", 703);
+                    $ID = $this->VariableCreate('float', $key, $key. "24h_avg", 703);
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
                         $this->SetValue($key, floatval($value));
                     }
@@ -296,7 +296,7 @@ class Froggit extends IPSModule
 
                 case 'pm4_co2':
                     $this->CreateVarProfileFloat('Froggit.PM10_ch', 'Fog', ' µg/m³');
-                    $ID = $this->VariableCreate('integer', $key, $key, 703);
+                    $ID = $this->VariableCreate('float', $key, $key, 703);
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
                         $this->SetValue($key, floatval($value));
                     }
@@ -304,7 +304,7 @@ class Froggit extends IPSModule
         
                 case 'pm4_co2_24h':
                     $this->CreateVarProfileFloat('Froggit.PM4_ch', 'Fog', ' µg/m³');
-                    $ID = $this->VariableCreate('integer', $key, $key. "24h_avg", 703);
+                    $ID = $this->VariableCreate('float', $key, $key. "24h_avg", 703);
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
                         $this->SetValue($key, floatval($value));
                     }
@@ -312,7 +312,7 @@ class Froggit extends IPSModule
 
                 case 'pm10_co2':
                     $this->CreateVarProfileFloat('Froggit.PM10_ch', 'Fog', ' µg/m³');
-                    $ID = $this->VariableCreate('integer', $key, $key, 703);
+                    $ID = $this->VariableCreate('float', $key, $key, 703);
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
                         $this->SetValue($key, floatval($value));
                     }
@@ -320,7 +320,7 @@ class Froggit extends IPSModule
 
                 case 'pm10_co2_24h':
                     $this->CreateVarProfileFloat('Froggit.PM10_ch', 'Fog', ' µg/m³');
-                    $ID = $this->VariableCreate('integer', $key, $key. "24h_avg", 703);
+                    $ID = $this->VariableCreate('float', $key, $key. "24h_avg", 703);
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
                         $this->SetValue($key, floatval($value));
                     }
@@ -594,7 +594,7 @@ class Froggit extends IPSModule
                 default: // all other keys that needs to be seperated
                     if (isset($key) && isset($value)) {
                         if ($Debug) {
-                            $this->SendDebug("Unsupportet Feature", "Key: " . $key . " | Value: " . $value, 0);
+                            $this->SendDebug("Unsupported Feature", "Key: " . $key . " | Value: " . $value, 0);
                         }
                         //$ID = $this->VariableCreate('string', $key, $key,'',1000);
                         //if($ID && ($this->GetValue($key) != $value)) $this->SetValue($key, $value);
