@@ -117,8 +117,9 @@ class Froggit extends IPSModule
                     }
                     break;
 
+                case 'PASSKEY': // key for ecowitt.com cloud access???
                 case 'freq': // static useless info
-                case  'heap': // memory info, may someone be interested?
+                case 'heap': // memory info, may someone be interested?
                     break;
 
                 case 'runtime':
@@ -430,8 +431,16 @@ class Froggit extends IPSModule
                     }
                     break;
 
-                case (substr($key, 0, 8) == 'pm25batt'):
-                    $batt = intval($value) * 20; // from 0 == empty to 5 == full
+                case (substr($key, 0, 8) == 'co2_batt'):
+                    $batt = intval($value) * 20; // from 0 == empty to 5 == full, 6 == ext. DC supply
+                    $ID = $this->VariableCreate('integer', $key, $this->Translate('Battery') . " CO2 (" . substr($key, -1) . ")", '~Battery.100', 830 + intval(substr($key, -1)));
+                    if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) {
+                        $this->SetValue($key, $batt);
+                    }
+                    break;
+
+                    case (substr($key, 0, 8) == 'pm25batt'):
+                    $batt = intval($value) * 20; // from 0 == empty to 5 == full, 6 == ext. DC supply
                     $ID = $this->VariableCreate('integer', $key, $this->Translate('Battery') . " PM2.5 (" . substr($key, -1) . ")", '~Battery.100', 830 + intval(substr($key, -1)));
                     if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) {
                         $this->SetValue($key, $batt);
@@ -523,7 +532,14 @@ class Froggit extends IPSModule
                         $this->SetValue($key, intval($value));
                     }
                     break;
-                    
+
+                case (substr($key, 0, 6) == 'soilad' && strlen($key) == 7):
+                    $ID = $this->VariableCreate('integer', $key, "AD (" . substr($key, -1) . ")", '', 400 + intval(substr($key, -1)));
+                    if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
+                        $this->SetValue($key, intval($value));
+                    }
+                    break;
+
                 case (substr($key, 0, 11) == 'leafwetness'):
                     $ID = $this->VariableCreate('integer', $key, $this->Translate('Leafwetness') . " (" . substr($key, -1) . ")", '~Humidity', 410 + intval(substr($key, -1)));
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
