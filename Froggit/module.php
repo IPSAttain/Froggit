@@ -117,6 +117,11 @@ class Froggit extends IPSModule
                     }
                     break;
 
+                case 'PASSKEY': // key for ecowitt.com cloud access???
+                case 'freq': // static useless info
+                case 'heap': // memory info, may someone be interested?
+                    break;
+
                 case 'runtime':
                     $uptime = time() - $value;
                     $ID = $this->VariableCreate('integer', $key, $this->Translate('Start Time Gateway'), '~UnixTimestamp', 903);
@@ -253,7 +258,7 @@ class Froggit extends IPSModule
                         $this->SetValue($key, $time);
                     }
                     break;
-
+                
                 case 'co2':
                 case 'co2_24h':
                     $ID = $this->VariableCreate('integer', $key, $key, '~Occurrence.CO2', 701);
@@ -262,16 +267,72 @@ class Froggit extends IPSModule
                     }
                     break;
 
-                case 'pm10_co2':
-                case 'pm10_co2_24h':
-                    $this->CreateVarProfileFloat('Froggit.PM10_ch', 'Fog', ' µg/m³');
-                    $ID = $this->VariableCreate('float', $key, $key, 703);
+                case 'pm1_co2':
+                    $this->CreateVarProfileFloat('Froggit.PM_ch', 'Fog', ' µg/m³');
+                    $ID = $this->VariableCreate('float', $key, $this->Translate('PM1.0 particle'), 'Froggit.PM1_ch', 703);
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
                         $this->SetValue($key, floatval($value));
                     }
                     break;
 
-                case (substr($key, 0, 5) == "pm25_"):
+                case 'pm1_24h_co2': 
+                    $this->CreateVarProfileFloat('Froggit.PM_ch', 'Fog', ' µg/m³');
+                    $ID = $this->VariableCreate('float', $key, $this->Translate('PM1.0 particle') . " 24h_avg", 'Froggit.PM1_ch', 703);
+                    if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
+                        $this->SetValue($key, floatval($value));
+                    }
+                    break;
+
+                case 'pm25_co2':
+                    $this->CreateVarProfileFloat('Froggit.PM_ch', 'Fog', ' µg/m³');
+                    $ID = $this->VariableCreate('float', $key, $this->Translate('PM1.0 particle') . " 24h_avg", 'Froggit.PM25_ch', 703);
+                    if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
+                        $this->SetValue($key, floatval($value));
+                    }
+                    break;
+
+                case 'pm25_avg_24h':
+                case 'pm25_24h_co2':
+                    $this->CreateVarProfileFloat('Froggit.PM_ch', 'Fog', ' µg/m³');
+                    $ID = $this->VariableCreate('float', $key, $this->Translate('PM2.5 particle') . " 24h_avg", 'Froggit.PM25_ch', 703);
+                    if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
+                        $this->SetValue($key, floatval($value));
+                    }
+                    break;
+
+                case 'pm4_co2':
+                    $this->CreateVarProfileFloat('Froggit.PM_ch', 'Fog', ' µg/m³');
+                    $ID = $this->VariableCreate('float', $key, $this->Translate('PM4 particle'), 'Froggit.PM4_ch' ,703);
+                    if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
+                        $this->SetValue($key, floatval($value));
+                    }
+                    break;
+        
+                case 'pm4_24h_co2':
+                    $this->CreateVarProfileFloat('Froggit.PM_ch', 'Fog', ' µg/m³');
+                    $ID = $this->VariableCreate('float', $key, $this->Translate('PM4 particle') . " 24h_avg", 'Froggit.PM4_ch' , 703);
+                    if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
+                        $this->SetValue($key, floatval($value));
+                    }
+                    break;
+
+                case 'pm10_co2':
+                    $this->CreateVarProfileFloat('Froggit.PM_ch', 'Fog', ' µg/m³');
+                    $ID = $this->VariableCreate('float', $key, $this->Translate('PM10 particle'), 'Froggit.PM10_ch', 703);
+                    if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
+                        $this->SetValue($key, floatval($value));
+                    }
+                    break;
+
+                case 'pm10_24h_co2':
+                    $this->CreateVarProfileFloat('Froggit.PM_ch', 'Fog', ' µg/m³');
+                    $ID = $this->VariableCreate('float', $key, $this->Translate('PM10 particle') . " 24h_avg", 'Froggit.PM10_ch', 703);
+                    if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
+                        $this->SetValue($key, floatval($value));
+                    }
+                    break;
+
+/*                case (substr($key, 0, 5) == "pm25_"):
                     $this->CreateVarProfileInteger('Froggit.PM25_ch', 'Fog', ' µg/m³');
                     if (substr($key, -11, 7) == 'avg_24h') {
                         $ID = $this->VariableCreate('integer', $key, $this->Translate('PM2.5 particle') . " 24h_avg (" . substr($key, -1) . ")", 'Froggit.PM25_ch', 700 + intval(substr($key, -1)));
@@ -282,7 +343,7 @@ class Froggit extends IPSModule
                         $this->SetValue($key, intval($value));
                     }
                     break;
-
+*/
                 case (substr($key, 0, 7) == 'leak_ch'):
                     $batt = boolval($value);
                     $ID = $this->VariableCreate('bool', $key, $this->Translate('Water Leak Sensor') . ' (' . substr($key, -1) . ')', '~Alert', 750 + intval(substr($key, -1)));
@@ -334,6 +395,7 @@ class Froggit extends IPSModule
                     break;
 
                 case 'wh40batt':  // digital rain gauge sensor
+                case 'bgtbatt': // black globe temperature sensor
                 case 'wh68batt':  // wireless solar powered anemometer
                 case 'bgtbatt':   // WN38
                     $batt = $value * 200 - 220;  // from 1.1 == empty to 1.6 == full
@@ -370,8 +432,16 @@ class Froggit extends IPSModule
                     }
                     break;
 
-                case (substr($key, 0, 8) == 'pm25batt'):
-                    $batt = intval($value) * 20; // from 0 == empty to 5 == full
+                case (substr($key, 0, 8) == 'co2_batt'):
+                    $batt = intval($value) * 20; // from 0 == empty to 5 == full, 6 == ext. DC supply
+                    $ID = $this->VariableCreate('integer', $key, $this->Translate('Battery') . " CO2 (" . substr($key, -1) . ")", '~Battery.100', 830 + intval(substr($key, -1)));
+                    if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) {
+                        $this->SetValue($key, $batt);
+                    }
+                    break;
+
+                    case (substr($key, 0, 8) == 'pm25batt'):
+                    $batt = intval($value) * 20; // from 0 == empty to 5 == full, 6 == ext. DC supply
                     $ID = $this->VariableCreate('integer', $key, $this->Translate('Battery') . " PM2.5 (" . substr($key, -1) . ")", '~Battery.100', 830 + intval(substr($key, -1)));
                     if($ID && ($this->GetValue($key) != $batt || $SaveAllValues)) {
                         $this->SetValue($key, $batt);
@@ -396,6 +466,8 @@ class Froggit extends IPSModule
 
                     // >>>>>>>>>>>>>>>>>>>>>>> Temperature Sensors <<<<<<<<<<<<<<<<<<<<
                 case (substr($key, 0, 4) == 'temp'):
+                case (substr($key, 0, 3) == 'bgt'):
+                case (substr($key, 0, 4) == 'wbgt'):
                 case (substr($key, 0, 5) == 'tf_ch'):
                 case (substr($key, 0, 12) == 'soil_ec_temp'):
                 case 'tf_co2':
@@ -463,7 +535,14 @@ class Froggit extends IPSModule
                         $this->SetValue($key, intval($value));
                     }
                     break;
-                    
+
+                case (substr($key, 0, 6) == 'soilad' && strlen($key) == 7):
+                    $ID = $this->VariableCreate('integer', $key, "AD (" . substr($key, -1) . ")", '', 400 + intval(substr($key, -1)));
+                    if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
+                        $this->SetValue($key, intval($value));
+                    }
+                    break;
+
                 case (substr($key, 0, 11) == 'leafwetness'):
                     $ID = $this->VariableCreate('integer', $key, $this->Translate('Leafwetness') . " (" . substr($key, -1) . ")", '~Humidity', 410 + intval(substr($key, -1)));
                     if($ID && ($this->GetValue($key) != $value || $SaveAllValues)) {
@@ -539,7 +618,7 @@ class Froggit extends IPSModule
                 default: // all other keys that needs to be seperated
                     if (isset($key) && isset($value)) {
                         if ($Debug) {
-                            $this->SendDebug("Unsupportet Feature", "Key: " . $key . " | Value: " . $value, 0);
+                            $this->SendDebug("Unsupported Feature", "Key: " . $key . " | Value: " . $value, 0);
                         }
                         //$ID = $this->VariableCreate('string', $key, $key,'',1000);
                         //if($ID && ($this->GetValue($key) != $value)) $this->SetValue($key, $value);
